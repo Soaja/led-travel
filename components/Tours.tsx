@@ -5,67 +5,20 @@ import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Star, Clock, Users, Globe, Check, ArrowRight } from 'lucide-react';
 
-interface Tour {
-  id: number;
-  badge: string;
-  badgeColor: string;
+export interface Tour {
+  id: string;
+  slug: string;
+  title: string;
+  region: string;
+  price: number | null;
+  duration: string;
   image: string;
   rating: number;
-  reviewCount: number;
-  title: string;
-  duration: string;
-  groupSize: string;
-  language: string;
-  price: number;
-  currency: string;
-  priceLabel: string;
-  cancellation: string;
-  confirmation: string;
-  slug: string;
+  reviews: number;
+  badge?: string;
+  groupSize?: string;
+  language?: string;
 }
-
-const tours: Tour[] = [
-  {
-    id: 1, badge: "Best Seller", badgeColor: "bg-orange-500",
-    image: "https://picsum.photos/seed/istanbul-old-city/800/600",
-    rating: 4.9, reviewCount: 128,
-    title: "Istanbul Classics: Full Day Old City Experience",
-    duration: "8h", groupSize: "Max 8 people", language: "IT/EN available",
-    price: 85, currency: "€", priceLabel: "per person",
-    cancellation: "Free cancellation", confirmation: "Instant",
-    slug: "istanbul-classics-full-day"
-  },
-  {
-    id: 2, badge: "Bucket List", badgeColor: "bg-purple-500",
-    image: "https://picsum.photos/seed/cappadocia-balloon/800/600",
-    rating: 4.9, reviewCount: 89,
-    title: "Cappadocia Hot Air Balloon Flight at Dawn",
-    duration: "3h", groupSize: "Max 20 people", language: "IT/EN available",
-    price: 180, currency: "€", priceLabel: "per person",
-    cancellation: "Free cancellation", confirmation: "Instant",
-    slug: "cappadocia-hot-air-balloon"
-  },
-  {
-    id: 3, badge: "Popular", badgeColor: "bg-blue-500",
-    image: "https://picsum.photos/seed/bosphorus-sunset/800/600",
-    rating: 4.8, reviewCount: 203,
-    title: "Bosphorus Sunset Cruise on Luxury Yacht",
-    duration: "2.5h", groupSize: "Max 12 people", language: "IT/EN available",
-    price: 65, currency: "€", priceLabel: "per person",
-    cancellation: "Free cancellation", confirmation: "Instant",
-    slug: "bosphorus-sunset-cruise"
-  },
-  {
-    id: 4, badge: "Foodie Choice", badgeColor: "bg-green-500",
-    image: "https://picsum.photos/seed/two-continents/800/600",
-    rating: 4.9, reviewCount: 67,
-    title: "Taste of Two Continents: Asia & Europe in One Day",
-    duration: "Full Day", groupSize: "Max 8 people", language: "IT/EN available",
-    price: 95, currency: "€", priceLabel: "per person",
-    cancellation: "Free cancellation", confirmation: "Instant",
-    slug: "two-continents-istanbul"
-  }
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -84,7 +37,9 @@ const cardVariants = {
   }
 };
 
-export default function Tours() {
+export default function Tours({ tours }: { tours: Tour[] }) {
+  if (!tours || tours.length === 0) return null;
+
   return (
     <section id="tours" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -118,16 +73,18 @@ export default function Tours() {
               {/* Image Container */}
               <div className="relative h-52 w-full overflow-hidden">
                 <Image
-                  src={tour.image}
+                  src={tour.image || `https://picsum.photos/seed/${tour.slug}/800/600`}
                   alt={tour.title}
                   fill
                   className="object-cover"
                   referrerPolicy="no-referrer"
                 />
                 {/* Badge */}
-                <div className={`absolute top-4 left-4 ${tour.badgeColor} text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm`}>
-                  {tour.badge}
-                </div>
+                {tour.badge && (
+                  <div className="absolute top-4 left-4 bg-[#F5A623] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                    {tour.badge}
+                  </div>
+                )}
               </div>
 
               {/* Card Body */}
@@ -139,8 +96,8 @@ export default function Tours() {
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
-                  <span className="font-bold text-gray-900 text-sm">{tour.rating}</span>
-                  <span className="text-gray-500 text-sm">({tour.reviewCount} reviews)</span>
+                  <span className="font-bold text-gray-900 text-sm">{tour.rating || 4.9}</span>
+                  <span className="text-gray-500 text-sm">({tour.reviews || 0} reviews)</span>
                 </div>
 
                 {/* Title */}
@@ -152,15 +109,15 @@ export default function Tours() {
                 <div className="flex flex-wrap gap-2 mb-4">
                   <div className="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md text-xs font-medium">
                     <Clock className="w-3.5 h-3.5" />
-                    {tour.duration}
+                    {tour.duration || 'Full Day'}
                   </div>
                   <div className="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md text-xs font-medium">
                     <Users className="w-3.5 h-3.5" />
-                    {tour.groupSize}
+                    {tour.groupSize || 'Max 8 people'}
                   </div>
                   <div className="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md text-xs font-medium">
                     <Globe className="w-3.5 h-3.5" />
-                    {tour.language}
+                    {tour.language || 'IT/EN available'}
                   </div>
                 </div>
 
@@ -169,9 +126,9 @@ export default function Tours() {
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm text-gray-500">From</span>
                     <span className="text-2xl font-bold text-[#F5A623]">
-                      {tour.currency}{tour.price}
+                      €{tour.price ? tour.price.toFixed(2) : 'On request'}
                     </span>
-                    <span className="text-xs text-gray-400">{tour.priceLabel}</span>
+                    <span className="text-xs text-gray-400">per person</span>
                   </div>
                 </div>
 
@@ -179,11 +136,11 @@ export default function Tours() {
                 <div className="flex flex-col gap-1.5 mb-5">
                   <div className="flex items-center gap-2 text-green-600 text-xs font-medium">
                     <Check className="w-4 h-4" />
-                    {tour.cancellation}
+                    Free cancellation
                   </div>
                   <div className="flex items-center gap-2 text-green-600 text-xs font-medium">
                     <Check className="w-4 h-4" />
-                    {tour.confirmation}
+                    Instant confirmation
                   </div>
                 </div>
 

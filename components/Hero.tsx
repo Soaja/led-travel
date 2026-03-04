@@ -1,6 +1,7 @@
 'use client';
 
-import HeroBackground from './HeroBackground';
+import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { MapPin, Calendar, Compass, ArrowRight, Star, Users, ShieldCheck, Zap, Plane, Mail } from 'lucide-react';
 
@@ -23,8 +24,15 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <HeroBackground />
+      <div className="absolute inset-0 z-0 bg-[#1A1A2E]">
+        <Image
+          src="https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=1920&auto=format&fit=crop"
+          alt="Istanbul skyline"
+          fill
+          className="object-cover"
+          priority
+          referrerPolicy="no-referrer"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/70 via-transparent to-[#1A1A2E]/50" />
       </div>
 
@@ -82,9 +90,9 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: (headlineWords.length + 1) * 0.2 + 0.2 }}
           className="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto"
         >
-          <button className="bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20">
+          <Link href="/tours" className="bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20">
             Explore Tours <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
           <button className="bg-transparent border-2 border-white hover:bg-white hover:text-[#1A1A2E] text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2">
             <Mail className="w-5 h-5" /> Get free itinerary
           </button>
