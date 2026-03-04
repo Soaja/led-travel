@@ -1,0 +1,102 @@
+'use client';
+import { useState } from 'react';
+import { Star, Calendar, Check, ShieldCheck, Zap, MessageCircle } from 'lucide-react';
+
+export default function BookingCard({ price, rating, reviewsCount, title }: { price: number, rating: number, reviewsCount: number, title: string }) {
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [date, setDate] = useState('');
+
+  const totalPrice = (adults * price) + (children * (price * 0.8)); // children 20% off
+
+  const handleBookNow = () => {
+    const message = `Hi LED Travel! I'd like to book:
+Tour: ${title}
+Date: ${date || 'Not selected'}
+Adults: ${adults}
+Children: ${children}
+Total: €${totalPrice}`;
+    window.open(`https://wa.me/905307419737?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-24 border border-gray-100">
+      <div className="flex items-end gap-2 mb-2">
+        <span className="text-4xl font-bold text-[#F5A623]">€{price}</span>
+        <span className="text-gray-500 text-sm mb-1.5">per person</span>
+      </div>
+      
+      <div className="flex items-center gap-2 mb-6 pb-6 border-b border-gray-100">
+        <div className="flex text-yellow-400">
+          {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+        </div>
+        <span className="font-bold text-gray-900">{rating}</span>
+        <span className="text-gray-500 text-sm">({reviewsCount} reviews)</span>
+      </div>
+
+      <div className="flex flex-col gap-5 mb-6">
+        <div>
+          <label className="block text-sm font-bold text-gray-700 mb-2">Date</label>
+          <div className="relative">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input 
+              type="date" 
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow cursor-pointer"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100">
+          <div>
+            <div className="font-bold text-gray-900 text-sm">Adults</div>
+            <div className="text-xs text-gray-500">Age 13+</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => setAdults(Math.max(1, adults - 1))} className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-700 font-medium shadow-sm">-</button>
+            <span className="w-4 text-center font-bold text-gray-900">{adults}</span>
+            <button onClick={() => setAdults(adults + 1)} className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-700 font-medium shadow-sm">+</button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100">
+          <div>
+            <div className="font-bold text-gray-900 text-sm">Children</div>
+            <div className="text-xs text-gray-500">Age 0-12</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => setChildren(Math.max(0, children - 1))} className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-700 font-medium shadow-sm">-</button>
+            <span className="w-4 text-center font-bold text-gray-900">{children}</span>
+            <button onClick={() => setChildren(children + 1)} className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-700 font-medium shadow-sm">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between mb-6 pt-4 border-t border-gray-100">
+        <span className="font-bold text-gray-900">Total Price</span>
+        <span className="text-2xl font-bold text-gray-900">€{totalPrice}</span>
+      </div>
+
+      <button onClick={handleBookNow} className="w-full bg-[#F5A623] hover:bg-[#e0961f] text-white font-bold py-4 rounded-xl mb-4 transition-colors text-lg shadow-lg shadow-[#F5A623]/20">
+        Book Now
+      </button>
+
+      <div className="text-center mb-4 relative">
+        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
+        <span className="relative bg-white px-3 text-sm text-gray-500">Or contact via</span>
+      </div>
+
+      <button onClick={handleBookNow} className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold py-3.5 rounded-xl mb-6 transition-colors flex items-center justify-center gap-2 shadow-md">
+        <MessageCircle className="w-5 h-5" />
+        WhatsApp
+      </button>
+
+      <div className="flex flex-col gap-3 text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <div className="flex items-center gap-3"><Check className="w-5 h-5 text-green-500 shrink-0" /> <span className="font-medium">Free cancellation</span> up to 24h</div>
+        <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#F5A623] shrink-0" /> <span className="font-medium">Instant confirmation</span></div>
+        <div className="flex items-center gap-3"><ShieldCheck className="w-5 h-5 text-blue-500 shrink-0" /> <span className="font-medium">Secure payment</span></div>
+      </div>
+    </div>
+  )
+}

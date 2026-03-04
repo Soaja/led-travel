@@ -1,0 +1,141 @@
+import Link from 'next/link';
+import { Instagram, Facebook, Youtube, MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
+
+// Custom TikTok Icon since it's not in Lucide
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.0000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
+export default function Footer() {
+  return (
+    <footer className="bg-[#1A1A2E] text-white border-t-[3px] border-[#F5A623]">
+      <div className="container mx-auto px-4 md:px-6">
+        
+        {/* TOP SECTION */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-16">
+          
+          {/* COL 1 - Brand */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <Link href="/" className="text-2xl font-bold mb-2">
+              <span className="text-[#F5A623]">Led</span> <span className="text-white">Travel</span>
+            </Link>
+            <p className="text-gray-300 font-medium mb-4 italic">
+              Connecting travelers to authentic Turkey
+            </p>
+            <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+              We specialize in creating unforgettable, premium private tours across Turkey. Experience the rich history, culture, and landscapes with our expert local guides.
+            </p>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+                <Instagram className="w-5 h-5" />
+                <span className="sr-only">Instagram</span>
+              </a>
+              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+                <Facebook className="w-5 h-5" />
+                <span className="sr-only">Facebook</span>
+              </a>
+              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+                <TikTokIcon className="w-5 h-5" />
+                <span className="sr-only">TikTok</span>
+              </a>
+              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+                <Youtube className="w-5 h-5" />
+                <span className="sr-only">YouTube</span>
+              </a>
+            </div>
+          </div>
+
+          {/* COL 2 - Destinations */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Destinations</h3>
+            <ul className="flex flex-col gap-3">
+              <li><Link href="/destinations/istanbul" className="text-gray-400 hover:text-white transition-colors duration-300">Istanbul Tours</Link></li>
+              <li><Link href="/destinations/cappadocia" className="text-gray-400 hover:text-white transition-colors duration-300">Cappadocia Tours</Link></li>
+              <li><Link href="/destinations/antalya" className="text-gray-400 hover:text-white transition-colors duration-300">Antalya Tours</Link></li>
+              <li><Link href="/destinations/ephesus" className="text-gray-400 hover:text-white transition-colors duration-300">Ephesus & Pamukkale</Link></li>
+              <li><Link href="/destinations/blue-lagoon" className="text-gray-400 hover:text-white transition-colors duration-300">Blue Lagoon</Link></li>
+              <li><Link href="/destinations" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium mt-2 block">View All →</Link></li>
+            </ul>
+          </div>
+
+          {/* COL 3 - Support */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Support</h3>
+            <ul className="flex flex-col gap-3">
+              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</Link></li>
+              <li><Link href="/faq" className="text-gray-400 hover:text-white transition-colors duration-300">FAQ</Link></li>
+              <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors duration-300">Terms & Conditions</Link></li>
+              <li><Link href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</Link></li>
+              <li><Link href="/cancellation" className="text-gray-400 hover:text-white transition-colors duration-300">Cancellation Policy</Link></li>
+            </ul>
+          </div>
+
+          {/* COL 4 - Contact info */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Contact</h3>
+            <ul className="flex flex-col gap-4 mb-6 w-full">
+              <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
+                <MapPin className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+                <span className="text-sm">Alemdar Mahalessi Yerebatan caddesi No.3</span>
+              </li>
+              <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
+                <Phone className="w-5 h-5 text-[#F5A623] shrink-0" />
+                <a href="tel:+905307419737" className="text-sm hover:text-white transition-colors duration-300">+90 530 741 97 37</a>
+              </li>
+              <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
+                <Mail className="w-5 h-5 text-[#F5A623] shrink-0" />
+                <a href="mailto:lara@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">lara@ledtravel.net</a>
+              </li>
+            </ul>
+            <a 
+              href="https://wa.me/905307419737" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors duration-300"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Chat on WhatsApp
+            </a>
+          </div>
+
+        </div>
+
+        {/* DIVIDER */}
+        <div className="border-t border-white/10"></div>
+
+        {/* BOTTOM SECTION */}
+        <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+          <div className="order-2 md:order-1">
+            © 2026 Led Travel. All rights reserved.
+          </div>
+          
+          <div className="order-3 md:order-2 flex items-center gap-1">
+            Made with <span className="text-red-500 mx-1">❤</span> in Istanbul
+          </div>
+          
+          <div className="order-1 md:order-3 flex items-center gap-4">
+            <Link href="#" className="flex items-center gap-1.5 hover:text-white transition-colors duration-300">
+              <span>🇮🇹</span> Italiano
+            </Link>
+            <div className="w-px h-4 bg-white/20"></div>
+            <Link href="#" className="flex items-center gap-1.5 hover:text-white transition-colors duration-300">
+              <span>🇬🇧</span> English
+            </Link>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
