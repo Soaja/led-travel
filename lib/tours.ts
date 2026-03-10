@@ -29,6 +29,21 @@ export interface Tour {
   badge: string;
 }
 
+const ALLOWED_DESTINATIONS = [
+  'Istanbul',
+  'Cappadocia',
+  'Ephesus',
+  'Pamukkale',
+  'Bodrum',
+  'Antalya',
+  'Izmir',
+  'Troy',
+  'Pergamon',
+  'Marmaris',
+  'Fethiye',
+  'Eastern Turkey'
+];
+
 export async function getToursFromSheet(): Promise<Tour[]> {
   const url = 'https://docs.google.com/spreadsheets/d/1ud-VcJwwAeo9cNkUD_NWihcd8cHueRvw8K9EVKl78a8/export?format=csv';
   
@@ -54,7 +69,7 @@ export async function getToursFromSheet(): Promise<Tour[]> {
     
     const tours: Tour[] = dataRows.map((row) => {
       const id = row[0] || '';
-      const region = row[1] || '';
+      let region = row[1] || '';
       const title = row[2] || '';
       const priceStr = row[3] || '';
       const priceNote = row[4] || '';
@@ -72,6 +87,14 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       const coverImage = row[16] || '';
       const galleryImages = row[17] || '';
       const websiteUrl = row[19] || '';
+
+      // Normalize region
+      const lowerRegion = region.toLowerCase().trim();
+      if (lowerRegion === 'bordum') region = 'Bodrum';
+      else {
+        const matchedRegion = ALLOWED_DESTINATIONS.find(d => d.toLowerCase() === lowerRegion);
+        if (matchedRegion) region = matchedRegion;
+      }
 
       // Parse price
       let price = null;
@@ -133,7 +156,7 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       };
     });
 
-    return tours.filter(t => t.title); // Return all tours that have a title
+    return tours.filter(t => t.title && ALLOWED_DESTINATIONS.includes(t.region)); // Return all tours that have a title and are in allowed destinations
   } catch (error) {
     console.error('Error fetching tours:', error);
     return [];

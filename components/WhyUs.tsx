@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useInView, animate } from 'motion/react';
 import { GraduationCap, Heart, Users, Shield, Star, ArrowRight } from 'lucide-react';
-import GenerateWhyUs from './GenerateWhyUs';
 
 function AnimatedCounter({ from = 0, to, suffix = "", duration = 2 }: { from?: number, to: number, suffix?: string, duration?: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -40,7 +39,6 @@ const features = [
 export default function WhyUs() {
   return (
     <section id="why-us" className="py-24 bg-white overflow-hidden">
-      <GenerateWhyUs />
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           

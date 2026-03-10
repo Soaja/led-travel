@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import ToursList from '@/components/tour/ToursList';
 import { getToursFromSheet } from '@/lib/tours';
 
@@ -31,7 +32,9 @@ export default async function ToursPage() {
       </div>
 
       {/* Filter and List Section */}
-      <ToursList initialTours={tours} />
+      <Suspense fallback={<div className="container mx-auto px-4 text-center py-20 text-gray-500">Loading tours...</div>}>
+        <ToursList initialTours={tours} />
+      </Suspense>
     </div>
   );
 }

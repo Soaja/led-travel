@@ -9,29 +9,55 @@ import { getToursFromSheet } from '@/lib/tours';
 export default async function Home() {
   const tours = await getToursFromSheet();
   
+  const desiredDestinations = [
+    'Istanbul',
+    'Cappadocia',
+    'Ephesus',
+    'Pamukkale',
+    'Bodrum',
+    'Antalya',
+    'Izmir',
+    'Troy',
+    'Pergamon',
+    'Marmaris',
+    'Fethiye',
+    'Eastern Turkey'
+  ];
+
   const regionMap = new Map();
+  
+  desiredDestinations.forEach(dest => {
+    regionMap.set(dest.toLowerCase(), {
+      name: dest,
+      tours: 0,
+      startingFrom: Infinity,
+      slug: dest.toLowerCase().replace(/\s+/g, '-'),
+      image: `https://picsum.photos/seed/${dest.toLowerCase().replace(/\s+/g, '-')}/800/600`
+    });
+  });
+
   tours.forEach(tour => {
     if (!tour.region) return;
-    if (!regionMap.has(tour.region)) {
-      regionMap.set(tour.region, {
-        name: tour.region,
-        tours: 0,
-        startingFrom: tour.price || Infinity,
-        slug: tour.region.toLowerCase().replace(/\s+/g, '-'),
-        image: tour.image || `https://picsum.photos/seed/${tour.region}/800/600`
-      });
-    }
-    const dest = regionMap.get(tour.region);
-    dest.tours += 1;
-    if (tour.price && tour.price < dest.startingFrom) {
-      dest.startingFrom = tour.price;
+    
+    let regionKey = tour.region.toLowerCase().trim();
+    if (regionKey === 'bordum') regionKey = 'bodrum';
+    
+    if (regionMap.has(regionKey)) {
+      const dest = regionMap.get(regionKey);
+      dest.tours += 1;
+      if (tour.price && tour.price < dest.startingFrom) {
+        dest.startingFrom = tour.price;
+      }
     }
   });
   
-  const destinations = Array.from(regionMap.values()).map(d => ({
-    ...d,
-    startingFrom: d.startingFrom === Infinity ? 0 : d.startingFrom
-  }));
+  const destinations = desiredDestinations.map(dest => {
+    const d = regionMap.get(dest.toLowerCase());
+    return {
+      ...d,
+      startingFrom: d.startingFrom === Infinity ? 0 : d.startingFrom
+    };
+  });
 
   // Get top 4 tours for the Best Selling Tours section
   const bestSellingTours = tours.slice(0, 4);

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
-import GenerateNewsletterImage from './GenerateNewsletterImage';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
@@ -35,7 +34,6 @@ export default function Newsletter() {
 
   return (
     <section className="relative overflow-hidden py-24">
-      <GenerateNewsletterImage />
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

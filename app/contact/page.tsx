@@ -41,7 +41,7 @@ export default function ContactPage() {
               <MapPin className="w-6 h-6 text-[#F5A623] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Visit Us</h3>
-            <p className="text-gray-600">Alemdar Mahalessi Yerebatan caddesi No.3<br/>Istanbul, Turkey</p>
+            <p className="text-gray-600">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</p>
           </motion.div>
 
           <motion.div 
@@ -54,7 +54,7 @@ export default function ContactPage() {
               <Phone className="w-6 h-6 text-[#F5A623] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Call Us</h3>
-            <a href="tel:+905307419737" className="text-gray-600 hover:text-[#F5A623] transition-colors block mb-1">+90 530 741 97 37</a>
+            <a href="tel:+905333811447" className="text-gray-600 hover:text-[#F5A623] transition-colors block mb-1">+90 533 381 14 47</a>
             <p className="text-sm text-gray-500 mt-2">Mon-Sun, 9am - 8pm</p>
           </motion.div>
 
@@ -123,7 +123,7 @@ export default function ContactPage() {
             <div className="mt-8 pt-8 border-t border-gray-200 text-center">
               <p className="text-gray-500 mb-4">Or reach out instantly via WhatsApp</p>
               <a 
-                href="https://wa.me/905307419737" 
+                href="https://wa.me/905333811447" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold py-3 px-8 rounded-xl transition-colors items-center justify-center gap-2 shadow-md"
@@ -137,7 +137,7 @@ export default function ContactPage() {
           {/* Right: Map */}
           <div className="lg:w-1/2 relative min-h-[400px] lg:min-h-full bg-gray-200">
             <iframe
-              src="https://maps.google.com/maps?q=Alemdar%20Mahallesi%20Yerebatan%20caddesi%20No.3%20Istanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=Alemdar%20Mahallesi%20Yerebatan%20caddesi%20No.29%20Istanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: '400px' }}

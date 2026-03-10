@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -84,10 +85,34 @@ const toursData = [
 import { Tour } from '@/lib/tours';
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const searchParams = useSearchParams();
+  const regionParam = searchParams.get('region');
+  const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
+
+  useEffect(() => {
+    if (regionParam) {
+      setActiveFilter(regionParam);
+    } else {
+      setActiveFilter('All');
+    }
+  }, [regionParam]);
 
   // Extract unique regions for filters
-  const locations = ['All', ...Array.from(new Set(initialTours.map(t => t.region)))];
+  const locations = [
+    'All',
+    'Istanbul',
+    'Cappadocia',
+    'Ephesus',
+    'Pamukkale',
+    'Bodrum',
+    'Antalya',
+    'Izmir',
+    'Troy',
+    'Pergamon',
+    'Marmaris',
+    'Fethiye',
+    'Eastern Turkey'
+  ];
 
   const filteredTours = activeFilter === 'All' 
     ? initialTours 

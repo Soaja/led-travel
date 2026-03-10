@@ -97,7 +97,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
                       {dest.name}
                     </h3>
                     <p className="text-[#F5A623] text-lg font-semibold">
-                      From €{dest.startingFrom.toFixed(2)}
+                      {dest.startingFrom > 0 ? `From €${dest.startingFrom.toFixed(2)}` : 'On request'}
                     </p>
                   </div>
                   

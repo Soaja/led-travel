@@ -60,12 +60,12 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Destinations</h3>
             <ul className="flex flex-col gap-3">
-              <li><Link href="/destinations/istanbul" className="text-gray-400 hover:text-white transition-colors duration-300">Istanbul Tours</Link></li>
-              <li><Link href="/destinations/cappadocia" className="text-gray-400 hover:text-white transition-colors duration-300">Cappadocia Tours</Link></li>
-              <li><Link href="/destinations/antalya" className="text-gray-400 hover:text-white transition-colors duration-300">Antalya Tours</Link></li>
-              <li><Link href="/destinations/ephesus" className="text-gray-400 hover:text-white transition-colors duration-300">Ephesus & Pamukkale</Link></li>
-              <li><Link href="/destinations/blue-lagoon" className="text-gray-400 hover:text-white transition-colors duration-300">Blue Lagoon</Link></li>
-              <li><Link href="/destinations" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium mt-2 block">View All →</Link></li>
+              <li><Link href="/tours?region=Istanbul" className="text-gray-400 hover:text-white transition-colors duration-300">Istanbul Tours</Link></li>
+              <li><Link href="/tours?region=Cappadocia" className="text-gray-400 hover:text-white transition-colors duration-300">Cappadocia Tours</Link></li>
+              <li><Link href="/tours?region=Antalya" className="text-gray-400 hover:text-white transition-colors duration-300">Antalya Tours</Link></li>
+              <li><Link href="/tours?region=Ephesus" className="text-gray-400 hover:text-white transition-colors duration-300">Ephesus Tours</Link></li>
+              <li><Link href="/tours?region=Pamukkale" className="text-gray-400 hover:text-white transition-colors duration-300">Pamukkale Tours</Link></li>
+              <li><Link href="/tours" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium mt-2 block">View All →</Link></li>
             </ul>
           </div>
 
@@ -87,11 +87,11 @@ export default function Footer() {
             <ul className="flex flex-col gap-4 mb-6 w-full">
               <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
                 <MapPin className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
-                <span className="text-sm">Alemdar Mahalessi Yerebatan caddesi No.3</span>
+                <span className="text-sm">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
                 <Phone className="w-5 h-5 text-[#F5A623] shrink-0" />
-                <a href="tel:+905307419737" className="text-sm hover:text-white transition-colors duration-300">+90 530 741 97 37</a>
+                <a href="tel:+905333811447" className="text-sm hover:text-white transition-colors duration-300">+90 533 381 14 47</a>
               </li>
               <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
                 <Mail className="w-5 h-5 text-[#F5A623] shrink-0" />
@@ -99,7 +99,7 @@ export default function Footer() {
               </li>
             </ul>
             <a 
-              href="https://wa.me/905307419737" 
+              href="https://wa.me/905333811447" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors duration-300"

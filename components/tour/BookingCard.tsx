@@ -16,7 +16,7 @@ Date: ${date || 'Not selected'}
 Adults: ${adults}
 Children: ${children}
 Total: €${totalPrice}`;
-    window.open(`https://wa.me/905307419737?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/905333811447?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (

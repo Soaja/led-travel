@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { MapPin, Calendar, Compass, ArrowRight, Star, Users, ShieldCheck, Zap, Plane, Mail } from 'lucide-react';
+import { ArrowRight, Plane, Mail } from 'lucide-react';
 
 export default function Hero() {
   const headlineWords = "Light up your holidays".split(" ");
@@ -73,16 +73,6 @@ export default function Hero() {
           </motion.span>
         </h1>
         
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: (headlineWords.length + 1) * 0.2 }}
-          className="text-xl text-white opacity-90 mb-10 max-w-2xl font-light"
-        >
-          Private tours in Istanbul, Cappadocia &amp; beyond — guided by locals
-        </motion.p>
-
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -98,84 +88,7 @@ export default function Hero() {
           </button>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="w-full bg-white rounded-2xl p-4 md:p-6 shadow-2xl flex flex-col md:flex-row gap-4 items-center mb-10"
-        >
-          <div className="flex-1 flex items-center gap-3 px-4 py-3 md:py-0 w-full border-b md:border-b-0 md:border-r border-gray-200">
-            <MapPin className="text-[#F5A623] w-6 h-6 shrink-0" />
-            <div className="flex flex-col items-start w-full">
-              <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Destination</span>
-              <select className="w-full outline-none text-[#1A1A2E] font-medium bg-transparent cursor-pointer appearance-none">
-                <option value="all">All Destinations</option>
-                <option value="istanbul">Istanbul</option>
-                <option value="cappadocia">Cappadocia</option>
-                <option value="antalya">Antalya</option>
-                <option value="ephesus">Ephesus</option>
-                <option value="pamukkale">Pamukkale</option>
-              </select>
-            </div>
-          </div>
-          
-          <div className="flex-1 flex items-center gap-3 px-4 py-3 md:py-0 w-full border-b md:border-b-0 md:border-r border-gray-200">
-            <Calendar className="text-[#F5A623] w-6 h-6 shrink-0" />
-            <div className="flex flex-col items-start w-full">
-              <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Date</span>
-              <input 
-                type="date" 
-                placeholder="When do you want to go?" 
-                className="w-full outline-none text-[#1A1A2E] font-medium placeholder:text-gray-400 bg-transparent cursor-pointer"
-              />
-            </div>
-          </div>
 
-          <div className="flex-1 flex items-center gap-3 px-4 py-3 md:py-0 w-full border-b md:border-b-0 md:border-r md:border-transparent border-gray-200">
-            <Compass className="text-[#F5A623] w-6 h-6 shrink-0" />
-            <div className="flex flex-col items-start w-full">
-              <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Tour Type</span>
-              <select className="w-full outline-none text-[#1A1A2E] font-medium bg-transparent cursor-pointer appearance-none">
-                <option value="all">All Tours</option>
-                <option value="private">Private</option>
-                <option value="group">Group</option>
-                <option value="day-trip">Day Trip</option>
-                <option value="multi-day">Multi-day</option>
-              </select>
-            </div>
-          </div>
-
-          <button className="w-full md:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 md:py-5 rounded-xl font-bold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20 shrink-0 h-full">
-            <span>Find Tours</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </motion.div>
-
-        {/* Trust Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="flex flex-wrap justify-center gap-6 md:gap-10 w-full"
-        >
-          <div className="flex items-center gap-2 text-white text-sm font-medium">
-            <Star className="w-5 h-5 text-[#F5A623] fill-[#F5A623]" />
-            <span>4.9 Rating</span>
-          </div>
-          <div className="flex items-center gap-2 text-white text-sm font-medium">
-            <Users className="w-5 h-5 text-[#F5A623]" />
-            <span>61K+ Happy Guests</span>
-          </div>
-          <div className="flex items-center gap-2 text-white text-sm font-medium">
-            <ShieldCheck className="w-5 h-5 text-[#F5A623]" />
-            <span>Secure Payment</span>
-          </div>
-          <div className="flex items-center gap-2 text-white text-sm font-medium">
-            <Zap className="w-5 h-5 text-[#F5A623]" />
-            <span>Instant Confirmation</span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

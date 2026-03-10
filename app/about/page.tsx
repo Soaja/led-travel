@@ -245,7 +245,7 @@ export default function AboutPage() {
                   Explore Tours <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link 
-                  href="https://wa.me/905307419737" 
+                  href="https://wa.me/905333811447" 
                   target="_blank"
                   className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-8 rounded-xl backdrop-blur-md transition-colors duration-300 flex items-center justify-center"
                 >
