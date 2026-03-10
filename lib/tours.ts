@@ -48,7 +48,7 @@ export async function getToursFromSheet(): Promise<Tour[]> {
   const url = 'https://docs.google.com/spreadsheets/d/1ud-VcJwwAeo9cNkUD_NWihcd8cHueRvw8K9EVKl78a8/export?format=csv';
   
   try {
-    const res = await fetch(url, { next: { revalidate: 60 } }); // Cache for 1 hour
+    const res = await fetch(url, { next: { revalidate: 3600 } }); // Cache for 1 hour
     if (!res.ok) throw new Error('Failed to fetch sheet');
     
     const csvText = await res.text();

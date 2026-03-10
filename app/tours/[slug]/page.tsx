@@ -123,18 +123,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <div className="container mx-auto px-4 md:px-6 pt-24">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-[#F5A623]">Home</Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link href="/tours" className="hover:text-[#F5A623]">Tours</Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link href={`/tours?region=${tour.region}`} className="hover:text-[#F5A623]">{tour.region}</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-gray-900 font-medium truncate">{tour.title}</span>
-        </nav>
+      {/* Dark Header Background for Navbar */}
+      <div className="bg-[#1A1A2E] pt-32 pb-8 mb-8">
+        <div className="container mx-auto px-4 md:px-6">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm text-gray-400">
+            <Link href="/" className="hover:text-[#F5A623] transition-colors">Home</Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link href="/tours" className="hover:text-[#F5A623] transition-colors">Tours</Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link href={`/tours?region=${tour.region}`} className="hover:text-[#F5A623] transition-colors">{tour.region}</Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-white font-medium truncate">{tour.title}</span>
+          </nav>
+        </div>
+      </div>
 
+      <div className="container mx-auto px-4 md:px-6">
         {/* Gallery */}
         <TourGallery images={images} />
 

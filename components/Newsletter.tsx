@@ -16,7 +16,7 @@ export default function Newsletter() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setStatus('error');
-      setErrorMessage('Inserisci un indirizzo email valido.');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
 
@@ -37,7 +37,7 @@ export default function Newsletter() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/newsletter-istanbul-night.jpg"
+          src="https://picsum.photos/seed/istanbul_night/1920/1080"
           alt="Istanbul at night"
           fill
           className="object-cover"
@@ -56,35 +56,35 @@ export default function Newsletter() {
         >
           {/* 1. Small orange label pill */}
           <div className="bg-[#F5A623]/20 border border-[#F5A623]/50 text-[#F5A623] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm">
-            <span>■</span> REGALO ESCLUSIVO / EXCLUSIVE GIFT
+            <span>■</span> EXCLUSIVE GIFT
           </div>
 
           {/* 2. H2 */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-            Il tuo piano gratuito per 3 giorni a Istanbul
+            Your free 3-day Istanbul itinerary
           </h2>
 
           {/* 3. Subtitle */}
           <p className="text-gray-300 text-lg mb-8 font-light">
-            Creato dai nostri esperti locali — aggiornato 2026
+            Created by our local experts — updated for 2026
           </p>
 
           {/* 4. BENEFIT PILLS */}
           <div className="flex flex-col md:flex-row gap-3 mb-10 w-full justify-center">
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> Gemme nascoste che i turisti non conoscono
+              <span className="text-[#F5A623] font-bold">✓</span> Hidden gems tourists don&apos;t know about
             </div>
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> I migliori ristoranti per quartiere
+              <span className="text-[#F5A623] font-bold">✓</span> Best restaurants by neighborhood
             </div>
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> Timing perfetto per evitare le folle
+              <span className="text-[#F5A623] font-bold">✓</span> Perfect timing to avoid the crowds
             </div>
           </div>
 
           {/* 5. SOCIAL PROOF LINE */}
           <div className="text-[#F5A623] text-sm font-medium mb-6 flex items-center justify-center gap-2">
-            <span>■</span> Già usato da 12.000+ viaggiatori
+            <span>■</span> Already used by 12,000+ travelers
           </div>
 
           {/* 6. EMAIL FORM */}
@@ -97,7 +97,7 @@ export default function Newsletter() {
                   setEmail(e.target.value);
                   if (status === 'error') setStatus('idle');
                 }}
-                placeholder="La tua email / Your email"
+                placeholder="Your email address"
                 className="flex-1 bg-white text-gray-900 rounded-lg md:rounded-r-none md:rounded-l-lg px-6 py-4 outline-none focus:ring-2 focus:ring-[#F5A623] placeholder:text-gray-400 font-medium"
                 disabled={status === 'loading' || status === 'success'}
               />
@@ -106,7 +106,7 @@ export default function Newsletter() {
                 disabled={status === 'loading' || status === 'success'}
                 className="bg-[#F5A623] hover:bg-[#e0961f] text-white font-bold px-8 py-4 rounded-lg md:rounded-l-none md:rounded-r-lg transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 whitespace-nowrap"
               >
-                {status === 'loading' ? 'Invio in corso...' : 'Scarica Gratis →'}
+                {status === 'loading' ? 'Sending...' : 'Download for Free →'}
               </button>
             </div>
             
@@ -118,14 +118,14 @@ export default function Newsletter() {
             )}
             {status === 'success' && (
               <div className="absolute -bottom-8 left-0 w-full text-green-400 text-sm font-medium flex items-center justify-center gap-2">
-                <span>■</span> Controlla la tua email!
+                <span>■</span> Check your email!
               </div>
             )}
           </form>
 
           {/* 7. TRUST LINE */}
           <div className="text-white/50 text-xs mt-8 flex items-center justify-center gap-1.5">
-            <span>■</span> Nessuno spam. Cancella quando vuoi.
+            <span>■</span> No spam. Unsubscribe anytime.
           </div>
 
         </motion.div>

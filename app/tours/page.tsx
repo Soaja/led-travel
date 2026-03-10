@@ -12,9 +12,9 @@ export default async function ToursPage() {
   const tours = await getToursFromSheet();
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-24 pb-20">
+    <div className="bg-gray-50 min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-[#1A1A2E] text-white py-16 mb-12 relative overflow-hidden">
+      <div className="bg-[#1A1A2E] text-white pt-32 pb-16 mb-12 relative overflow-hidden">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#F5A623 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
         
