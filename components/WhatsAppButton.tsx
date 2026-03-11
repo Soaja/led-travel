@@ -32,19 +32,20 @@ export default function WhatsAppButton() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-6 right-6 z-50 flex items-center justify-center"
+          className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9999] flex items-center justify-center"
         >
           <a
             href="https://wa.me/905333811447"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300 group relative"
+            className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300 group relative"
             aria-label="Chat on WhatsApp"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
+              width="24"
+              height="24"
+              className="md:w-[28px] md:h-[28px]"
               fill="currentColor"
               viewBox="0 0 16 16"
             >

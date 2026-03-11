@@ -272,7 +272,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         <div className="mt-20 border-t border-gray-200 pt-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Guest Reviews</h2>
-            <button className="text-[#F5A623] font-bold hover:underline hidden md:block">Read all 128 reviews →</button>
+            <Link href="/reviews" className="text-[#F5A623] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -325,7 +325,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               </div>
             </div>
           </div>
-          <button className="text-[#F5A623] font-bold hover:underline mt-6 md:hidden">Read all 128 reviews →</button>
+          <Link href="/reviews" className="text-[#F5A623] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
         </div>
 
         {/* Related Tours */}
