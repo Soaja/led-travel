@@ -30,27 +30,6 @@ const values = [
   }
 ];
 
-const team = [
-  {
-    name: 'Ahmet Yılmaz',
-    role: 'Founder & Lead Guide',
-    image: 'https://picsum.photos/seed/ahmet/600/800',
-    bio: 'Born in Istanbul, Ahmet has spent 15 years sharing the history of his beloved city with travelers from around the world.'
-  },
-  {
-    name: 'Lara Demir',
-    role: 'Head of Operations',
-    image: 'https://picsum.photos/seed/lara/600/800',
-    bio: 'Lara ensures every logistical detail is flawless, from your airport transfer to your hot air balloon flight in Cappadocia.'
-  },
-  {
-    name: 'Can Kaya',
-    role: 'Experience Designer',
-    image: 'https://picsum.photos/seed/can/600/800',
-    bio: 'An expert in culinary and cultural tours, Can crafts itineraries that tantalize the senses and create lasting memories.'
-  }
-];
-
 export default function AboutPage() {
   return (
     <div className="bg-white min-h-screen pb-20">
@@ -185,40 +164,6 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* MEET THE TEAM */}
-      <section className="py-24 container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl font-bold text-[#1A1A2E] mb-4">Meet Your Local Experts</h2>
-          <p className="text-lg text-gray-600">The passionate individuals working behind the scenes to make your trip extraordinary.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {team.map((member, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="group"
-            >
-              <div className="relative h-96 w-full rounded-2xl overflow-hidden mb-6">
-                <Image 
-                  src={member.image} 
-                  alt={member.name} 
-                  fill 
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              <h3 className="text-2xl font-bold text-[#1A1A2E] mb-1">{member.name}</h3>
-              <div className="text-[#F5A623] font-medium mb-4">{member.role}</div>
-              <p className="text-gray-600 leading-relaxed">{member.bio}</p>
-            </motion.div>
-          ))}
         </div>
       </section>
 

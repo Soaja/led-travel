@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
+import { supabase } from '@/lib/supabase';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
@@ -22,14 +23,19 @@ export default function Newsletter() {
 
     setStatus('loading');
 
-    // TODO: Connect to Mailchimp / ConvertKit API here
-    // Example: await fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email }) });
-    
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const { error } = await supabase
+        .from('itinerary_requests')
+        .insert([{ email }]);
+
+      if (error) throw error;
+
       setStatus('success');
       setEmail('');
-    }, 1000);
+    } catch (err: any) {
+      setStatus('error');
+      setErrorMessage(err.message || 'Failed to send request. Please try again later.');
+    }
   };
 
   return (

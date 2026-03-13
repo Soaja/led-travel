@@ -82,7 +82,7 @@ const toursData = [
   }
 ];
 
-import { Tour } from '@/lib/tours';
+import type { Tour } from '@/lib/tours';
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const searchParams = useSearchParams();

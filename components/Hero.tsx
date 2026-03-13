@@ -1,11 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ArrowRight, Plane, Mail } from 'lucide-react';
+import { ArrowRight, Plane, Mail, Check } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 export default function Hero() {
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const headlineWords = "Light up your holidays".split(" ");
   
   const wordVariants = {
@@ -19,6 +26,33 @@ export default function Hero() {
         ease: [0.2, 0.65, 0.3, 0.9] as const,
       },
     }),
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    setStatus('loading');
+
+    try {
+      const { error } = await supabase
+        .from('itinerary_requests')
+        .insert([{ email }]);
+
+      if (error) throw error;
+
+      setStatus('success');
+      setEmail('');
+    } catch (err: any) {
+      setStatus('error');
+      setErrorMessage(err.message || 'Failed to send request. Please try again.');
+    }
   };
 
   return (
@@ -78,16 +112,61 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: (headlineWords.length + 1) * 0.2 + 0.2 }}
-          className="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto items-center"
         >
-          <Link href="/tours" className="bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20">
+          <Link href="/tours" className="w-full sm:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20">
             Explore Tours <ArrowRight className="w-5 h-5" />
           </Link>
-          <button className="bg-transparent border-2 border-white hover:bg-white hover:text-[#1A1A2E] text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2">
-            <Mail className="w-5 h-5" /> Get free itinerary
-          </button>
+          
+          {!isEmailOpen && status !== 'success' ? (
+            <button 
+              onClick={() => setIsEmailOpen(true)}
+              className="w-full sm:w-auto bg-transparent border-2 border-white hover:bg-white hover:text-[#1A1A2E] text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Mail className="w-5 h-5" /> Get free itinerary
+            </button>
+          ) : status === 'success' ? (
+            <div className="w-full sm:w-auto bg-green-500/20 border-2 border-green-500 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 backdrop-blur-sm">
+              <Check className="w-5 h-5" /> Sent! Check your inbox.
+            </div>
+          ) : (
+            <motion.form 
+              initial={{ opacity: 0, scale: 0.95, x: -10 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              onSubmit={handleEmailSubmit} 
+              className="flex flex-col sm:flex-row w-full sm:w-auto relative bg-white p-1.5 rounded-xl shadow-2xl ring-4 ring-white/20"
+            >
+              <div className="hidden sm:flex items-center pl-3 pr-1">
+                <Mail className="w-5 h-5 text-gray-400" />
+              </div>
+              <input 
+                type="email" 
+                placeholder="Enter your email..." 
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (status === 'error') setStatus('idle');
+                }}
+                disabled={status === 'loading'}
+                className="w-full sm:w-64 px-4 sm:px-2 py-3 sm:py-0 bg-transparent text-gray-900 focus:outline-none font-medium placeholder:text-gray-400"
+                required
+              />
+              <button 
+                type="submit" 
+                disabled={status === 'loading'}
+                className="w-full sm:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white px-6 py-3 rounded-lg font-bold transition-colors duration-300 disabled:opacity-70 flex items-center justify-center whitespace-nowrap"
+              >
+                {status === 'loading' ? 'Sending...' : 'Send'}
+              </button>
+              {status === 'error' && (
+                <div className="absolute -bottom-10 left-0 text-red-400 text-sm font-medium w-full text-center sm:text-left bg-black/60 px-3 py-1.5 rounded-md backdrop-blur-md">
+                  {errorMessage}
+                </div>
+              )}
+            </motion.form>
+          )}
         </motion.div>
-
 
       </div>
     </section>
