@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Compass, Heart, Shield, Users, Award, Map, ArrowRight } from 'lucide-react';
+import Team from '@/components/Team';
 
 const stats = [
   { label: 'Years of Experience', value: '10+' },
@@ -166,6 +167,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* TEAM SECTION */}
+      <Team />
 
       {/* CTA SECTION */}
       <section className="py-20">

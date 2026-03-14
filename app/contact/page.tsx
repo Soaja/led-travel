@@ -41,7 +41,7 @@ export default function ContactPage() {
               <MapPin className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Visit Us</h3>
-            <p className="text-gray-600">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</p>
+            <p className="text-gray-600">Alemdar, Yerebatan caddesi No.30<br/>Fatih / İstanbul, Türkiye</p>
           </motion.div>
 
           <motion.div 
@@ -137,7 +137,7 @@ export default function ContactPage() {
           {/* Right: Map */}
           <div className="lg:w-1/2 relative min-h-[400px] lg:min-h-full bg-gray-200">
             <iframe
-              src="https://maps.google.com/maps?q=Alemdar%20Mahallesi%20Yerebatan%20caddesi%20No.29%20Istanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=Alemdar%20Mahallesi%20Yerebatan%20caddesi%20No.30%20Istanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: '400px' }}

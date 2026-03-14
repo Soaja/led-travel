@@ -27,8 +27,16 @@ export default function Footer() {
           
           {/* COL 1 - Brand */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <Link href="/" className="text-2xl font-bold mb-2">
-              <span className="text-[#E63946]">Led</span> <span className="text-white">Travel</span>
+            <Link href="/" className="flex flex-col justify-center group mb-4">
+              <div className="flex items-baseline">
+                <span className="text-3xl md:text-4xl font-black tracking-tighter uppercase text-white transition-colors duration-500">
+                  LED
+                </span>
+                <span className="text-[#E63946] text-3xl md:text-4xl font-black ml-0.5 group-hover:translate-x-1 transition-transform duration-500">.</span>
+              </div>
+              <span className="text-[0.65rem] md:text-xs font-bold tracking-[0.35em] uppercase mt-[-4px] md:mt-[-6px] pl-0.5 text-white/70 group-hover:text-[#E63946] transition-colors duration-500">
+                Travel
+              </span>
             </Link>
             <p className="text-gray-300 font-medium mb-4 italic">
               Connecting travelers to authentic Turkey
@@ -87,7 +95,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-4 mb-6 w-full">
               <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
                 <MapPin className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
-                <span className="text-sm">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</span>
+                <span className="text-sm">Alemdar, Yerebatan caddesi No.30<br/>Fatih / İstanbul, Türkiye</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
                 <Phone className="w-5 h-5 text-[#E63946] shrink-0" />

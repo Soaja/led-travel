@@ -48,7 +48,7 @@ export default function Extras() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* Card 1: Hamam */}
+          {/* Card 1: Hammam */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ export default function Extras() {
             <div className="relative h-64 overflow-hidden">
               <Image 
                 src="https://picsum.photos/seed/hamam/800/600" 
-                alt="Traditional Turkish Hamam" 
+                alt="Traditional Turkish Hammam" 
                 fill 
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
@@ -69,7 +69,7 @@ export default function Extras() {
               </div>
             </div>
             <div className="p-8 flex flex-col flex-grow">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Traditional Hamam</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Traditional Hammam</h3>
               <p className="text-gray-600 mb-6 flex-grow">
                 Experience ultimate relaxation and cleansing in a historic, authentic Turkish bath. A centuries-old tradition for body and soul rejuvenation.
               </p>
