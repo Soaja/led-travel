@@ -44,8 +44,9 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Tours', href: '/tours' },
+    { name: 'About Us', href: '/about' },
     { name: 'Reviews', href: '/reviews' },
-    { name: 'About', href: '/about' },
+    { name: 'Extras', href: '/#extras' },
   ];
 
   const containerVariants = {

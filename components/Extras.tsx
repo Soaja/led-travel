@@ -32,7 +32,7 @@ export default function Extras() {
   };
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section id="extras" className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
