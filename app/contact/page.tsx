@@ -8,14 +8,14 @@ export default function ContactPage() {
     <div className="bg-white min-h-screen pb-20">
       {/* HERO SECTION */}
       <section className="relative pt-32 pb-20 bg-[#1A1A2E] overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#F5A623 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#E63946 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-[#F5A623] font-bold tracking-wider uppercase text-sm mb-4 block">
+            <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
               ■ Get in Touch
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
@@ -37,8 +37,8 @@ export default function ContactPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center group hover:-translate-y-2 transition-transform duration-300"
           >
-            <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#F5A623] transition-colors duration-300">
-              <MapPin className="w-6 h-6 text-[#F5A623] group-hover:text-white transition-colors duration-300" />
+            <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#E63946] transition-colors duration-300">
+              <MapPin className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Visit Us</h3>
             <p className="text-gray-600">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</p>
@@ -50,11 +50,11 @@ export default function ContactPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center group hover:-translate-y-2 transition-transform duration-300"
           >
-            <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#F5A623] transition-colors duration-300">
-              <Phone className="w-6 h-6 text-[#F5A623] group-hover:text-white transition-colors duration-300" />
+            <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#E63946] transition-colors duration-300">
+              <Phone className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Call Us</h3>
-            <a href="tel:+905333811447" className="text-gray-600 hover:text-[#F5A623] transition-colors block mb-1">+90 533 381 14 47</a>
+            <a href="tel:+905333811447" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">+90 533 381 14 47</a>
             <p className="text-sm text-gray-500 mt-2">Mon-Sun, 9am - 8pm</p>
           </motion.div>
 
@@ -64,11 +64,11 @@ export default function ContactPage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center group hover:-translate-y-2 transition-transform duration-300"
           >
-            <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#F5A623] transition-colors duration-300">
-              <Mail className="w-6 h-6 text-[#F5A623] group-hover:text-white transition-colors duration-300" />
+            <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#E63946] transition-colors duration-300">
+              <Mail className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Email Us</h3>
-            <a href="mailto:lara@ledtravel.net" className="text-gray-600 hover:text-[#F5A623] transition-colors block">lara@ledtravel.net</a>
+            <a href="mailto:lara@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block">lara@ledtravel.net</a>
             <p className="text-sm text-gray-500 mt-2">We reply within 24 hours</p>
           </motion.div>
         </div>
@@ -87,22 +87,22 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">First Name</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-shadow" placeholder="John" />
+                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-shadow" placeholder="John" />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Last Name</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-shadow" placeholder="Doe" />
+                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-shadow" placeholder="Doe" />
                 </div>
               </div>
               
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-shadow" placeholder="john@example.com" />
+                <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-shadow" placeholder="john@example.com" />
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Subject</label>
-                <select className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-shadow bg-white">
+                <select className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-shadow bg-white">
                   <option>General Inquiry</option>
                   <option>Custom Tour Request</option>
                   <option>Booking Question</option>
@@ -112,7 +112,7 @@ export default function ContactPage() {
 
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                <textarea rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help you?"></textarea>
+                <textarea rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-shadow resize-none" placeholder="How can we help you?"></textarea>
               </div>
 
               <button type="submit" className="w-full bg-[#1A1A2E] hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg">

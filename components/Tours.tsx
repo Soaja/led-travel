@@ -60,8 +60,8 @@ export default function Tours({ tours }: { tours: Tour[] }) {
     <section id="tours" className="py-24 bg-[#1A1A2E] text-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-[#F5A623] opacity-5 blur-[120px]"></div>
-        <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[#F5A623] opacity-5 blur-[120px]"></div>
+        <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-[#E63946] opacity-5 blur-[120px]"></div>
+        <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[#E63946] opacity-5 blur-[120px]"></div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -69,8 +69,8 @@ export default function Tours({ tours }: { tours: Tour[] }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-3">
-              <Flame className="w-5 h-5 text-[#F5A623]" />
-              <span className="text-[#F5A623] font-bold tracking-wider uppercase text-sm">
+              <Flame className="w-5 h-5 text-[#E63946]" />
+              <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm">
                 LIMITED TIME DEALS
               </span>
             </div>
@@ -85,7 +85,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
           <div className="hidden md:block">
             <Link 
               href="/tours"
-              className="inline-flex items-center gap-2 text-white hover:text-[#F5A623] font-bold transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-white hover:text-[#E63946] font-bold transition-colors duration-300"
             >
               View All Offers <ArrowRight className="w-5 h-5" />
             </Link>
@@ -130,7 +130,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
 
                     {/* Original Badge (if any) */}
                     {tour.badge && (
-                      <div className="absolute top-4 left-4 bg-[#F5A623] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
+                      <div className="absolute top-4 left-4 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
                         {tour.badge}
                       </div>
                     )}
@@ -140,7 +140,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                   <div className="p-6 flex flex-col flex-grow relative">
                     {/* Rating Row */}
                     <div className="flex items-center gap-1.5 mb-3">
-                      <div className="flex text-[#F5A623]">
+                      <div className="flex text-[#E63946]">
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className="w-4 h-4 fill-current" />
                         ))}
@@ -150,18 +150,18 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white line-clamp-2 mb-4 group-hover:text-[#F5A623] transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-white line-clamp-2 mb-4 group-hover:text-[#E63946] transition-colors duration-300">
                       {tour.title}
                     </h3>
 
                     {/* Info Pills Row */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       <div className="flex items-center gap-1.5 bg-white/5 text-gray-300 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/5">
-                        <Clock className="w-3.5 h-3.5 text-[#F5A623]" />
+                        <Clock className="w-3.5 h-3.5 text-[#E63946]" />
                         {tour.duration || 'Full Day'}
                       </div>
                       <div className="flex items-center gap-1.5 bg-white/5 text-gray-300 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/5">
-                        <Users className="w-3.5 h-3.5 text-[#F5A623]" />
+                        <Users className="w-3.5 h-3.5 text-[#E63946]" />
                         {tour.groupSize || 'Max 8'}
                       </div>
                     </div>
@@ -171,7 +171,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                       <div className="flex flex-col">
                         <span className="text-xs text-gray-400 mb-1">Special Price</span>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-[#F5A623]">
+                          <span className="text-2xl font-bold text-[#E63946]">
                             €{tour.price ? tour.price.toFixed(2) : 'On request'}
                           </span>
                           {originalPrice && (
@@ -186,7 +186,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                     {/* CTA Button */}
                     <Link 
                       href={`/tours/${tour.slug}`}
-                      className="w-full bg-white/10 hover:bg-[#F5A623] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10 hover:border-transparent group/btn"
+                      className="w-full bg-white/10 hover:bg-[#E63946] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10 hover:border-transparent group/btn"
                     >
                       Claim Offer 
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -202,7 +202,7 @@ export default function Tours({ tours }: { tours: Tour[] }) {
         <div className="mt-10 text-center md:hidden">
           <Link 
             href="/tours"
-            className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-[#F5A623] hover:border-transparent px-8 py-3.5 rounded-xl font-bold transition-all duration-300"
+            className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-[#E63946] hover:border-transparent px-8 py-3.5 rounded-xl font-bold transition-all duration-300"
           >
             View All Offers <ArrowRight className="w-5 h-5" />
           </Link>

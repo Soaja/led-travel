@@ -1,99 +1,144 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Quote, Send, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
+import { supabase } from '@/lib/supabase';
 
+// Initial mock reviews to show if DB is empty or loading
 const mockReviews = [
   {
-    id: 1,
+    id: '1',
     name: "Marco Ricci",
-    flag: "🇮🇹",
-    city: "Milano",
     tour: "Istanbul Classics Full Day",
     text: "Il miglior tour che abbia mai fatto! La guida parlava perfettamente italiano e conosceva ogni angolo di Istanbul. Un'esperienza autentica e indimenticabile.",
-    avatar: "https://picsum.photos/seed/marco/100/100",
     stars: 5,
-    date: "October 2025"
+    created_at: new Date("2025-10-15").toISOString()
   },
   {
-    id: 2,
+    id: '2',
     name: "Sofia Ferretti",
-    flag: "🇮🇹",
-    city: "Roma",
     tour: "Cappadocia Hot Air Balloon",
     text: "La mongolfiera all'alba è stata magica. LED Travel ha organizzato tutto perfettamente, dall'hotel al trasferimento. Prenoto già il prossimo viaggio!",
-    avatar: "https://picsum.photos/seed/sofia/100/100",
     stars: 5,
-    date: "September 2025"
+    created_at: new Date("2025-09-20").toISOString()
   },
   {
-    id: 3,
+    id: '3',
     name: "James Thompson",
-    flag: "🇬🇧",
-    city: "London",
     tour: "Bosphorus Sunset Cruise",
     text: "Professional, punctual, and passionate guides. This is exactly how Turkey should be experienced — intimate, authentic, and absolutely stunning.",
-    avatar: "https://picsum.photos/seed/james/100/100",
     stars: 5,
-    date: "August 2025"
-  },
-  {
-    id: 4,
-    name: "Elena K.",
-    flag: "🇩🇪",
-    city: "Berlin",
-    tour: "Ephesus Ancient City",
-    text: "Walking through Ephesus with our guide was like stepping back in time. The knowledge and passion of the LED Travel team is unmatched.",
-    avatar: "https://picsum.photos/seed/elena/100/100",
-    stars: 5,
-    date: "July 2025"
-  },
-  {
-    id: 5,
-    name: "David & Sarah",
-    flag: "🇺🇸",
-    city: "New York",
-    tour: "Pamukkale Thermal Pools",
-    text: "We had an amazing time. The private tour meant we could avoid the biggest crowds and take our time taking photos. Highly recommended!",
-    avatar: "https://picsum.photos/seed/david/100/100",
-    stars: 4,
-    date: "June 2025"
-  },
-  {
-    id: 6,
-    name: "Lucia M.",
-    flag: "🇪🇸",
-    city: "Madrid",
-    tour: "Antalya Coastal Tour",
-    text: "Un viaje increíble. Todo estuvo organizado a la perfección. Los guías son muy amables y conocen los mejores lugares locales para comer.",
-    avatar: "https://picsum.photos/seed/lucia/100/100",
-    stars: 5,
-    date: "May 2025"
+    created_at: new Date("2025-08-10").toISOString()
   }
 ];
+
+type Review = {
+  id: string;
+  name: string;
+  tour: string;
+  text: string;
+  stars: number;
+  created_at: string;
+};
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  
+  // Form state
+  const [name, setName] = useState('');
+  const [tour, setTour] = useState('');
+  const [text, setText] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-    }, 800);
+  // Reviews state
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        setReviews(data);
+      } else {
+        // Fallback to mock reviews if DB is empty
+        setReviews(mockReviews);
+      }
+    } catch (err) {
+      console.error('Error fetching reviews:', err);
+      setReviews(mockReviews); // Fallback on error
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (rating === 0) {
+      setError('Please select a rating.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const { error: supabaseError } = await supabase
+        .from('reviews')
+        .insert([
+          {
+            name,
+            tour,
+            text,
+            stars: rating
+          }
+        ]);
+
+      if (supabaseError) throw supabaseError;
+
+      setIsSubmitted(true);
+      // Reset form
+      setName('');
+      setTour('');
+      setText('');
+      setRating(0);
+      
+      // Refresh reviews list
+      fetchReviews();
+    } catch (err: any) {
+      console.error('Review submission error:', err);
+      setError(err.message || 'Failed to submit review. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Calculate average rating
+  const avgRating = reviews.length > 0 
+    ? (reviews.reduce((acc, rev) => acc + rev.stars, 0) / reviews.length).toFixed(1)
+    : "5.0";
 
   return (
     <div className="bg-gray-50 min-h-screen pb-20">
       {/* Header Section */}
       <div className="bg-[#1A1A2E] text-white pt-32 pb-16 mb-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#F5A623 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#E63946 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <span className="text-[#F5A623] font-bold tracking-wider uppercase text-sm mb-4 block">
+          <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
             ■ Guest Experiences
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -109,7 +154,7 @@ export default function ReviewsPage() {
         
         {/* Leave a Review Box */}
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 mb-20 border border-gray-100 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-[#F5A623]"></div>
+          <div className="absolute top-0 left-0 w-full h-2 bg-[#E63946]"></div>
           
           {isSubmitted ? (
             <div className="text-center py-10">
@@ -118,11 +163,11 @@ export default function ReviewsPage() {
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
               <p className="text-gray-600 text-lg">
-                Your review has been submitted successfully and is pending approval. We appreciate your feedback!
+                Your review has been submitted successfully and is now visible on our site. We appreciate your feedback!
               </p>
               <button 
                 onClick={() => setIsSubmitted(false)}
-                className="mt-8 text-[#F5A623] font-bold hover:underline"
+                className="mt-8 text-[#E63946] font-bold hover:underline"
               >
                 Submit another review
               </button>
@@ -168,8 +213,10 @@ export default function ReviewsPage() {
                     <input 
                       type="text" 
                       id="name" 
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-all"
                       placeholder="John Doe"
                     />
                   </div>
@@ -178,8 +225,10 @@ export default function ReviewsPage() {
                     <input 
                       type="text" 
                       id="tour" 
+                      value={tour}
+                      onChange={(e) => setTour(e.target.value)}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-all"
                       placeholder="e.g. Istanbul Full Day"
                     />
                   </div>
@@ -189,20 +238,28 @@ export default function ReviewsPage() {
                   <label htmlFor="review" className="text-sm font-bold text-gray-700">Your Review</label>
                   <textarea 
                     id="review" 
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
                     rows={5}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none transition-all resize-none"
                     placeholder="Tell us about your experience..."
                   ></textarea>
                 </div>
 
+                {error && (
+                  <div className="text-sm text-red-500 font-medium bg-red-50 p-3 rounded-lg border border-red-100">
+                    {error}
+                  </div>
+                )}
+
                 <button 
                   type="submit"
-                  disabled={rating === 0}
-                  className="w-full bg-[#F5A623] hover:bg-[#e0961f] text-white font-bold py-4 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={rating === 0 || isSubmitting}
+                  className="w-full bg-[#E63946] hover:bg-[#D62828] text-white font-bold py-4 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
-                  Submit Review
+                  {isSubmitting ? 'Submitting...' : 'Submit Review'}
                 </button>
               </form>
             </>
@@ -214,68 +271,74 @@ export default function ReviewsPage() {
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-900">All Reviews</h2>
             <div className="flex items-center gap-2">
-              <Star className="w-6 h-6 text-[#F5A623] fill-current" />
-              <span className="text-2xl font-bold text-gray-900">4.9</span>
+              <Star className="w-6 h-6 text-[#E63946] fill-current" />
+              <span className="text-2xl font-bold text-gray-900">{avgRating}</span>
               <span className="text-gray-500 text-sm">/ 5.0</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockReviews.map((review) => (
-              <div key={review.id} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow">
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-[#F5A623] opacity-10 rotate-180" />
+          {isLoading ? (
+            <div className="text-center py-12 text-gray-500">Loading reviews...</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {reviews.map((review) => {
+                // Generate a consistent random avatar based on the name
+                const seed = review.name.replace(/\s+/g, '').toLowerCase() || 'user';
+                const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=F5A623`;
                 
-                {/* Top: Stars */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(review.stars)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                
-                {/* Quote Text */}
-                <p className="text-gray-700 text-base leading-relaxed italic flex-grow mb-6">
-                  &quot;{review.text}&quot;
-                </p>
-                
-                {/* Divider */}
-                <div className="border-t border-gray-50 my-4"></div>
-                
-                {/* Bottom Row */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
-                      <Image
-                        src={review.avatar}
-                        alt={review.name}
-                        fill
-                        className="object-cover"
-                        referrerPolicy="no-referrer"
-                      />
+                // Format date
+                const dateObj = new Date(review.created_at);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+                return (
+                  <div key={review.id} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow">
+                    <Quote className="absolute top-8 right-8 w-10 h-10 text-[#E63946] opacity-10 rotate-180" />
+                    
+                    {/* Top: Stars */}
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(review.stars)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                      ))}
                     </div>
-                    <div className="flex flex-col">
-                      <div className="font-bold text-gray-900 text-sm flex items-center gap-1.5">
-                        {review.name} <span>{review.flag}</span>
+                    
+                    {/* Quote Text */}
+                    <p className="text-gray-700 text-base leading-relaxed italic flex-grow mb-6">
+                      &quot;{review.text}&quot;
+                    </p>
+                    
+                    {/* Divider */}
+                    <div className="border-t border-gray-50 my-4"></div>
+                    
+                    {/* Bottom Row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-gray-100 border border-gray-200">
+                          <Image
+                            src={avatarUrl}
+                            alt={review.name}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="font-bold text-gray-900 text-sm flex items-center gap-1.5">
+                            {review.name}
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-500">{review.city}</div>
+                      <div className="text-right">
+                        <div className="text-xs font-bold text-[#E63946] max-w-[100px] truncate" title={review.tour}>
+                          {review.tour}
+                        </div>
+                        <div className="text-[10px] text-gray-400 mt-0.5">{formattedDate}</div>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-xs font-bold text-[#F5A623] max-w-[100px] truncate" title={review.tour}>
-                      {review.tour}
-                    </div>
-                    <div className="text-[10px] text-gray-400 mt-0.5">{review.date}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Load More Button (Visual only) */}
-          <div className="mt-12 text-center">
-            <button className="border-2 border-gray-200 text-gray-600 hover:border-[#F5A623] hover:text-[#F5A623] font-bold py-3 px-8 rounded-lg transition-colors duration-300">
-              Load More Reviews
-            </button>
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
       </div>

@@ -128,7 +128,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
             onClick={() => setActiveFilter(location)}
             className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
               activeFilter === location
-                ? 'bg-[#F5A623] text-white shadow-lg shadow-[#F5A623]/30'
+                ? 'bg-[#E63946] text-white shadow-lg shadow-[#E63946]/30'
                 : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
             }`}
           >
@@ -162,7 +162,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                   className="object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
                 {tour.badge && (
-                  <div className="absolute top-4 left-4 bg-[#F5A623] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                  <div className="absolute top-4 left-4 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
                     {tour.badge}
                   </div>
                 )}
@@ -176,16 +176,16 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                   <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4 text-[#F5A623]" />
+                    <MapPin className="w-4 h-4 text-[#E63946]" />
                     {tour.region}
                   </div>
                   <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4 text-[#F5A623]" />
+                    <Clock className="w-4 h-4 text-[#E63946]" />
                     {tour.duration}
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-[#F5A623] transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-[#E63946] transition-colors">
                   {tour.title}
                 </h3>
 
@@ -198,7 +198,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                   </div>
                   <Link 
                     href={`/tours/${tour.slug}`}
-                    className="flex items-center gap-2 bg-gray-900 hover:bg-[#F5A623] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300"
+                    className="flex items-center gap-2 bg-gray-900 hover:bg-[#E63946] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300"
                   >
                     View Details <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -214,7 +214,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
           <p className="text-gray-500 text-lg">No tours found for this destination.</p>
           <button 
             onClick={() => setActiveFilter('All')}
-            className="mt-4 text-[#F5A623] font-bold hover:underline"
+            className="mt-4 text-[#E63946] font-bold hover:underline"
           >
             View all tours
           </button>

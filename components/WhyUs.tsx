@@ -50,7 +50,7 @@ export default function WhyUs() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="w-full lg:w-1/2"
           >
-            <span className="text-[#F5A623] font-bold tracking-wider uppercase mb-3 block text-sm">
+            <span className="text-[#E63946] font-bold tracking-wider uppercase mb-3 block text-sm">
               WHY CHOOSE US
             </span>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -63,8 +63,8 @@ export default function WhyUs() {
             <div className="flex flex-col gap-0 mb-10">
               {features.map((feature, idx) => (
                 <div key={idx} className="flex gap-4 py-4 border-b border-gray-100 last:border-0">
-                  <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
-                    <feature.icon className="w-6 h-6 text-[#F5A623]" />
+                  <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
+                    <feature.icon className="w-6 h-6 text-[#E63946]" />
                   </div>
                   <div className="flex flex-col justify-center">
                     <h3 className="font-bold text-gray-900 text-base">{feature.title}</h3>
@@ -76,7 +76,7 @@ export default function WhyUs() {
 
             <Link 
               href="/about" 
-              className="inline-flex items-center gap-2 border-2 border-[#F5A623] text-[#F5A623] hover:bg-[#F5A623] hover:text-white px-8 py-3 rounded-lg font-bold transition-colors duration-300"
+              className="inline-flex items-center gap-2 border-2 border-[#E63946] text-[#E63946] hover:bg-[#E63946] hover:text-white px-8 py-3 rounded-lg font-bold transition-colors duration-300"
             >
               Learn More About Us <ArrowRight className="w-5 h-5" />
             </Link>
@@ -93,19 +93,19 @@ export default function WhyUs() {
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-4 z-10 relative">
               <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-50">
-                <div className="text-3xl font-bold text-[#F5A623] mb-1">
+                <div className="text-3xl font-bold text-[#E63946] mb-1">
                   <AnimatedCounter to={61} suffix="K+" />
                 </div>
                 <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Happy Guests</div>
               </div>
               <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-50">
-                <div className="text-3xl font-bold text-[#F5A623] mb-1">
+                <div className="text-3xl font-bold text-[#E63946] mb-1">
                   <AnimatedCounter to={4.9} suffix="★" />
                 </div>
                 <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Average Rating</div>
               </div>
               <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-50">
-                <div className="text-3xl font-bold text-[#F5A623] mb-1">
+                <div className="text-3xl font-bold text-[#E63946] mb-1">
                   <AnimatedCounter to={8} suffix="+" />
                 </div>
                 <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Years of Experience</div>

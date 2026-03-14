@@ -19,7 +19,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1A1A2E] text-white border-t-[3px] border-[#F5A623]">
+    <footer className="bg-[#1A1A2E] text-white border-t-[3px] border-[#E63946]">
       <div className="container mx-auto px-4 md:px-6">
         
         {/* TOP SECTION */}
@@ -28,7 +28,7 @@ export default function Footer() {
           {/* COL 1 - Brand */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <Link href="/" className="text-2xl font-bold mb-2">
-              <span className="text-[#F5A623]">Led</span> <span className="text-white">Travel</span>
+              <span className="text-[#E63946]">Led</span> <span className="text-white">Travel</span>
             </Link>
             <p className="text-gray-300 font-medium mb-4 italic">
               Connecting travelers to authentic Turkey
@@ -37,19 +37,19 @@ export default function Footer() {
               We specialize in creating unforgettable, premium private tours across Turkey. Experience the rich history, culture, and landscapes with our expert local guides.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+              <a href="#" className="text-white hover:text-[#E63946] transition-colors duration-300">
                 <Instagram className="w-5 h-5" />
                 <span className="sr-only">Instagram</span>
               </a>
-              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+              <a href="#" className="text-white hover:text-[#E63946] transition-colors duration-300">
                 <Facebook className="w-5 h-5" />
                 <span className="sr-only">Facebook</span>
               </a>
-              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+              <a href="#" className="text-white hover:text-[#E63946] transition-colors duration-300">
                 <TikTokIcon className="w-5 h-5" />
                 <span className="sr-only">TikTok</span>
               </a>
-              <a href="#" className="text-white hover:text-[#F5A623] transition-colors duration-300">
+              <a href="#" className="text-white hover:text-[#E63946] transition-colors duration-300">
                 <Youtube className="w-5 h-5" />
                 <span className="sr-only">YouTube</span>
               </a>
@@ -58,7 +58,7 @@ export default function Footer() {
 
           {/* COL 2 - Destinations */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Destinations</h3>
+            <h3 className="text-[#E63946] font-semibold text-lg mb-4">Destinations</h3>
             <ul className="flex flex-col gap-3">
               <li><Link href="/tours?region=Istanbul" className="text-gray-400 hover:text-white transition-colors duration-300">Istanbul Tours</Link></li>
               <li><Link href="/tours?region=Cappadocia" className="text-gray-400 hover:text-white transition-colors duration-300">Cappadocia Tours</Link></li>
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* COL 3 - Support */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Support</h3>
+            <h3 className="text-[#E63946] font-semibold text-lg mb-4">Support</h3>
             <ul className="flex flex-col gap-3">
               <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</Link></li>
               <li><Link href="/faq" className="text-gray-400 hover:text-white transition-colors duration-300">FAQ</Link></li>
@@ -83,21 +83,21 @@ export default function Footer() {
 
           {/* COL 4 - Contact info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-[#F5A623] font-semibold text-lg mb-4">Contact</h3>
+            <h3 className="text-[#E63946] font-semibold text-lg mb-4">Contact</h3>
             <ul className="flex flex-col gap-4 mb-6 w-full">
               <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
-                <MapPin className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
                 <span className="text-sm">Alemdar, Yerebatan caddesi No.29<br/>Fatih / İstanbul, Türkiye</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
-                <Phone className="w-5 h-5 text-[#F5A623] shrink-0" />
+                <Phone className="w-5 h-5 text-[#E63946] shrink-0" />
                 <div className="flex flex-col">
                   <a href="tel:+905333811447" className="text-sm hover:text-white transition-colors duration-300">+90 533 381 14 47</a>
                   <a href="tel:+905336693721" className="text-sm hover:text-white transition-colors duration-300 mt-1">+90 533 669 37 21</a>
                 </div>
               </li>
               <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
-                <Mail className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+                <Mail className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
                 <div className="flex flex-col gap-1">
                   <a href="mailto:lara@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">lara@ledtravel.net</a>
                   <a href="mailto:kadir@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">kadir@ledtravel.net</a>

@@ -28,7 +28,7 @@ export default function TourGallery({ images }: { images: string[] }) {
       {/* Lightbox Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
-          <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-white hover:text-[#F5A623] z-50 transition-colors">
+          <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-white hover:text-[#E63946] z-50 transition-colors">
             <X className="w-8 h-8" />
           </button>
           <div className="relative w-full max-w-5xl h-[80vh]">
@@ -40,7 +40,7 @@ export default function TourGallery({ images }: { images: string[] }) {
               <button 
                 key={idx} 
                 onClick={() => setCurrentIndex(idx)} 
-                className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex ? 'bg-[#F5A623] scale-125' : 'bg-white/50 hover:bg-white'}`} 
+                className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex ? 'bg-[#E63946] scale-125' : 'bg-white/50 hover:bg-white'}`} 
               />
             ))}
           </div>

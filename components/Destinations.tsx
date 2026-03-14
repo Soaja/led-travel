@@ -41,7 +41,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
-            <span className="text-[#F5A623] font-bold tracking-wider uppercase mb-3 block text-sm">
+            <span className="text-[#E63946] font-bold tracking-wider uppercase mb-3 block text-sm">
               TOP DESTINATIONS
             </span>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -53,7 +53,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
           </div>
           <Link 
             href="/tours" 
-            className="flex items-center gap-2 text-[#F5A623] font-semibold hover:text-[#e0961f] transition-colors duration-300 group"
+            className="flex items-center gap-2 text-[#E63946] font-semibold hover:text-[#D62828] transition-colors duration-300 group"
           >
             View all destinations
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -86,7 +86,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-colors duration-300 group-hover:from-black/90 group-hover:via-black/30" />
                 
                 {/* Top Left Badge */}
-                <div className="absolute top-4 left-4 bg-[#F5A623] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                <div className="absolute top-4 left-4 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
                   {dest.tours} Tours
                 </div>
                 
@@ -96,14 +96,14 @@ export default function Destinations({ destinations }: { destinations: Destinati
                     <h3 className="text-white text-2xl font-bold mb-1">
                       {dest.name}
                     </h3>
-                    <p className="text-[#F5A623] text-lg font-semibold">
+                    <p className="text-[#E63946] text-lg font-semibold">
                       {dest.startingFrom > 0 ? `From €${dest.startingFrom.toFixed(2)}` : 'On request'}
                     </p>
                   </div>
                   
                   {/* Hover Button */}
                   <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button className="bg-[#F5A623] text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-1 text-sm">
+                    <button className="bg-[#E63946] text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-1 text-sm">
                       Explore <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>

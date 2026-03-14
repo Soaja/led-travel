@@ -44,8 +44,8 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Tours', href: '/tours' },
+    { name: 'Reviews', href: '/reviews' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
   ];
 
   const containerVariants = {
@@ -71,10 +71,15 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group z-50">
-          <Globe className="w-8 h-8 text-[#F5A623]" />
-          <span className="text-2xl font-bold tracking-tight text-[#F5A623]">
-            Led Travel
+        <Link href="/" className="flex flex-col justify-center group z-50">
+          <div className="flex items-baseline">
+            <span className={`text-3xl md:text-4xl font-black tracking-tighter uppercase transition-colors duration-500 ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+              LED
+            </span>
+            <span className="text-[#E63946] text-3xl md:text-4xl font-black ml-0.5 group-hover:translate-x-1 transition-transform duration-500">.</span>
+          </div>
+          <span className={`text-[0.65rem] md:text-xs font-bold tracking-[0.35em] uppercase mt-[-4px] md:mt-[-6px] pl-0.5 transition-colors duration-500 ${isScrolled ? 'text-gray-500' : 'text-white/70'} group-hover:text-[#E63946]`}>
+            Travel
           </span>
         </Link>
 
@@ -91,8 +96,8 @@ export default function Navbar() {
                 <motion.div key={link.name} variants={itemVariants} className="relative group">
                   <Link
                     href={link.href}
-                    className={`relative text-sm font-medium transition-colors duration-300 flex items-center gap-1 ${
-                      isScrolled ? 'text-gray-800 hover:text-[#F5A623]' : 'text-white hover:text-[#F5A623]'
+                    className={`relative text-lg font-bold transition-colors duration-300 flex items-center gap-1 ${
+                      isScrolled ? 'text-gray-800 hover:text-[#E63946]' : 'text-white hover:text-[#E63946]'
                     }`}
                   >
                     {link.name}
@@ -105,7 +110,7 @@ export default function Navbar() {
                         <Link 
                           key={dest} 
                           href={`/tours?region=${dest}`} 
-                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#F5A623] transition-colors"
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#E63946] transition-colors"
                         >
                           {dest}
                         </Link>
@@ -120,12 +125,12 @@ export default function Navbar() {
               <motion.div key={link.name} variants={itemVariants}>
                 <Link
                   href={link.href}
-                  className={`relative text-sm font-medium group transition-colors duration-300 ${
-                    isScrolled ? 'text-gray-800 hover:text-[#F5A623]' : 'text-white hover:text-[#F5A623]'
+                  className={`relative text-lg font-bold group transition-colors duration-300 ${
+                    isScrolled ? 'text-gray-800 hover:text-[#E63946]' : 'text-white hover:text-[#E63946]'
                   }`}
                 >
                   {link.name}
-                  <span className="absolute left-0 bottom-[-4px] w-0 h-[2px] bg-[#F5A623] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute left-0 bottom-[-4px] w-0 h-[2px] bg-[#E63946] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </motion.div>
             );
@@ -134,16 +139,13 @@ export default function Navbar() {
 
         {/* Right Side Actions */}
         <div className="hidden lg:flex items-center gap-6">
-          {/* WhatsApp Button */}
-          <a
-            href="https://wa.me/905333811447"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#25D366] hover:bg-green-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors duration-300 shadow-lg flex items-center gap-2"
+          {/* Contact Us Button */}
+          <Link
+            href="/contact"
+            className="bg-[#E63946] hover:bg-[#D62828] text-white px-6 py-2.5 rounded-lg font-bold transition-colors duration-300 shadow-lg flex items-center gap-2"
           >
-            <Phone className="w-4 h-4" />
-            <span>WhatsApp</span>
-          </a>
+            <span>Contact Us</span>
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -179,7 +181,7 @@ export default function Navbar() {
                         <Link
                           href={link.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="text-gray-800 text-lg font-medium hover:text-[#F5A623] transition-colors duration-300"
+                          className="text-gray-800 text-2xl font-bold hover:text-[#E63946] transition-colors duration-300"
                         >
                           {link.name}
                         </Link>
@@ -189,7 +191,7 @@ export default function Navbar() {
                               key={dest} 
                               href={`/tours?region=${dest}`} 
                               onClick={() => setIsMobileMenuOpen(false)} 
-                              className="text-gray-600 text-base hover:text-[#F5A623] transition-colors"
+                              className="text-gray-600 text-base hover:text-[#E63946] transition-colors"
                             >
                               {dest}
                             </Link>
@@ -204,7 +206,7 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-gray-800 text-lg font-medium hover:text-[#F5A623] transition-colors duration-300"
+                      className="text-gray-800 text-2xl font-bold hover:text-[#E63946] transition-colors duration-300"
                     >
                       {link.name}
                     </Link>
@@ -212,15 +214,13 @@ export default function Navbar() {
                 })}
               </nav>
 
-              <a
-                href="https://wa.me/905333811447"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium w-full text-center flex items-center justify-center gap-2 shadow-md"
+              <Link
+                href="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="bg-[#E63946] hover:bg-[#D62828] text-white px-6 py-3 rounded-lg font-bold w-full text-center flex items-center justify-center gap-2 shadow-md"
               >
-                <Phone className="w-4 h-4" />
-                <span>WhatsApp</span>
-              </a>
+                <span>Contact Us</span>
+              </Link>
             </div>
           </motion.div>
         )}

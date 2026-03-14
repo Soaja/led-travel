@@ -2,6 +2,7 @@ import Hero from '@/components/Hero';
 import Destinations from '@/components/Destinations';
 import Tours from '@/components/Tours';
 import WhyUs from '@/components/WhyUs';
+import Extras from '@/components/Extras';
 import Reviews from '@/components/Reviews';
 import Newsletter from '@/components/Newsletter';
 import { getToursFromSheet } from '@/lib/tours';
@@ -68,6 +69,7 @@ export default async function Home() {
       <Destinations destinations={destinations} />
       <Tours tours={bestSellingTours} />
       <WhyUs />
+      <Extras />
       <Reviews />
       <Newsletter />
     </>

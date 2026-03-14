@@ -14,17 +14,17 @@ const stats = [
 
 const values = [
   {
-    icon: <Compass className="w-8 h-8 text-[#F5A623]" />,
+    icon: <Compass className="w-8 h-8 text-[#E63946]" />,
     title: 'Authentic Experiences',
     description: 'We go beyond the tourist traps to show you the real Turkey, connecting you with local culture and hidden gems.'
   },
   {
-    icon: <Shield className="w-8 h-8 text-[#F5A623]" />,
+    icon: <Shield className="w-8 h-8 text-[#E63946]" />,
     title: 'Uncompromising Quality',
     description: 'From luxury transport to hand-picked boutique hotels, every detail of your journey is meticulously planned.'
   },
   {
-    icon: <Heart className="w-8 h-8 text-[#F5A623]" />,
+    icon: <Heart className="w-8 h-8 text-[#E63946]" />,
     title: 'Personalized Care',
     description: 'Your journey is unique. We tailor every itinerary to your specific interests, pace, and travel style.'
   }
@@ -36,7 +36,7 @@ export default function AboutPage() {
       {/* HERO SECTION */}
       <section className="relative min-h-[80vh] flex items-center pt-24 overflow-hidden bg-[#1A1A2E]">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#F5A623 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#E63946 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -45,12 +45,12 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#F5A623] text-sm font-bold tracking-wider uppercase mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#F5A623] animate-pulse"></span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#E63946] text-sm font-bold tracking-wider uppercase mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#E63946] animate-pulse"></span>
                 Our Story
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A623] to-yellow-300">Unforgettable</span> Turkish Journeys
+                Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] to-red-300">Unforgettable</span> Turkish Journeys
               </h1>
               <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-xl">
                 We are a team of passionate locals dedicated to showing you the authentic heart of Turkey through premium, private experiences.
@@ -122,7 +122,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A2E] mb-6">More Than Just a Tour Agency</h2>
-            <div className="w-20 h-2 bg-[#F5A623] mb-8"></div>
+            <div className="w-20 h-2 bg-[#E63946] mb-8"></div>
             <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
               <p>
                 LED Travel was born from a simple belief: the best way to experience a country is through the eyes of a local friend. We started as a small group of passionate Istanbulites who wanted to share the hidden courtyards, secret rooftop views, and authentic flavors that big bus tours always miss.
@@ -130,7 +130,7 @@ export default function AboutPage() {
               <p>
                 Today, we are proud to be one of Turkey&apos;s leading boutique travel agencies. We don&apos;t just sell tours; we design experiences. Whether you are marveling at the ancient ruins of Ephesus, floating above the fairy chimneys of Cappadocia, or sailing the Bosphorus at sunset, we ensure every moment is magical.
               </p>
-              <p className="font-medium text-gray-900 italic border-l-4 border-[#F5A623] pl-4 py-2">
+              <p className="font-medium text-gray-900 italic border-l-4 border-[#E63946] pl-4 py-2">
                 &quot;Our mission is to turn your Turkish vacation into a lifelong memory, crafted with care, expertise, and a touch of local magic.&quot;
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group"
               >
-                <div className="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   {value.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-[#1A1A2E] mb-4">{value.title}</h3>
@@ -176,7 +176,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="bg-[#1A1A2E] rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
           >
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#F5A623 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#E63946 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
             <div className="relative z-10 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Start Your Adventure?</h2>
               <p className="text-gray-300 text-lg mb-10">
@@ -185,7 +185,7 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   href="/tours" 
-                  className="w-full sm:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white font-bold py-4 px-8 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20"
+                  className="w-full sm:w-auto bg-[#E63946] hover:bg-[#D62828] text-white font-bold py-4 px-8 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#E63946]/20"
                 >
                   Explore Tours <ArrowRight className="w-5 h-5" />
                 </Link>

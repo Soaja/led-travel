@@ -76,7 +76,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-[#F5A623]/20 border border-[#F5A623]/50 text-[#F5A623] px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm"
+          className="bg-[#E63946]/20 border border-[#E63946]/50 text-[#E63946] px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm"
         >
           <Plane className="w-4 h-4" />
           Guided Private Experiences
@@ -114,7 +114,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: (headlineWords.length + 1) * 0.2 + 0.2 }}
           className="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto items-center"
         >
-          <Link href="/tours" className="w-full sm:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#F5A623]/20">
+          <Link href="/tours" className="w-full sm:w-auto bg-[#E63946] hover:bg-[#D62828] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#E63946]/20">
             Explore Tours <ArrowRight className="w-5 h-5" />
           </Link>
           
@@ -155,7 +155,7 @@ export default function Hero() {
               <button 
                 type="submit" 
                 disabled={status === 'loading'}
-                className="w-full sm:w-auto bg-[#F5A623] hover:bg-[#e0961f] text-white px-6 py-3 rounded-lg font-bold transition-colors duration-300 disabled:opacity-70 flex items-center justify-center whitespace-nowrap"
+                className="w-full sm:w-auto bg-[#E63946] hover:bg-[#D62828] text-white px-6 py-3 rounded-lg font-bold transition-colors duration-300 disabled:opacity-70 flex items-center justify-center whitespace-nowrap"
               >
                 {status === 'loading' ? 'Sending...' : 'Send'}
               </button>

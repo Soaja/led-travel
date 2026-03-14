@@ -61,7 +61,7 @@ export default function Newsletter() {
           className="max-w-2xl mx-auto text-center flex flex-col items-center"
         >
           {/* 1. Small orange label pill */}
-          <div className="bg-[#F5A623]/20 border border-[#F5A623]/50 text-[#F5A623] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm">
+          <div className="bg-[#E63946]/20 border border-[#E63946]/50 text-[#E63946] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm">
             <span>■</span> EXCLUSIVE GIFT
           </div>
 
@@ -78,18 +78,18 @@ export default function Newsletter() {
           {/* 4. BENEFIT PILLS */}
           <div className="flex flex-col md:flex-row gap-3 mb-10 w-full justify-center">
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> Hidden gems tourists don&apos;t know about
+              <span className="text-[#E63946] font-bold">✓</span> Hidden gems tourists don&apos;t know about
             </div>
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> Best restaurants by neighborhood
+              <span className="text-[#E63946] font-bold">✓</span> Best restaurants by neighborhood
             </div>
             <div className="bg-white/10 backdrop-blur rounded-full px-4 py-2 text-white text-sm flex items-center justify-center gap-2">
-              <span className="text-[#F5A623] font-bold">✓</span> Perfect timing to avoid the crowds
+              <span className="text-[#E63946] font-bold">✓</span> Perfect timing to avoid the crowds
             </div>
           </div>
 
           {/* 5. SOCIAL PROOF LINE */}
-          <div className="text-[#F5A623] text-sm font-medium mb-6 flex items-center justify-center gap-2">
+          <div className="text-[#E63946] text-sm font-medium mb-6 flex items-center justify-center gap-2">
             <span>■</span> Already used by 12,000+ travelers
           </div>
 
@@ -104,13 +104,13 @@ export default function Newsletter() {
                   if (status === 'error') setStatus('idle');
                 }}
                 placeholder="Your email address"
-                className="flex-1 bg-white text-gray-900 rounded-lg md:rounded-r-none md:rounded-l-lg px-6 py-4 outline-none focus:ring-2 focus:ring-[#F5A623] placeholder:text-gray-400 font-medium"
+                className="flex-1 bg-white text-gray-900 rounded-lg md:rounded-r-none md:rounded-l-lg px-6 py-4 outline-none focus:ring-2 focus:ring-[#E63946] placeholder:text-gray-400 font-medium"
                 disabled={status === 'loading' || status === 'success'}
               />
               <button
                 type="submit"
                 disabled={status === 'loading' || status === 'success'}
-                className="bg-[#F5A623] hover:bg-[#e0961f] text-white font-bold px-8 py-4 rounded-lg md:rounded-l-none md:rounded-r-lg transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 whitespace-nowrap"
+                className="bg-[#E63946] hover:bg-[#D62828] text-white font-bold px-8 py-4 rounded-lg md:rounded-l-none md:rounded-r-lg transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 whitespace-nowrap"
               >
                 {status === 'loading' ? 'Sending...' : 'Download for Free →'}
               </button>

@@ -54,8 +54,8 @@ export default function Reviews() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Star className="w-10 h-10 text-[#F5A623] fill-current" />
-            <span className="text-5xl font-bold text-[#F5A623]">4.9</span>
+            <Star className="w-10 h-10 text-[#E63946] fill-current" />
+            <span className="text-5xl font-bold text-[#E63946]">4.9</span>
           </div>
           <p className="text-gray-500 text-sm mb-6">Based on 1,847 verified reviews</p>
           
@@ -84,7 +84,7 @@ export default function Reviews() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="embla__slide flex-[0_0_90%] min-w-0 md:flex-auto bg-white p-6 rounded-2xl shadow-md relative flex flex-col"
               >
-                <Quote className="absolute top-6 right-6 w-12 h-12 text-[#F5A623] opacity-20 rotate-180" />
+                <Quote className="absolute top-6 right-6 w-12 h-12 text-[#E63946] opacity-20 rotate-180" />
                 
                 {/* Top: Stars */}
                 <div className="flex gap-1 mb-4">
@@ -117,7 +117,7 @@ export default function Reviews() {
                       {review.name} <span className="text-sm">{review.flag}</span>
                     </div>
                     <div className="text-sm text-gray-500 mb-0.5">{review.city}</div>
-                    <div className="text-xs text-[#F5A623] font-medium">Tour: {review.tour}</div>
+                    <div className="text-xs text-[#E63946] font-medium">Tour: {review.tour}</div>
                   </div>
                 </div>
               </motion.div>
@@ -129,7 +129,7 @@ export default function Reviews() {
         <div className="mt-12 text-center flex flex-col items-center">
           <Link 
             href="/reviews"
-            className="inline-flex items-center gap-2 text-[#F5A623] font-bold hover:text-orange-600 transition-colors duration-300 mb-6"
+            className="inline-flex items-center gap-2 text-[#E63946] font-bold hover:text-red-600 transition-colors duration-300 mb-6"
           >
             Read all 1,847 reviews <ArrowRight className="w-4 h-4" />
           </Link>

@@ -128,11 +128,11 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         <div className="container mx-auto px-4 md:px-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-gray-400">
-            <Link href="/" className="hover:text-[#F5A623] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#E63946] transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/tours" className="hover:text-[#F5A623] transition-colors">Tours</Link>
+            <Link href="/tours" className="hover:text-[#E63946] transition-colors">Tours</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href={`/tours?region=${tour.region}`} className="hover:text-[#F5A623] transition-colors">{tour.region}</Link>
+            <Link href={`/tours?region=${tour.region}`} className="hover:text-[#E63946] transition-colors">{tour.region}</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-white font-medium truncate">{tour.title}</span>
           </nav>
@@ -150,7 +150,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
           <div className="flex-grow lg:w-2/3">
             <div className="mb-6">
               {tour.badge && (
-                <span className="inline-block bg-[#F5A623] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+                <span className="inline-block bg-[#E63946] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
                   ■ {tour.badge}
                 </span>
               )}
@@ -163,15 +163,15 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                 </div>
                 <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
                 <div className="flex items-center gap-1.5">
-                  <Clock className="w-5 h-5 text-[#F5A623]" /> {tour.duration}
+                  <Clock className="w-5 h-5 text-[#E63946]" /> {tour.duration}
                 </div>
                 <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
                 <div className="flex items-center gap-1.5">
-                  <Users className="w-5 h-5 text-[#F5A623]" /> Max {maxGroupSize}
+                  <Users className="w-5 h-5 text-[#E63946]" /> Max {maxGroupSize}
                 </div>
                 <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="w-5 h-5 text-[#F5A623]" /> {tour.region}
+                  <MapPin className="w-5 h-5 text-[#E63946]" /> {tour.region}
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {highlightsList.map((highlight, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+                    <Check className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
                     <span className="text-gray-700">{highlight}</span>
                   </li>
                 ))}
@@ -246,7 +246,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                 </div>
               </div>
               <div className="flex items-start gap-3 text-gray-700">
-                <MapPin className="w-6 h-6 text-[#F5A623] shrink-0" />
+                <MapPin className="w-6 h-6 text-[#E63946] shrink-0" />
                 <p>{meetingPoint}</p>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         <div className="mt-20 border-t border-gray-200 pt-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Guest Reviews</h2>
-            <Link href="/reviews" className="text-[#F5A623] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
+            <Link href="/reviews" className="text-[#E63946] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -325,7 +325,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               </div>
             </div>
           </div>
-          <Link href="/reviews" className="text-[#F5A623] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
+          <Link href="/reviews" className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
         </div>
 
         {/* Related Tours */}
@@ -342,7 +342,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                     className="object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
                   {relatedTour.badge && (
-                    <div className="absolute top-3 left-3 bg-[#F5A623] text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    <div className="absolute top-3 left-3 bg-[#E63946] text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-md">
                       {relatedTour.badge}
                     </div>
                   )}
@@ -350,13 +350,13 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">
                     <div className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#F5A623]" /> {relatedTour.region}
+                      <MapPin className="w-3 h-3 text-[#E63946]" /> {relatedTour.region}
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#F5A623]" /> {relatedTour.duration}
+                      <Clock className="w-3 h-3 text-[#E63946]" /> {relatedTour.duration}
                     </div>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-[#F5A623] transition-colors">
+                  <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-[#E63946] transition-colors">
                     {relatedTour.title}
                   </h3>
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">

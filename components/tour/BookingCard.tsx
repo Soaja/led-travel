@@ -71,7 +71,7 @@ Total: €${totalPrice}`;
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-24 border border-gray-100">
       <div className="flex items-end gap-2 mb-2">
-        <span className="text-4xl font-bold text-[#F5A623]">€{price}</span>
+        <span className="text-4xl font-bold text-[#E63946]">€{price}</span>
         <span className="text-gray-500 text-sm mb-1.5">per person</span>
       </div>
       
@@ -108,7 +108,7 @@ Total: €${totalPrice}`;
                   type="date" 
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow cursor-pointer"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow cursor-pointer"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@ Total: €${totalPrice}`;
                   placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
                 />
               </div>
             </div>
@@ -162,7 +162,7 @@ Total: €${totalPrice}`;
                   placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ Total: €${totalPrice}`;
                   placeholder="+1 234 567 8900"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#E63946] focus:border-transparent outline-none text-gray-700 font-medium transition-shadow"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ Total: €${totalPrice}`;
           <button 
             onClick={handleBookNow} 
             disabled={isSubmitting}
-            className="w-full bg-[#F5A623] hover:bg-[#e0961f] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl mb-4 transition-colors text-lg shadow-lg shadow-[#F5A623]/20 flex items-center justify-center"
+            className="w-full bg-[#E63946] hover:bg-[#D62828] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl mb-4 transition-colors text-lg shadow-lg shadow-[#E63946]/20 flex items-center justify-center"
           >
             {isSubmitting ? 'Submitting...' : 'Book Now'}
           </button>
@@ -215,7 +215,7 @@ Total: €${totalPrice}`;
 
       <div className="flex flex-col gap-3 text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-100">
         <div className="flex items-center gap-3"><Check className="w-5 h-5 text-green-500 shrink-0" /> <span className="font-medium">Free cancellation</span> up to 24h</div>
-        <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#F5A623] shrink-0" /> <span className="font-medium">Instant confirmation</span></div>
+        <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#E63946] shrink-0" /> <span className="font-medium">Instant confirmation</span></div>
         <div className="flex items-center gap-3"><ShieldCheck className="w-5 h-5 text-blue-500 shrink-0" /> <span className="font-medium">Secure payment</span></div>
       </div>
     </div>

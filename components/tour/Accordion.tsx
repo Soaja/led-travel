@@ -15,13 +15,13 @@ export function ItineraryAccordion({ items }: { items: { time: string, location:
             className="w-full flex items-center justify-between p-4 md:p-5 text-left bg-white hover:bg-gray-50 transition-colors"
           >
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="w-16 md:w-20 text-sm md:text-base font-bold text-[#F5A623] shrink-0">{item.time}</div>
+              <div className="w-16 md:w-20 text-sm md:text-base font-bold text-[#E63946] shrink-0">{item.time}</div>
               <div className="font-bold text-gray-900 flex items-center gap-2 text-sm md:text-base">
                 <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
                 {item.location}
               </div>
             </div>
-            <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 shrink-0 ${openIndex === idx ? 'rotate-180 text-[#F5A623]' : ''}`} />
+            <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 shrink-0 ${openIndex === idx ? 'rotate-180 text-[#E63946]' : ''}`} />
           </button>
           <AnimatePresence>
             {openIndex === idx && (
@@ -56,7 +56,7 @@ export function FaqAccordion({ items }: { items: { question: string, answer: str
             className="w-full flex items-center justify-between p-4 md:p-5 text-left bg-white hover:bg-gray-50 transition-colors"
           >
             <div className="font-bold text-gray-900 pr-4 text-sm md:text-base">{item.question}</div>
-            <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 shrink-0 ${openIndex === idx ? 'rotate-180 text-[#F5A623]' : ''}`} />
+            <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 shrink-0 ${openIndex === idx ? 'rotate-180 text-[#E63946]' : ''}`} />
           </button>
           <AnimatePresence>
             {openIndex === idx && (
