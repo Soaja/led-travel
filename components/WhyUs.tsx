@@ -116,8 +116,8 @@ export default function WhyUs() {
             <div className="relative w-full mt-2">
               <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-lg">
                 <Image 
-                  src="https://picsum.photos/seed/turkey_landscape/800/1000" 
-                  alt="Beautiful landscape of Turkey" 
+                  src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=800&auto=format&fit=crop" 
+                  alt="Beautiful sunset landscape of Turkey" 
                   fill 
                   className="object-cover" 
                   referrerPolicy="no-referrer"

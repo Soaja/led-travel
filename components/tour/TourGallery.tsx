@@ -1,11 +1,35 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function TourGallery({ images }: { images: string[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrevious = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
+
+  const handleNext = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') handlePrevious();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handlePrevious, handleNext]);
 
   return (
     <div className="mb-8">
@@ -27,20 +51,45 @@ export default function TourGallery({ images }: { images: string[] }) {
 
       {/* Lightbox Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
           <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-white hover:text-[#E63946] z-50 transition-colors">
             <X className="w-8 h-8" />
           </button>
-          <div className="relative w-full max-w-5xl h-[80vh]">
+          
+          {/* Previous Button */}
+          {images.length > 1 && (
+            <button 
+              onClick={handlePrevious}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 p-2 md:p-3 rounded-full transition-all z-50"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
+            </button>
+          )}
+
+          <div className="relative w-full max-w-5xl h-[80vh]" onClick={(e) => e.stopPropagation()}>
             <Image src={images[currentIndex]} alt="Lightbox" fill className="object-contain" />
           </div>
+
+          {/* Next Button */}
+          {images.length > 1 && (
+            <button 
+              onClick={handleNext}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 p-2 md:p-3 rounded-full transition-all z-50"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
+            </button>
+          )}
+
           {/* Simple controls */}
-          <div className="absolute bottom-6 flex gap-4">
+          <div className="absolute bottom-6 flex gap-4" onClick={(e) => e.stopPropagation()}>
             {images.map((_, idx) => (
               <button 
                 key={idx} 
                 onClick={() => setCurrentIndex(idx)} 
                 className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex ? 'bg-[#E63946] scale-125' : 'bg-white/50 hover:bg-white'}`} 
+                aria-label={`Go to image ${idx + 1}`}
               />
             ))}
           </div>

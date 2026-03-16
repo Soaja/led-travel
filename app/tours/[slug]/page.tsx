@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ChevronRight, Star, Clock, Users, MapPin, Check, X as XIcon, Map as MapIcon } from 'lucide-react';
 import TourGallery from '@/components/tour/TourGallery';
-import { ItineraryAccordion, FaqAccordion } from '@/components/tour/Accordion';
+import { ItineraryAccordion } from '@/components/tour/Accordion';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
 
@@ -61,11 +61,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
     { time: tour.endTime || '05:00 PM', location: 'End of Tour', description: 'Tour concludes.' },
   ];
   const meetingPoint = `Central location in ${tour.region}`;
-  const faqs = [
-    { question: 'Is this a private tour?', answer: 'Yes, this is a private tour exclusively for your group.' },
-    { question: 'Can we customize the itinerary?', answer: 'Absolutely! Since it is a private tour, we can adjust the pace and focus based on your preferences.' },
-    { question: 'What should I bring?', answer: tour.whatToBring || 'Comfortable shoes, camera, and a smile!' },
-  ];
   
   let images = [tour.image];
   if (tour.galleryImages) {
@@ -198,15 +193,22 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
             </div>
 
             {/* Included / Not Included */}
-            <div className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">What&apos;s Included</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <ul className="flex flex-col gap-3">
+            <div className="mb-12 rounded-3xl overflow-hidden border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                {/* Included */}
+                <div className="p-8 md:p-10 bg-gradient-to-br from-emerald-50/80 via-white to-white relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-200/30 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3 relative z-10">
+                    <span className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-sm shadow-emerald-200">
+                      <Check className="w-5 h-5" />
+                    </span>
+                    What&apos;s Included
+                  </h3>
+                  <ul className="flex flex-col gap-4 relative z-10">
                     {includedItems.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                        <span className="text-gray-700">{item}</span>
+                      <li key={idx} className="flex items-start gap-4">
+                        <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                        <span className="text-gray-700 font-medium">{item}</span>
                       </li>
                     ))}
                     {includedItems.length === 0 && (
@@ -214,11 +216,20 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                     )}
                   </ul>
                 </div>
-                <div>
-                  <ul className="flex flex-col gap-3">
+
+                {/* Not Included */}
+                <div className="p-8 md:p-10 bg-gradient-to-br from-rose-50/60 via-white to-white border-t md:border-t-0 md:border-l border-gray-100 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-rose-200/30 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3 relative z-10">
+                    <span className="w-10 h-10 rounded-full bg-rose-400 flex items-center justify-center text-white shadow-sm shadow-rose-200">
+                      <XIcon className="w-5 h-5" />
+                    </span>
+                    Not Included
+                  </h3>
+                  <ul className="flex flex-col gap-4 relative z-10">
                     {notIncludedItems.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <XIcon className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                      <li key={idx} className="flex items-start gap-4 opacity-80">
+                        <XIcon className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
                         <span className="text-gray-500">{item}</span>
                       </li>
                     ))}
@@ -249,14 +260,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                 <MapPin className="w-6 h-6 text-[#E63946] shrink-0" />
                 <p>{meetingPoint}</p>
               </div>
-            </div>
-
-            <div className="border-t border-gray-200 my-8"></div>
-
-            {/* FAQs */}
-            <div className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-              <FaqAccordion items={faqs} />
             </div>
 
           </div>

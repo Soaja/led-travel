@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ArrowRight, Plane, Mail, Check } from 'lucide-react';
+import { ArrowRight, Mail, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export default function Hero() {
@@ -71,40 +71,34 @@ export default function Hero() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center text-center w-full max-w-6xl mt-12">
-        {/* Label */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="bg-[#E63946]/20 border border-[#E63946]/50 text-[#E63946] px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6 flex items-center gap-2 backdrop-blur-sm"
-        >
-          <Plane className="w-4 h-4" />
-          Guided Private Experiences
-        </motion.div>
         
         {/* Headline */}
-        <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 flex flex-wrap justify-center gap-x-4 gap-y-2 max-w-5xl leading-tight">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-12 max-w-4xl leading-[1.15] drop-shadow-xl">
           {headlineWords.map((word, i) => (
+            <span key={i} className="inline-block whitespace-pre">
+              <motion.span
+                custom={i}
+                initial="hidden"
+                animate="visible"
+                variants={wordVariants}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+              {" "}
+            </span>
+          ))}
+          <span className="inline-block whitespace-pre">
             <motion.span
-              key={i}
-              custom={i}
+              custom={headlineWords.length}
               initial="hidden"
               animate="visible"
               variants={wordVariants}
-              className="inline-block"
+              className="text-white italic inline-block"
             >
-              {word}
+              in Turkey
             </motion.span>
-          ))}
-          <motion.span
-            custom={headlineWords.length}
-            initial="hidden"
-            animate="visible"
-            variants={wordVariants}
-            className="text-white italic inline-block"
-          >
-            in Turkey
-          </motion.span>
+          </span>
         </h1>
         
         {/* CTAs */}

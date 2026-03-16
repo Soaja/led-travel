@@ -2,32 +2,35 @@
 
 import { motion } from 'motion/react';
 import Image from 'next/image';
-import { Linkedin, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const teamMembers = [
   {
     name: 'Kadir Kılgı',
     role: 'Owner & Founder',
+    email: 'kadir@ledtravel.com',
     image: 'https://picsum.photos/seed/kadir/600/800',
     description: 'Visionary leader with a passion for showcasing the authentic beauty of Turkey to the world.'
   },
   {
     name: 'Lara Gölel',
-    role: 'Affiliate Partner & Intermediary for International Relations and Group Organizations',
+    role: 'Affiliate partner & head of international relations',
+    email: 'lara@ledtravel.com',
     image: 'https://picsum.photos/seed/lara/600/800',
-    description: 'Expert in building global partnerships and orchestrating seamless experiences for large groups.'
+    description: 'Expert in building global partnerships and orchestrating seamless experiences for international clients.'
   },
   {
     name: 'Murat Kılgı',
-    role: 'Affiliate Partner & Head of Reservations',
+    role: 'Affiliate partner & head of local service organizations',
+    email: 'murat@ledtravel.com',
     image: 'https://picsum.photos/seed/murat/600/800',
-    description: 'Ensures every booking is handled with precision, guaranteeing a flawless journey from start to finish.'
+    description: 'Ensures every local service and organization is handled with precision for a flawless journey.'
   },
   {
     name: 'Seyit Esen',
-    role: 'Affiliate Partner & Collaborator',
+    role: 'Affiliate partner & collaborator for external services',
     image: 'https://picsum.photos/seed/seyit/600/800',
-    description: 'Dedicated to crafting unique itineraries and providing exceptional on-the-ground support.'
+    description: 'Dedicated to crafting unique itineraries and providing exceptional support through external services.'
   }
 ];
 
@@ -69,14 +72,13 @@ export default function Team() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A2E]/90 via-[#1A1A2E]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
                 
                 {/* Social Links on Hover */}
-                <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-20">
-                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#E63946] transition-colors">
-                    <Linkedin className="w-5 h-5" />
-                  </button>
-                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#E63946] transition-colors">
-                    <Mail className="w-5 h-5" />
-                  </button>
-                </div>
+                {member.email && (
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-20">
+                    <a href={`mailto:${member.email}`} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#E63946] transition-colors">
+                      <Mail className="w-5 h-5" />
+                    </a>
+                  </div>
+                )}
               </div>
               
               <div className="text-center px-2">

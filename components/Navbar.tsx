@@ -74,12 +74,12 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex flex-col justify-center group z-50">
           <div className="flex items-baseline">
-            <span className={`text-3xl md:text-4xl font-black tracking-tighter uppercase transition-colors duration-500 ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+            <span className={`text-4xl md:text-5xl font-black tracking-tighter uppercase transition-colors duration-500 ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
               LED
             </span>
-            <span className="text-[#E63946] text-3xl md:text-4xl font-black ml-0.5 group-hover:translate-x-1 transition-transform duration-500">.</span>
+            <span className="text-[#E63946] text-4xl md:text-5xl font-black ml-0.5 group-hover:translate-x-1 transition-transform duration-500">.</span>
           </div>
-          <span className={`text-[0.65rem] md:text-xs font-bold tracking-[0.35em] uppercase mt-[-4px] md:mt-[-6px] pl-0.5 transition-colors duration-500 ${isScrolled ? 'text-gray-500' : 'text-white/70'} group-hover:text-[#E63946]`}>
+          <span className={`text-[0.75rem] md:text-sm font-bold tracking-[0.35em] uppercase mt-[-6px] md:mt-[-8px] pl-0.5 transition-colors duration-500 ${isScrolled ? 'text-gray-500' : 'text-white/70'} group-hover:text-[#E63946]`}>
             Travel
           </span>
         </Link>
