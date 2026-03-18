@@ -60,12 +60,12 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0 bg-[#1A1A2E]">
         <Image
-          src="/images/hero-istanbul.jpg"
+          src="https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=1920&auto=format&fit=crop"
           alt="Istanbul skyline"
           fill
-          unoptimized
           className="object-cover"
           priority
+          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/70 via-transparent to-[#1A1A2E]/50" />
       </div>
