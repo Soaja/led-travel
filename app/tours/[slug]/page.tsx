@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ChevronRight, Star, Clock, Users, MapPin, Check, X as XIcon, Map as MapIcon } from 'lucide-react';
 import TourGallery from '@/components/tour/TourGallery';
-import { ItineraryAccordion } from '@/components/tour/Accordion';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
 
@@ -55,11 +54,9 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
   const description = tour.shortDescription || `Experience the best of ${tour.region} with our ${tour.title}. This premium tour is designed to give you an unforgettable experience.`;
   const maxGroupSize = 8;
   
-  const itinerary = [
-    { time: tour.startTime || '09:00 AM', location: 'Meeting Point', description: 'Meet your guide.' },
-    { time: 'Mid-day', location: 'Main Attractions', description: `Explore the highlights of ${tour.title}.` },
-    { time: tour.endTime || '05:00 PM', location: 'End of Tour', description: 'Tour concludes.' },
-  ];
+  const itineraryItems = tour.itinerary
+    ? tour.itinerary.split('|').map(i => i.trim()).filter(Boolean)
+    : [];
   const meetingPoint = `Central location in ${tour.region}`;
   
   let images = [tour.image];
@@ -241,10 +238,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
             <div className="border-t border-gray-200 my-8"></div>
 
             {/* Itinerary */}
-            <div className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Itinerary</h2>
-              <ItineraryAccordion items={itinerary} />
-            </div>
+            {itineraryItems.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Itinerary</h2>
+                <div className="border border-gray-100 rounded-2xl overflow-hidden">
+                  {itineraryItems.map((item, idx) => (
+                    <div key={idx}>
+                      <div className="px-6 py-4 text-gray-700 leading-relaxed">
+                        {item}
+                      </div>
+                      {idx < itineraryItems.length - 1 && (
+                        <hr className="border-gray-100" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
 
           </div>
