@@ -106,7 +106,8 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                 <motion.div
                   key={tour.id}
                   variants={cardVariants}
-                  className="embla__slide flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-auto min-w-0 bg-[#23233D] rounded-2xl overflow-hidden shadow-2xl hover:-translate-y-2 transition-transform duration-300 flex flex-col group border border-white/5"
+                  onClick={() => window.location.href = `/tours/${tour.slug}`}
+                  className="embla__slide flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-auto min-w-0 bg-[#23233D] rounded-2xl overflow-hidden shadow-2xl hover:-translate-y-2 transition-transform duration-300 flex flex-col group border border-white/5 cursor-pointer"
                 >
                   {/* Image Container */}
                   <div className="relative h-60 w-full overflow-hidden">
