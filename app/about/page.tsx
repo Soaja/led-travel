@@ -65,8 +65,8 @@ export default function AboutPage() {
               className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-black/50"
             >
               <Image
-                src="https://image.hurimg.com/i/hurriyet/90/1110x740/55ea5525f018fbb8f8790adc.jpg"
-                alt="Hot air balloons in Cappadocia"
+                src="/images/aboutus1.webp"
+                alt="Crafting unforgettable Turkish journeys"
                 fill
                 className="object-cover"
                 priority
@@ -108,8 +108,8 @@ export default function AboutPage() {
             className="relative h-[600px] rounded-3xl overflow-hidden"
           >
             <Image
-              src="https://thumbs.dreamstime.com/b/bright-colorful-old-houses-cozy-streets-jewish-district-istanbul-turkey-209503459.jpg"
-              alt="Istanbul Street"
+              src="/images/aboutus2.webp"
+              alt="More than just a tour agency"
               fill
               className="object-cover"
             />

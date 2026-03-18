@@ -110,15 +110,11 @@ const locations = [
   'All',
   'Istanbul',
   'Cappadocia',
-  'Ephesus',
   'Pamukkale',
+  'Ephesus',
   'Bodrum',
   'Antalya',
-  'Izmir',
   'Troy',
-  'Pergamon',
-  'Marmaris',
-  'Fethiye',
   'Eastern Turkey',
 ];
 
@@ -131,9 +127,12 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     setActiveFilter(regionParam || 'All');
   }, [regionParam]);
 
-  const filteredTours = activeFilter === 'All'
+  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Ephesus', 'Bodrum', 'Antalya', 'Troy', 'Eastern Turkey']);
+
+  const filteredTours = (activeFilter === 'All'
     ? initialTours
-    : initialTours.filter(tour => tour.region === activeFilter);
+    : initialTours.filter(tour => tour.region === activeFilter)
+  ).filter(tour => allowedRegions.has(tour.region));
 
   return (
     <div className="container mx-auto px-4 md:px-6">

@@ -9,27 +9,27 @@ const teamMembers = [
     name: 'Kadir Kılgı',
     role: 'Owner & Founder',
     email: 'kadir@ledtravel.net',
-    image: 'https://istanbultickets.tours/wp-content/uploads/2025/02/blue-mosque.jpg',
+    image: '/images/aboutus3.webp',
     description: 'Visionary leader with a passion for showcasing the authentic beauty of Turkey to the world.'
   },
   {
     name: 'Lara Gölel',
     role: 'Affiliate partner & head of international relations',
     email: 'lara@ledtravel.net',
-    image: 'https://staranzoslow.it/wp-content/uploads/2020/12/trieste-castello-miramare-Gianpiero-Decorti00009.jpg',
+    image: '/images/aboutus5.jpg',
     description: 'Expert in building global partnerships and orchestrating seamless experiences for international clients.'
   },
   {
     name: 'Murat Kılgı',
     role: 'Affiliate partner & head of local service organizations',
     email: 'murat@ledtravel.net',
-    image: 'https://canakkale.com.tr/assets/upload/fotograflar/gelibolu_hamza_koyu-2_1.jpg',
+    image: '/images/aboutus4.jpg',
     description: 'Ensures every local service and organization is handled with precision for a flawless journey.'
   },
   {
     name: 'Seyit Esen',
     role: 'Affiliate partner & collaborator for external services',
-    image: 'https://picsum.photos/seed/seyit/600/800',
+    image: '/images/aboutus6.jpg',
     description: 'Dedicated to crafting unique itineraries and providing exceptional support through external services.'
   }
 ];
@@ -66,7 +66,6 @@ export default function Team() {
                   alt={member.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  referrerPolicy="no-referrer"
                 />
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A2E]/90 via-[#1A1A2E]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
