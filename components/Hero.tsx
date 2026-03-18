@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { ArrowRight, Mail, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import HeroBackground from '@/components/HeroBackground';
 
 export default function Hero() {
   const [isEmailOpen, setIsEmailOpen] = useState(false);
@@ -57,16 +57,9 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 bg-[#1A1A2E]">
-        <Image
-          src="https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=1920&auto=format&fit=crop"
-          alt="Istanbul skyline"
-          fill
-          className="object-cover"
-          priority
-          referrerPolicy="no-referrer"
-        />
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <HeroBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/70 via-transparent to-[#1A1A2E]/50" />
       </div>
 

@@ -8,22 +8,22 @@ const teamMembers = [
   {
     name: 'Kadir Kılgı',
     role: 'Owner & Founder',
-    email: 'kadir@ledtravel.com',
-    image: 'https://picsum.photos/seed/kadir/600/800',
+    email: 'kadir@ledtravel.net',
+    image: 'https://istanbultickets.tours/wp-content/uploads/2025/02/blue-mosque.jpg',
     description: 'Visionary leader with a passion for showcasing the authentic beauty of Turkey to the world.'
   },
   {
     name: 'Lara Gölel',
     role: 'Affiliate partner & head of international relations',
-    email: 'lara@ledtravel.com',
-    image: 'https://picsum.photos/seed/lara/600/800',
+    email: 'lara@ledtravel.net',
+    image: 'https://staranzoslow.it/wp-content/uploads/2020/12/trieste-castello-miramare-Gianpiero-Decorti00009.jpg',
     description: 'Expert in building global partnerships and orchestrating seamless experiences for international clients.'
   },
   {
     name: 'Murat Kılgı',
     role: 'Affiliate partner & head of local service organizations',
-    email: 'murat@ledtravel.com',
-    image: 'https://picsum.photos/seed/murat/600/800',
+    email: 'murat@ledtravel.net',
+    image: 'https://canakkale.com.tr/assets/upload/fotograflar/gelibolu_hamza_koyu-2_1.jpg',
     description: 'Ensures every local service and organization is handled with precision for a flawless journey.'
   },
   {

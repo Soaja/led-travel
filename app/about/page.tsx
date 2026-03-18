@@ -64,10 +64,10 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-black/50"
             >
-              <Image 
-                src="https://picsum.photos/seed/turkey_about/1200/1600" 
-                alt="Hot air balloons in Cappadocia" 
-                fill 
+              <Image
+                src="https://image.hurimg.com/i/hurriyet/90/1110x740/55ea5525f018fbb8f8790adc.jpg"
+                alt="Hot air balloons in Cappadocia"
+                fill
                 className="object-cover"
                 priority
               />
@@ -107,10 +107,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="relative h-[600px] rounded-3xl overflow-hidden"
           >
-            <Image 
-              src="https://picsum.photos/seed/istanbul_street/800/1200" 
-              alt="Istanbul Street" 
-              fill 
+            <Image
+              src="https://thumbs.dreamstime.com/b/bright-colorful-old-houses-cozy-streets-jewish-district-istanbul-turkey-209503459.jpg"
+              alt="Istanbul Street"
+              fill
               className="object-cover"
             />
             <div className="absolute inset-0 border-4 border-white/20 rounded-3xl m-4 z-10 pointer-events-none"></div>

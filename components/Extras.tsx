@@ -58,7 +58,7 @@ export default function Extras() {
           >
             <div className="relative h-64 overflow-hidden">
               <Image 
-                src="https://picsum.photos/seed/hamam/800/600" 
+                src="https://media.istockphoto.com/id/1324585125/photo/foam-peeling-in-turkish-spa-hammam-attractive-model-is-relaxing-in-spa-masseur-is-making.jpg" 
                 alt="Traditional Turkish Hammam" 
                 fill 
                 className="object-cover group-hover:scale-105 transition-transform duration-700"

@@ -185,7 +185,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {highlightsList.map((highlight, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
+                    <span className="text-gray-900 font-bold shrink-0 mt-0.5">•</span>
                     <span className="text-gray-700">{highlight}</span>
                   </li>
                 ))}

@@ -27,13 +27,25 @@ export default async function Home() {
 
   const regionMap = new Map();
   
+  const destinationImages: Record<string, string> = {
+    Istanbul:         'https://media.cntraveller.com/photos/68ff3db8e7084c26e7744dee/1:1/w_2160,h_2160,c_limit/1480863367',
+    Cappadocia:       'https://static.independent.co.uk/2025/07/30/13/15/iStock-1339814820.jpeg',
+    Pamukkale:        'https://dynamic-media.tacdn.com/media/photo-o/2f/b9/be/51/caption.jpg?w=2400&h=-1&s=1',
+    Ephesus:          'https://ids.bmgroup.com.tr/uploads/images/2020/06/16/41171.jpg',
+    Izmir:            'https://ids.bmgroup.com.tr/uploads/images/2020/06/16/41171.jpg',
+    Bodrum:           'https://www.spotblue.com/app/uploads/2018/10/Bodrum-in-Turkey.jpg',
+    Antalya:          'https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt21155ac1ca63f676/687f9d115903b3a04b04e07c/BCC-2024-EXPLORER-ANTALYA-FREE_THINGS_TO_DO-HEADER-MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart',
+    Troy:             'https://www.tripass.com.tr/resources/assets/images/attractions/Canakkale_Troy_Ancient_City_Ticket/1_670x350.jpg',
+    'Eastern Turkey': 'https://blog.obilet.com/wp-content/uploads/2024/05/ana-gorsel-min-2-scaled.jpeg',
+  };
+
   desiredDestinations.forEach(dest => {
     regionMap.set(dest.toLowerCase(), {
       name: dest,
       tours: 0,
       startingFrom: Infinity,
       slug: dest.toLowerCase().replace(/\s+/g, '-'),
-      image: `https://picsum.photos/seed/${dest.toLowerCase().replace(/\s+/g, '-')}/800/600`
+      image: destinationImages[dest] ?? `https://picsum.photos/seed/${dest.toLowerCase().replace(/\s+/g, '-')}/800/600`
     });
   });
 

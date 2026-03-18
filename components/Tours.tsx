@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { Star, Clock, Users, Globe, ArrowRight, Tag, Flame } from 'lucide-react';
+import { Star, Clock, Users, MapPin, ArrowRight, Flame } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 
 export interface Tour {
@@ -102,9 +102,6 @@ export default function Tours({ tours }: { tours: Tour[] }) {
             className="embla__container flex lg:grid lg:grid-cols-4 gap-6 cursor-grab active:cursor-grabbing lg:cursor-auto"
           >
             {tours.map((tour) => {
-              // Calculate fake original price (20% more)
-              const originalPrice = tour.price ? Math.round(tour.price * 1.25) : null;
-              
               return (
                 <motion.div
                   key={tour.id}
@@ -121,14 +118,8 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                       referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#23233D] via-transparent to-transparent opacity-80"></div>
-                    
-                    {/* Discount Badge */}
-                    <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1 z-10">
-                      <Tag className="w-3 h-3" />
-                      SAVE 20%
-                    </div>
 
-                    {/* Original Badge (if any) */}
+                    {/* Badge (if any) */}
                     {tour.badge && (
                       <div className="absolute top-4 left-4 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
                         {tour.badge}
@@ -166,29 +157,18 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                       </div>
                     </div>
 
-                    {/* Price Row */}
-                    <div className="mt-auto mb-6 flex items-end justify-between">
-                      <div className="flex flex-col">
-                        <span className="text-xs text-gray-400 mb-1">Special Price</span>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-[#E63946]">
-                            €{tour.price ? tour.price.toFixed(2) : 'On request'}
-                          </span>
-                          {originalPrice && (
-                            <span className="text-sm text-gray-500 line-through decoration-red-500/50">
-                              €{originalPrice.toFixed(2)}
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                    {/* City Row */}
+                    <div className="mt-auto mb-6 flex items-center gap-1.5 text-gray-300">
+                      <MapPin className="w-4 h-4 text-[#E63946] shrink-0" />
+                      <span className="text-sm font-medium">{tour.region}</span>
                     </div>
 
                     {/* CTA Button */}
-                    <Link 
+                    <Link
                       href={`/tours/${tour.slug}`}
                       className="w-full bg-white/10 hover:bg-[#E63946] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10 hover:border-transparent group/btn"
                     >
-                      Claim Offer 
+                      Explore
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>

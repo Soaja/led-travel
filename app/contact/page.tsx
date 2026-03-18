@@ -55,6 +55,7 @@ export default function ContactPage() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Call Us</h3>
             <a href="tel:+905333811447" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">+90 533 381 14 47</a>
+            <a href="tel:+905336693721" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">+90 533 669 37 21</a>
             <p className="text-sm text-gray-500 mt-2">Mon-Sun, 9am - 8pm</p>
           </motion.div>
 
@@ -68,7 +69,9 @@ export default function ContactPage() {
               <Mail className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Email Us</h3>
-            <a href="mailto:lara@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block">lara@ledtravel.net</a>
+            <a href="mailto:kadir@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">kadir@ledtravel.net</a>
+            <a href="mailto:lara@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">lara@ledtravel.net</a>
+            <a href="mailto:murat@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">murat@ledtravel.net</a>
             <p className="text-sm text-gray-500 mt-2">We reply within 24 hours</p>
           </motion.div>
         </div>
