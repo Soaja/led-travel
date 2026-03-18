@@ -92,12 +92,9 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 {/* Bottom Content */}
                 <div className="absolute bottom-0 left-0 w-full p-6 flex items-end justify-between">
                   <div>
-                    <h3 className="text-white text-2xl font-bold mb-1">
+                    <h3 className="text-white text-2xl font-bold">
                       {dest.name}
                     </h3>
-                    <p className="text-[#E63946] text-lg font-semibold">
-                      {dest.startingFrom > 0 ? `From €${dest.startingFrom.toFixed(2)}` : 'On request'}
-                    </p>
                   </div>
                   
                   {/* Hover Button */}
