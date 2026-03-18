@@ -114,8 +114,8 @@ export default function Tours({ tours }: { tours: Tour[] }) {
                       src={tour.image || `https://picsum.photos/seed/${tour.slug}/800/600`}
                       alt={tour.title}
                       fill
+                      unoptimized
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#23233D] via-transparent to-transparent opacity-80"></div>
 
