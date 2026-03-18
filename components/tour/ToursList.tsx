@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -120,6 +120,7 @@ const locations = [
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const regionParam = searchParams.get('region');
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
 
@@ -172,7 +173,8 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-100 group flex flex-col"
+                onClick={() => router.push(`/tours/${tour.slug}`)}
+                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-100 group flex flex-col cursor-pointer"
               >
                 {/* Image carousel */}
                 <div className="relative">
