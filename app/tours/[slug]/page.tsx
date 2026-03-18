@@ -334,9 +334,10 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               <Link href={`/tours/${relatedTour.slug}`} key={relatedTour.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-100 group cursor-pointer flex flex-col">
                 <div className="relative h-48 w-full overflow-hidden">
                   <Image 
-                    src={relatedTour.image} 
-                    alt={relatedTour.title} 
-                    fill 
+                    src={relatedTour.image}
+                    alt={relatedTour.title}
+                    fill
+                    unoptimized
                     className="object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
                   {relatedTour.badge && (

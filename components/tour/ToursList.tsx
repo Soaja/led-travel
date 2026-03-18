@@ -59,6 +59,7 @@ function CardImageCarousel({ images, alt }: { images: string[]; alt: string }) {
             src={images[index]}
             alt={alt}
             fill
+            unoptimized
             className="object-cover"
           />
         </motion.div>
