@@ -78,9 +78,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
                   src={dest.image}
                   alt={dest.name}
                   fill
-                  unoptimized
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
                 />
                 
                 {/* Gradient Overlay */}

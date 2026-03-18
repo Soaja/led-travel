@@ -8,14 +8,14 @@ import Newsletter from '@/components/Newsletter';
 import { getToursFromSheet } from '@/lib/tours';
 
 const STATIC_DESTINATIONS = [
-  { name: 'Istanbul',       slug: 'istanbul',        image: 'https://media.cntraveller.com/photos/68ff3db8e7084c26e7744dee/1:1/w_2160,h_2160,c_limit/1480863367' },
-  { name: 'Cappadocia',     slug: 'cappadocia',      image: 'https://static.independent.co.uk/2025/07/30/13/15/iStock-1339814820.jpeg' },
-  { name: 'Pamukkale',      slug: 'pamukkale',       image: 'https://dynamic-media.tadaq.com/media/photo-o/2f/b9/be/51/caption.jpg?w=2400&h=-1&s=1' },
-  { name: 'Ephesus',        slug: 'ephesus',         image: 'https://idsb.tmgrup.com.tr/ly/uploads/images/2020/06/16/41171.jpg' },
-  { name: 'Bodrum',         slug: 'bodrum',          image: 'https://www.spotblue.com/app/uploads/2018/10/Bodrum-in-Turkey.jpg' },
-  { name: 'Antalya',        slug: 'antalya',         image: 'https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt21155ac1ca63f676/687f9d115903b3a04b04e07c/BCC-2024-EXPLORER-ANTALYA-FREE_THINGS_TO_DO-HEADER-MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart' },
-  { name: 'Troy',           slug: 'troy',            image: 'https://www.tripass.com.tr/resources/assets/images/attractions/Canakkale_Troy_Ancient_City_Ticket/1_670x350.jpg' },
-  { name: 'Eastern Turkey', slug: 'eastern-turkey',  image: 'https://blog.obilet.com/wp-content/uploads/2024/05/ana-gorsel-min-2-scaled.jpeg' },
+  { name: 'Istanbul',       slug: 'istanbul',       image: '/images/1.webp'  },
+  { name: 'Cappadocia',     slug: 'cappadocia',     image: '/images/2.avif'  },
+  { name: 'Pamukkale',      slug: 'pamukkale',      image: '/images/3.jpg'   },
+  { name: 'Ephesus',        slug: 'ephesus',        image: '/images/4.jpg'   },
+  { name: 'Bodrum',         slug: 'bodrum',         image: '/images/5.jpg'   },
+  { name: 'Antalya',        slug: 'antalya',        image: '/images/6.webp'  },
+  { name: 'Troy',           slug: 'troy',           image: '/images/7.jpg'   },
+  { name: 'Eastern Turkey', slug: 'eastern-turkey', image: '/images/8.jpeg'  },
 ];
 
 export default async function Home() {
