@@ -246,21 +246,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               <ItineraryAccordion items={itinerary} />
             </div>
 
-            {/* Meeting Point */}
-            <div className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Meeting Point</h2>
-              <div className="bg-gray-100 rounded-2xl h-64 w-full mb-4 relative overflow-hidden flex items-center justify-center border border-gray-200">
-                {/* Placeholder for Map */}
-                <MapIcon className="w-16 h-16 text-gray-300" />
-                <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                  <span className="bg-white px-4 py-2 rounded-lg shadow-md font-medium text-gray-700 text-sm">Interactive Map</span>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 text-gray-700">
-                <MapPin className="w-6 h-6 text-[#E63946] shrink-0" />
-                <p>{meetingPoint}</p>
-              </div>
-            </div>
 
           </div>
 
