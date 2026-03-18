@@ -261,7 +261,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
 
           {/* Right Column - Booking Card */}
           <div className="lg:w-1/3 relative">
-            <BookingCard price={tour.price || 0} rating={tour.rating} reviewsCount={tour.reviews} title={tour.title} />
+            <BookingCard price={tour.price} rating={tour.rating} reviewsCount={tour.reviews} title={tour.title} />
           </div>
 
         </div>

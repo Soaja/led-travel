@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Star, Calendar, Check, ShieldCheck, Zap, MessageCircle, User, Mail, Phone } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-export default function BookingCard({ price, rating, reviewsCount, title }: { price: number, rating: number, reviewsCount: number, title: string }) {
+export default function BookingCard({ price, rating, reviewsCount, title }: { price: number | null, rating: number, reviewsCount: number, title: string }) {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [date, setDate] = useState('');
@@ -14,7 +14,7 @@ export default function BookingCard({ price, rating, reviewsCount, title }: { pr
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const totalPrice = (adults * price) + (children * (price * 0.8)); // children 20% off
+  const totalPrice = price ? (adults * price) + (children * (price * 0.8)) : null;
 
   const handleBookNow = async () => {
     if (!date || !name || !email || !phone) {
@@ -64,15 +64,21 @@ Tour: ${title}
 Date: ${date || 'Not selected'}
 Adults: ${adults}
 Children: ${children}
-Total: €${totalPrice}`;
+Total: ${totalPrice ? `€${totalPrice}` : 'On request'}`;
     window.open(`https://wa.me/905333811447?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-24 border border-gray-100">
       <div className="flex items-end gap-2 mb-2">
-        <span className="text-4xl font-bold text-[#E63946]">€{price}</span>
-        <span className="text-gray-500 text-sm mb-1.5">per person</span>
+        {price ? (
+          <>
+            <span className="text-4xl font-bold text-[#E63946]">€{price}</span>
+            <span className="text-gray-500 text-sm mb-1.5">per person</span>
+          </>
+        ) : (
+          <span className="text-2xl font-bold text-[#E63946]">On request</span>
+        )}
       </div>
       
       <div className="flex items-center gap-2 mb-6 pb-6 border-b border-gray-100">
@@ -190,7 +196,9 @@ Total: €${totalPrice}`;
 
           <div className="flex items-center justify-between mb-6 pt-4 border-t border-gray-100">
             <span className="font-bold text-gray-900">Total Price</span>
-            <span className="text-2xl font-bold text-gray-900">€{totalPrice}</span>
+            <span className="text-2xl font-bold text-gray-900">
+              {totalPrice ? `€${totalPrice}` : 'On request'}
+            </span>
           </div>
 
           <button 
