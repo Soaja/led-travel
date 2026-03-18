@@ -63,6 +63,7 @@ export default function Hero() {
           src="/images/hero-istanbul.jpg"
           alt="Istanbul skyline"
           fill
+          unoptimized
           className="object-cover"
           priority
         />
