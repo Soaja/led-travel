@@ -49,7 +49,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
                 <span className="sr-only">Instagram</span>
               </a>
-              <a href="#" className="text-white hover:text-[#E63946] transition-colors duration-300">
+              <a href="https://www.facebook.com/ledtravel.turkey/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#E63946] transition-colors duration-300">
                 <Facebook className="w-5 h-5" />
                 <span className="sr-only">Facebook</span>
               </a>
