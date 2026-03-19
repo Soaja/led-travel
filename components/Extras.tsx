@@ -73,9 +73,9 @@ export default function Extras() {
               <p className="text-gray-600 mb-6 flex-grow">
                 Experience ultimate relaxation and cleansing in a historic, authentic Turkish bath. A centuries-old tradition for body and soul rejuvenation.
               </p>
-              <button className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+              <a href="https://wa.me/905333811447" target="_blank" rel="noopener noreferrer" className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
                 Learn More <span className="text-xl">→</span>
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -104,9 +104,9 @@ export default function Extras() {
               <p className="text-gray-600 mb-6 flex-grow">
                 World-class medical tourism in Turkey. We arrange top-tier hair transplants, dental care, and aesthetic procedures with trusted professionals.
               </p>
-              <button className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+              <a href="https://wa.me/905333811447" target="_blank" rel="noopener noreferrer" className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
                 Learn More <span className="text-xl">→</span>
-              </button>
+              </a>
             </div>
           </motion.div>
 

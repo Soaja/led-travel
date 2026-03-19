@@ -33,11 +33,7 @@ export default function Navbar() {
     'Pamukkale',
     'Bodrum',
     'Antalya',
-    'Izmir',
     'Troy',
-    'Pergamon',
-    'Marmaris',
-    'Fethiye',
     'Eastern Turkey'
   ];
 
