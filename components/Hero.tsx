@@ -32,6 +32,7 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const heroInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -48,8 +49,11 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
     if (!q) return [];
     return initialTours
       .filter(t =>
-        t.searchKeywords?.some(kw => kw.includes(q)) ||
-        t.title.toLowerCase().includes(q)
+        t.title.toLowerCase().includes(q) ||
+        t.region.toLowerCase().includes(q) ||
+        (t.shortDescription ? t.shortDescription.toLowerCase().includes(q) : false) ||
+        (t.highlights ? t.highlights.toLowerCase().includes(q) : false) ||
+        t.searchKeywords?.some(kw => kw.includes(q))
       )
       .slice(0, 6);
   }, [initialTours, query]);
@@ -153,10 +157,19 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
           <div className="relative flex items-center">
             <Search className="absolute left-5 w-5 h-5 text-gray-400 pointer-events-none z-10" />
             <input
+              ref={heroInputRef}
               type="text"
               value={query}
               onChange={e => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && query.trim()) {
+                  setIsFocused(false);
+                  heroInputRef.current?.blur();
+                  router.push(`/tours`);
+                }
+                if (e.key === 'Escape') { setQuery(''); setIsFocused(false); }
+              }}
               placeholder="Search tours… e.g. Istanbul, Bursa, Cappadocia"
               className="w-full pl-14 pr-12 py-[1.1rem] rounded-2xl bg-white text-gray-800 text-base shadow-2xl placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E63946]/35 transition-all font-medium"
             />

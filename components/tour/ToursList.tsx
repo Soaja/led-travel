@@ -119,14 +119,29 @@ const locations = [
   'Other Tours',
 ];
 
+const ALLOWED_REGIONS = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tours']);
+
+function matchesTour(tour: Tour, q: string): boolean {
+  return (
+    tour.title.toLowerCase().includes(q) ||
+    tour.region.toLowerCase().includes(q) ||
+    (tour.shortDescription ? tour.shortDescription.toLowerCase().includes(q) : false) ||
+    (tour.includes ? tour.includes.toLowerCase().includes(q) : false) ||
+    (tour.highlights ? tour.highlights.toLowerCase().includes(q) : false) ||
+    tour.searchKeywords.some(kw => kw.includes(q))
+  );
+}
+
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const regionParam = searchParams.get('region');
+  const qParam = searchParams.get('q');
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(qParam || '');
   const [isFocused, setIsFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setActiveFilter(regionParam || 'All');
@@ -143,42 +158,41 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tours']);
-
   // Results shown in the dropdown while typing
   const dropdownResults = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
     return initialTours
-      .filter(tour =>
-        allowedRegions.has(tour.region) && (
-          tour.title.toLowerCase().includes(q) ||
-          tour.region.toLowerCase().includes(q) ||
-          (tour.shortDescription && tour.shortDescription.toLowerCase().includes(q)) ||
-          (tour.includes && tour.includes.toLowerCase().includes(q)) ||
-          (tour.highlights && tour.highlights.toLowerCase().includes(q)) ||
-          tour.searchKeywords.some(kw => kw.includes(q))
-        )
-      )
+      .filter(tour => ALLOWED_REGIONS.has(tour.region) && matchesTour(tour, q))
       .slice(0, 7);
   }, [initialTours, query]);
 
   // Tours shown in the main grid
   const filteredTours = useMemo(() => {
-    const base = initialTours.filter(tour => allowedRegions.has(tour.region));
+    const base = initialTours.filter(tour => ALLOWED_REGIONS.has(tour.region));
     const q = query.trim().toLowerCase();
     if (q) {
-      return base.filter(tour =>
-        tour.title.toLowerCase().includes(q) ||
-        tour.region.toLowerCase().includes(q) ||
-        (tour.shortDescription && tour.shortDescription.toLowerCase().includes(q)) ||
-        (tour.includes && tour.includes.toLowerCase().includes(q)) ||
-        (tour.highlights && tour.highlights.toLowerCase().includes(q)) ||
-        tour.searchKeywords.some(kw => kw.includes(q))
-      );
+      return base.filter(tour => matchesTour(tour, q));
     }
     return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
   }, [initialTours, query, activeFilter]);
+
+  const handleQueryChange = (val: string) => {
+    setQuery(val);
+    if (val.trim()) setActiveFilter('All');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsFocused(false);
+      inputRef.current?.blur();
+    }
+    if (e.key === 'Escape') {
+      setQuery('');
+      setIsFocused(false);
+      inputRef.current?.blur();
+    }
+  };
 
   const showDropdown = isFocused;
   const destinations = locations.filter(l => l !== 'All');
@@ -190,16 +204,18 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
         <div className="relative flex items-center">
           <Search className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" />
           <input
+            ref={inputRef}
             type="text"
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => handleQueryChange(e.target.value)}
             onFocus={() => setIsFocused(true)}
+            onKeyDown={handleKeyDown}
             placeholder="Search tours or destinations… e.g. Bursa, Istanbul, Cappadocia"
             className="w-full pl-12 pr-10 py-4 rounded-2xl border border-gray-200 bg-white text-gray-800 text-sm shadow-md placeholder:text-gray-400 focus:outline-none focus:border-[#E63946] focus:ring-2 focus:ring-[#E63946]/15 transition"
           />
           {query && (
             <button
-              onClick={() => setQuery('')}
+              onMouseDown={() => { setQuery(''); setActiveFilter('All'); inputRef.current?.focus(); }}
               className="absolute right-4 p-1 text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Clear search"
             >
