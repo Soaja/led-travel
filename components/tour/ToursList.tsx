@@ -321,7 +321,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                   <CardImageCarousel images={images} alt={tour.title} />
 
                   {tour.badge && (
-                    <div className="absolute top-4 left-4 z-10 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md pointer-events-none">
+                    <div className="absolute top-4 left-4 z-10 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md pointer-events-none ring-2 ring-white ring-offset-1 ring-offset-[#E63946]">
                       {tour.badge}
                     </div>
                   )}
