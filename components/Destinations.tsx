@@ -90,16 +90,18 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 </div>
                 
                 {/* Bottom Content */}
-                <div className="absolute bottom-0 left-0 w-full p-4 flex items-end justify-between">
+                <div className="absolute bottom-0 left-0 w-full p-5 flex items-end justify-between">
                   {/* City name badge */}
-                  <h3 className="inline-flex items-center gap-2.5 bg-white text-gray-900 text-lg font-bold px-4 py-2.5 rounded-2xl shadow-xl tracking-tight border-2 border-[#E63946]">
-                    <span className="w-2 h-2 rounded-full bg-[#E63946] shrink-0" />
+                  <h3 className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-sm text-gray-900 font-black px-5 py-3 rounded-2xl shadow-2xl tracking-tight border-l-4 border-[#E63946] group-hover:scale-105 transition-transform duration-300" style={{ fontSize: '1.05rem', letterSpacing: '-0.01em' }}>
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#E63946] shrink-0">
+                      <MapPin className="w-3.5 h-3.5 text-white" />
+                    </span>
                     {dest.name}
                   </h3>
 
                   {/* Hover Button */}
                   <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button className="bg-white text-gray-900 hover:bg-[#E63946] hover:text-white px-4 py-2 rounded-xl font-semibold flex items-center gap-1.5 text-sm shadow-xl transition-colors duration-200">
+                    <button className="bg-[#E63946] text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 text-sm shadow-xl hover:bg-[#D62828] transition-colors duration-200">
                       Explore <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
