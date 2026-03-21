@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 
 export type Destination = {
   name: string;
@@ -90,13 +90,13 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 </div>
                 
                 {/* Bottom Content */}
-                <div className="absolute bottom-0 left-0 w-full p-6 flex items-end justify-between">
-                  <div>
-                    <h3 className="text-white text-2xl font-bold">
-                      {dest.name}
-                    </h3>
-                  </div>
-                  
+                <div className="absolute bottom-0 left-0 w-full p-4 flex items-end justify-between">
+                  {/* City name badge */}
+                  <h3 className="inline-flex items-center gap-1.5 bg-black/50 backdrop-blur-md border border-white/20 text-white text-sm font-semibold px-3 py-1.5 rounded-lg shadow-lg tracking-wide">
+                    <MapPin className="w-3.5 h-3.5 text-[#E63946] shrink-0" />
+                    {dest.name}
+                  </h3>
+
                   {/* Hover Button */}
                   <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <button className="bg-[#E63946] text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-1 text-sm">

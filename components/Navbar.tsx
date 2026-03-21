@@ -29,12 +29,11 @@ export default function Navbar() {
   const destinations = [
     'Istanbul',
     'Cappadocia',
-    'Ephesus',
+    'Izmir-Ephesus',
     'Pamukkale',
-    'Bodrum',
     'Antalya',
     'Troy',
-    'Eastern Turkey'
+    'Other Tour',
   ];
 
   const navLinks = [

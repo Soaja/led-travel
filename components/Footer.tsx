@@ -71,7 +71,7 @@ export default function Footer() {
               <li><Link href="/tours?region=Istanbul" className="text-gray-400 hover:text-white transition-colors duration-300">Istanbul Tours</Link></li>
               <li><Link href="/tours?region=Cappadocia" className="text-gray-400 hover:text-white transition-colors duration-300">Cappadocia Tours</Link></li>
               <li><Link href="/tours?region=Antalya" className="text-gray-400 hover:text-white transition-colors duration-300">Antalya Tours</Link></li>
-              <li><Link href="/tours?region=Ephesus" className="text-gray-400 hover:text-white transition-colors duration-300">Ephesus Tours</Link></li>
+              <li><Link href="/tours?region=Izmir-Ephesus" className="text-gray-400 hover:text-white transition-colors duration-300">Izmir-Ephesus Tours</Link></li>
               <li><Link href="/tours?region=Pamukkale" className="text-gray-400 hover:text-white transition-colors duration-300">Pamukkale Tours</Link></li>
               <li><Link href="/tours" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium mt-2 block">View All →</Link></li>
             </ul>

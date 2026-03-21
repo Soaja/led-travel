@@ -28,18 +28,38 @@ export interface Tour {
   reviews: number;
   image: string;
   badge: string;
+  searchKeywords: string[];
 }
+
+// Sub-destination keywords per region — used for keyword search
+// Add new places here to make them searchable without creating new routes
+export const REGION_KEYWORDS: Record<string, string[]> = {
+  'Istanbul':      ['bursa', 'yalova', 'sapanca', 'bosphorus', 'galata', 'sultanahmet', 'hagia sophia', 'grand bazaar', 'topkapi', 'princes islands', 'buyukada', 'kadikoy', 'ortakoy', 'beyoglu'],
+  'Cappadocia':    ['goreme', 'urgup', 'avanos', 'uchisar', 'hot air balloon', 'fairy chimneys', 'underground city', 'derinkuyu', 'kaymakli'],
+  'Izmir-Ephesus': ['ephesus', 'kusadasi', 'pergamon', 'selcuk', 'house of virgin mary', 'izmir', 'sirince'],
+  'Pamukkale':     ['hierapolis', 'cotton castle', 'travertine', 'denizli', 'laodikeia', 'aphrodisias'],
+  'Antalya':       ['side', 'aspendos', 'perge', 'alanya', 'olympos', 'kemer', 'termessos', 'phaselis', 'manavgat'],
+  'Troy':          ['canakkale', 'gallipoli', 'anzac', 'dardanelles', 'assos', 'truva'],
+  'Other Tour':    [],
+};
 
 const ALLOWED_DESTINATIONS = [
   'Istanbul',
   'Cappadocia',
-  'Ephesus',
+  'Izmir-Ephesus',
   'Pamukkale',
-  'Bodrum',
   'Antalya',
   'Troy',
-  'Eastern Turkey',
+  'Other Tour',
 ];
+
+// Maps legacy/sheet values to canonical display names
+const REGION_ALIASES: Record<string, string> = {
+  'ephesus':        'Izmir-Ephesus',
+  'izmir':          'Izmir-Ephesus',
+  'izmir-ephesus':  'Izmir-Ephesus',
+  'eastern turkey': 'Other Tour',
+};
 
 // New sheet: https://docs.google.com/spreadsheets/d/1keSjydbWk0VhMx3WcLsPvwU-MyI6GlcG_sM2Ggw_PKY
 // Column layout (0-indexed):
@@ -104,10 +124,11 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       const websiteUrl       = row[19] || '';
       const activeOnSite     = (row[20] || '').trim().toUpperCase() === 'YES';
 
-      // Normalize region
+      // Normalize region — resolve aliases first, then match canonical names
       const lowerRegion = region.toLowerCase().trim();
-      if (lowerRegion === 'bordum') region = 'Bodrum';
-      else {
+      if (REGION_ALIASES[lowerRegion]) {
+        region = REGION_ALIASES[lowerRegion];
+      } else {
         const matched = ALLOWED_DESTINATIONS.find(d => d.toLowerCase() === lowerRegion);
         if (matched) region = matched;
       }
@@ -140,12 +161,19 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       if (mockId % 7 === 0) badge = 'Best Seller';
       else if (mockId % 11 === 0) badge = 'Must Do';
 
+      const searchKeywords = [
+        ...(REGION_KEYWORDS[region] ?? []),
+        region.toLowerCase(),
+        title.toLowerCase(),
+        shortDescription.toLowerCase(),
+      ];
+
       return {
         id, slug, region, title, price, priceNote,
         startTime, endTime, durationStr, meals,
         includes, itinerary, highlights, notIncluded, whatToBring,
         shortDescription, metaDescription, coverImage, galleryImages, websiteUrl,
-        activeOnSite, duration, rating, reviews, image, badge,
+        activeOnSite, duration, rating, reviews, image, badge, searchKeywords,
       };
     });
 

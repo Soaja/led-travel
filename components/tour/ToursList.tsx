@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 import type { Tour } from '@/lib/tours';
 
 // ---------------------------------------------------------------------------
@@ -112,11 +112,10 @@ const locations = [
   'Istanbul',
   'Cappadocia',
   'Pamukkale',
-  'Ephesus',
-  'Bodrum',
+  'Izmir-Ephesus',
   'Antalya',
   'Troy',
-  'Eastern Turkey',
+  'Other Tour',
 ];
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
@@ -124,22 +123,53 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const router = useRouter();
   const regionParam = searchParams.get('region');
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     setActiveFilter(regionParam || 'All');
   }, [regionParam]);
 
-  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Ephesus', 'Bodrum', 'Antalya', 'Troy', 'Eastern Turkey']);
+  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tour']);
 
-  const filteredTours = (activeFilter === 'All'
-    ? initialTours
-    : initialTours.filter(tour => tour.region === activeFilter)
-  ).filter(tour => allowedRegions.has(tour.region));
+  const filteredTours = useMemo(() => {
+    const base = initialTours.filter(tour => allowedRegions.has(tour.region));
+    const q = query.trim().toLowerCase();
+    if (q) {
+      return base.filter(tour =>
+        tour.searchKeywords.some(kw => kw.includes(q)) ||
+        tour.title.toLowerCase().includes(q)
+      );
+    }
+    return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
+  }, [initialTours, query, activeFilter]);
 
   return (
     <div className="container mx-auto px-4 md:px-6">
+      {/* Search */}
+      <div className="max-w-xl mx-auto mb-8">
+        <div className="relative flex items-center">
+          <Search className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" />
+          <input
+            type="text"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search tours or destinations… e.g. Bursa, Yalova, Sapanca"
+            className="w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm shadow-sm placeholder:text-gray-400 focus:outline-none focus:border-[#E63946] focus:ring-2 focus:ring-[#E63946]/15 transition"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery('')}
+              className="absolute right-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Clear search"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* Filters */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+      <div className={`flex flex-wrap items-center justify-center gap-3 mb-12 transition-opacity duration-200 ${query ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
         {locations.map((location) => (
           <button
             key={location}
@@ -232,9 +262,13 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
 
       {filteredTours.length === 0 && (
         <div className="text-center py-20">
-          <p className="text-gray-500 text-lg">No tours found for this destination.</p>
+          <p className="text-gray-500 text-lg">
+            {query
+              ? `No tours found for "${query}".`
+              : 'No tours found for this destination.'}
+          </p>
           <button
-            onClick={() => setActiveFilter('All')}
+            onClick={() => { setQuery(''); setActiveFilter('All'); }}
             className="mt-4 text-[#E63946] font-bold hover:underline"
           >
             View all tours

@@ -29,6 +29,18 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'blog.obilet.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'hellostambul.ru',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   output: 'standalone',
