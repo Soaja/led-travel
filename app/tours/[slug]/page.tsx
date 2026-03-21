@@ -6,7 +6,7 @@ import { ChevronRight, Star, Clock, Users, MapPin, Check, X as XIcon, Map as Map
 import TourGallery from '@/components/tour/TourGallery';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
-import { STATIC_REVIEWS } from '@/lib/reviews';
+import { getReviewsForTour } from '@/lib/reviews';
 
 export async function generateStaticParams() {
   const tours = await getToursFromSheet();
@@ -95,8 +95,11 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
     }
   };
 
-  // Fetch all tours to find related ones
-  const allTours = await getToursFromSheet();
+  // Fetch reviews and all tours in parallel
+  const [guestReviews, allTours] = await Promise.all([
+    getReviewsForTour(tour.slug),
+    getToursFromSheet(),
+  ]);
   const relatedTours = allTours
     .filter(t => t.region === tour.region && t.slug !== tour.slug)
     .slice(0, 3);
@@ -275,20 +278,21 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {STATIC_REVIEWS.map((review) => (
+            {guestReviews.map((review) => (
               <div key={review.id} className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
                 <div className="flex text-yellow-400 mb-3">
-                  {[...Array(review.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                  {[...Array(Math.min(Math.max(review.stars, 1), 5))].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
                 </div>
                 <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;{review.text}&quot;</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 relative overflow-hidden">
-                    <Image src={review.avatar} alt={review.name} fill className="object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-[#E63946]/10 flex items-center justify-center shrink-0">
+                    <span className="text-[#E63946] font-bold text-sm">
+                      {review.name.charAt(0).toUpperCase()}
+                    </span>
                   </div>
-                  <div>
-                    <div className="font-bold text-sm text-gray-900">{review.name} {review.flag}</div>
-                    <div className="text-xs text-gray-500">{review.city}</div>
-                  </div>
+                  <div className="font-bold text-sm text-gray-900">{review.name}</div>
                 </div>
               </div>
             ))}

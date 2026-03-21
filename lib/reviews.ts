@@ -1,3 +1,48 @@
+import { supabase } from '@/lib/supabase';
+
+export type DbReview = {
+  id: string;
+  name: string;
+  tour: string;
+  text: string;
+  stars: number;
+  created_at: string;
+};
+
+export async function getReviewsForTour(slug: string): Promise<DbReview[]> {
+  // 1. Fetch up to 3 reviews for this tour
+  const { data: tourReviews } = await supabase
+    .from('reviews')
+    .select('id, name, tour, text, stars, created_at')
+    .eq('tour', slug)
+    .order('created_at', { ascending: false })
+    .limit(3);
+
+  const reviews: DbReview[] = tourReviews ?? [];
+
+  // 2. Fill remaining spots with reviews from other tours
+  if (reviews.length < 3) {
+    const { data: others } = await supabase
+      .from('reviews')
+      .select('id, name, tour, text, stars, created_at')
+      .neq('tour', slug)
+      .order('created_at', { ascending: false })
+      .limit(3 - reviews.length);
+
+    if (others) reviews.push(...others);
+  }
+
+  // 3. Final fallback: use static reviews if Supabase returned nothing
+  if (reviews.length < 3) {
+    const needed = 3 - reviews.length;
+    STATIC_REVIEWS.slice(0, needed).forEach(r =>
+      reviews.push({ id: String(r.id), name: r.name, tour: r.tour, text: r.text, stars: r.stars, created_at: '' })
+    );
+  }
+
+  return reviews.slice(0, 3);
+}
+
 export const STATIC_REVIEWS = [
   {
     id: 1,
