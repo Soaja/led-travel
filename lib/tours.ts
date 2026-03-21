@@ -172,10 +172,11 @@ export async function getToursFromSheet(): Promise<Tour[]> {
 
       const searchKeywords = [
         ...(REGION_KEYWORDS[region] ?? []),
-        region.toLowerCase(),
         title.toLowerCase(),
-        shortDescription.toLowerCase(),
-      ];
+        region.toLowerCase(),
+        (shortDescription || '').toLowerCase(),
+        (highlights || '').toLowerCase(),
+      ].join(' ').split(/\s+/).filter(Boolean);
 
       return {
         id, slug, region, title, price, priceNote,

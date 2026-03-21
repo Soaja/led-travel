@@ -152,8 +152,12 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     return initialTours
       .filter(tour =>
         allowedRegions.has(tour.region) && (
-          tour.searchKeywords.some(kw => kw.includes(q)) ||
-          tour.title.toLowerCase().includes(q)
+          tour.title.toLowerCase().includes(q) ||
+          tour.region.toLowerCase().includes(q) ||
+          (tour.shortDescription && tour.shortDescription.toLowerCase().includes(q)) ||
+          (tour.includes && tour.includes.toLowerCase().includes(q)) ||
+          (tour.highlights && tour.highlights.toLowerCase().includes(q)) ||
+          tour.searchKeywords.some(kw => kw.includes(q))
         )
       )
       .slice(0, 7);
@@ -165,8 +169,12 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     const q = query.trim().toLowerCase();
     if (q) {
       return base.filter(tour =>
-        tour.searchKeywords.some(kw => kw.includes(q)) ||
-        tour.title.toLowerCase().includes(q)
+        tour.title.toLowerCase().includes(q) ||
+        tour.region.toLowerCase().includes(q) ||
+        (tour.shortDescription && tour.shortDescription.toLowerCase().includes(q)) ||
+        (tour.includes && tour.includes.toLowerCase().includes(q)) ||
+        (tour.highlights && tour.highlights.toLowerCase().includes(q)) ||
+        tour.searchKeywords.some(kw => kw.includes(q))
       );
     }
     return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
