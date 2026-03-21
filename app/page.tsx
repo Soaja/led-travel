@@ -47,7 +47,7 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
+      <Hero initialTours={tours} />
       <Destinations destinations={destinations} />
       <Tours tours={bestSellingTours} />
       <WhyUs />
