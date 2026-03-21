@@ -92,8 +92,8 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 {/* Bottom Content */}
                 <div className="absolute bottom-0 left-0 w-full p-4 flex items-end justify-between">
                   {/* City name badge */}
-                  <h3 className="inline-flex items-center gap-1.5 bg-black/50 backdrop-blur-md border border-white/20 text-white text-sm font-semibold px-3 py-1.5 rounded-lg shadow-lg tracking-wide">
-                    <MapPin className="w-3.5 h-3.5 text-[#E63946] shrink-0" />
+                  <h3 className="inline-flex items-center gap-2 bg-black/55 backdrop-blur-md border border-white/20 text-white text-xl font-bold px-5 py-2.5 rounded-xl shadow-lg tracking-wide">
+                    <MapPin className="w-5 h-5 text-[#E63946] shrink-0" />
                     {dest.name}
                   </h3>
 
