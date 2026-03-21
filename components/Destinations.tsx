@@ -92,14 +92,14 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 {/* Bottom Content */}
                 <div className="absolute bottom-0 left-0 w-full p-4 flex items-end justify-between">
                   {/* City name badge */}
-                  <h3 className="inline-flex items-center gap-2 bg-[#E63946] text-white text-xl font-bold px-5 py-2.5 rounded-xl shadow-lg tracking-wide">
-                    <MapPin className="w-5 h-5 text-white shrink-0" />
+                  <h3 className="inline-flex items-center gap-2.5 bg-white text-gray-900 text-lg font-bold px-4 py-2.5 rounded-2xl shadow-xl tracking-tight">
+                    <span className="w-2 h-2 rounded-full bg-[#E63946] shrink-0" />
                     {dest.name}
                   </h3>
 
                   {/* Hover Button */}
                   <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button className="bg-[#E63946] text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-1 text-sm">
+                    <button className="bg-white text-gray-900 hover:bg-[#E63946] hover:text-white px-4 py-2 rounded-xl font-semibold flex items-center gap-1.5 text-sm shadow-xl transition-colors duration-200">
                       Explore <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
