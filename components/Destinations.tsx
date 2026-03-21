@@ -92,7 +92,7 @@ export default function Destinations({ destinations }: { destinations: Destinati
                 {/* Bottom Content */}
                 <div className="absolute bottom-0 left-0 w-full p-4 flex items-end justify-between">
                   {/* City name badge */}
-                  <h3 className="inline-flex items-center gap-2.5 bg-white text-gray-900 text-lg font-bold px-4 py-2.5 rounded-2xl shadow-xl tracking-tight">
+                  <h3 className="inline-flex items-center gap-2.5 bg-white text-gray-900 text-lg font-bold px-4 py-2.5 rounded-2xl shadow-xl tracking-tight border-2 border-[#E63946]">
                     <span className="w-2 h-2 rounded-full bg-[#E63946] shrink-0" />
                     {dest.name}
                   </h3>
