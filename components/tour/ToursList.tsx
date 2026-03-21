@@ -5,8 +5,9 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X, Quote } from 'lucide-react';
 import type { Tour } from '@/lib/tours';
+import { STATIC_REVIEWS } from '@/lib/reviews';
 
 // ---------------------------------------------------------------------------
 // CardImageCarousel
@@ -347,6 +348,25 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                   <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-[#E63946] transition-colors">
                     {tour.title}
                   </h3>
+
+                  {/* Review snippet */}
+                  {(() => {
+                    const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
+                    return (
+                      <div className="flex items-start gap-2 mb-4 bg-gray-50 rounded-xl px-3 py-2.5">
+                        <Quote className="w-3.5 h-3.5 text-[#E63946] shrink-0 mt-0.5" />
+                        <div className="min-w-0">
+                          <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">
+                            {review.text}
+                          </p>
+                          <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
+                            {review.name} {review.flag}
+                            <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                     <div>

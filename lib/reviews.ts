@@ -1,0 +1,32 @@
+export const STATIC_REVIEWS = [
+  {
+    id: 1,
+    name: "Marco Ricci",
+    flag: "🇮🇹",
+    city: "Milano",
+    tour: "Istanbul Classics Full Day",
+    text: "Il miglior tour che abbia mai fatto! La guida parlava perfettamente italiano e conosceva ogni angolo di Istanbul. Un'esperienza autentica e indimenticabile.",
+    avatar: "https://picsum.photos/seed/marco/100/100",
+    stars: 5,
+  },
+  {
+    id: 2,
+    name: "Sofia Ferretti",
+    flag: "🇮🇹",
+    city: "Roma",
+    tour: "Cappadocia Hot Air Balloon",
+    text: "La mongolfiera all'alba è stata magica. LED Travel ha organizzato tutto perfettamente, dall'hotel al trasferimento. Prenoto già il prossimo viaggio!",
+    avatar: "https://picsum.photos/seed/sofia/100/100",
+    stars: 5,
+  },
+  {
+    id: 3,
+    name: "James Thompson",
+    flag: "🇬🇧",
+    city: "London",
+    tour: "Bosphorus Sunset Cruise",
+    text: "Professional, punctual, and passionate guides. This is exactly how Turkey should be experienced — intimate, authentic, and absolutely stunning.",
+    avatar: "https://picsum.photos/seed/james/100/100",
+    stars: 5,
+  },
+];
