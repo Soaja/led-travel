@@ -40,7 +40,7 @@ export const REGION_KEYWORDS: Record<string, string[]> = {
   'Pamukkale':     ['hierapolis', 'cotton castle', 'travertine', 'denizli', 'laodikeia', 'aphrodisias'],
   'Antalya':       ['side', 'aspendos', 'perge', 'alanya', 'olympos', 'kemer', 'termessos', 'phaselis', 'manavgat'],
   'Troy':          ['canakkale', 'gallipoli', 'anzac', 'dardanelles', 'assos', 'truva'],
-  'Other Tour':    [],
+  'Other Tours':    [],
 };
 
 const ALLOWED_DESTINATIONS = [
@@ -50,7 +50,7 @@ const ALLOWED_DESTINATIONS = [
   'Pamukkale',
   'Antalya',
   'Troy',
-  'Other Tour',
+  'Other Tours',
 ];
 
 // Maps legacy/sheet values to canonical display names
@@ -58,7 +58,7 @@ const REGION_ALIASES: Record<string, string> = {
   'ephesus':        'Izmir-Ephesus',
   'izmir':          'Izmir-Ephesus',
   'izmir-ephesus':  'Izmir-Ephesus',
-  'eastern turkey': 'Other Tour',
+  'eastern turkey': 'Other Tours',
 };
 
 // New sheet: https://docs.google.com/spreadsheets/d/1keSjydbWk0VhMx3WcLsPvwU-MyI6GlcG_sM2Ggw_PKY

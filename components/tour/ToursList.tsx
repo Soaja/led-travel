@@ -115,7 +115,7 @@ const locations = [
   'Izmir-Ephesus',
   'Antalya',
   'Troy',
-  'Other Tour',
+  'Other Tours',
 ];
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
@@ -142,7 +142,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tour']);
+  const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tours']);
 
   // Results shown in the dropdown while typing
   const dropdownResults = useMemo(() => {

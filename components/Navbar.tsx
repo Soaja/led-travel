@@ -33,7 +33,7 @@ export default function Navbar() {
     'Pamukkale',
     'Antalya',
     'Troy',
-    'Other Tour',
+    'Other Tours',
   ];
 
   const navLinks = [

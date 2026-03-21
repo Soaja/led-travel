@@ -14,7 +14,7 @@ const STATIC_DESTINATIONS = [
   { name: 'Izmir-Ephesus',  slug: 'ephesus',        image: '/images/4.jpg'   },
   { name: 'Antalya',        slug: 'antalya',        image: '/images/6.webp'  },
   { name: 'Troy',           slug: 'troy',           image: '/images/7.jpg'   },
-  { name: 'Other Tour',     slug: 'eastern-turkey', image: '/images/8.jpeg'  },
+  { name: 'Other Tours',     slug: 'eastern-turkey', image: '/images/8.jpeg'  },
 ];
 
 export default async function Home() {
