@@ -8,6 +8,8 @@ import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
 import { getReviewsForTour } from '@/lib/reviews';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const tours = await getToursFromSheet();
   return tours.map((tour) => ({

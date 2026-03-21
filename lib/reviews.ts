@@ -9,38 +9,49 @@ export type DbReview = {
   created_at: string;
 };
 
+function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export async function getReviewsForTour(slug: string): Promise<DbReview[]> {
-  // 1. Fetch up to 3 reviews for this tour
+  // 1. Fetch up to 20 reviews for this tour, shuffle, take 3
   const { data: tourReviews } = await supabase
     .from('reviews')
     .select('id, name, tour, text, stars, created_at')
     .eq('tour', slug)
-    .order('created_at', { ascending: false })
-    .limit(3);
+    .limit(20);
 
-  const reviews: DbReview[] = tourReviews ?? [];
+  const picked = shuffleArray<DbReview>(tourReviews ?? []).slice(0, 3);
 
-  // 2. Fill remaining spots with reviews from other tours
-  if (reviews.length < 3) {
+  // 2. Fill remaining spots with shuffled reviews from other tours
+  if (picked.length < 3) {
+    const pickedIds = new Set(picked.map(r => r.id));
     const { data: others } = await supabase
       .from('reviews')
       .select('id, name, tour, text, stars, created_at')
       .neq('tour', slug)
-      .order('created_at', { ascending: false })
-      .limit(3 - reviews.length);
+      .limit(20);
 
-    if (others) reviews.push(...others);
+    const shuffledOthers = shuffleArray<DbReview>(others ?? [])
+      .filter(r => !pickedIds.has(r.id))
+      .slice(0, 3 - picked.length);
+
+    picked.push(...shuffledOthers);
   }
 
-  // 3. Final fallback: use static reviews if Supabase returned nothing
-  if (reviews.length < 3) {
-    const needed = 3 - reviews.length;
+  // 3. Final fallback: static reviews if Supabase returned nothing
+  if (picked.length < 3) {
+    const needed = 3 - picked.length;
     STATIC_REVIEWS.slice(0, needed).forEach(r =>
-      reviews.push({ id: String(r.id), name: r.name, tour: r.tour, text: r.text, stars: r.stars, created_at: '' })
+      picked.push({ id: String(r.id), name: r.name, tour: r.tour, text: r.text, stars: r.stars, created_at: '' })
     );
   }
 
-  return reviews.slice(0, 3);
+  return picked;
 }
 
 export const STATIC_REVIEWS = [
