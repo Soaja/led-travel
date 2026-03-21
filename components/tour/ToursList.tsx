@@ -124,13 +124,41 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const regionParam = searchParams.get('region');
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
   const [query, setQuery] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveFilter(regionParam || 'All');
   }, [regionParam]);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsFocused(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const allowedRegions = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tour']);
 
+  // Results shown in the dropdown while typing
+  const dropdownResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return initialTours
+      .filter(tour =>
+        allowedRegions.has(tour.region) && (
+          tour.searchKeywords.some(kw => kw.includes(q)) ||
+          tour.title.toLowerCase().includes(q)
+        )
+      )
+      .slice(0, 7);
+  }, [initialTours, query]);
+
+  // Tours shown in the main grid
   const filteredTours = useMemo(() => {
     const base = initialTours.filter(tour => allowedRegions.has(tour.region));
     const q = query.trim().toLowerCase();
@@ -143,33 +171,114 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
   }, [initialTours, query, activeFilter]);
 
+  const showDropdown = isFocused;
+  const destinations = locations.filter(l => l !== 'All');
+
   return (
     <div className="container mx-auto px-4 md:px-6">
       {/* Search */}
-      <div className="max-w-xl mx-auto mb-8">
+      <div className="max-w-2xl mx-auto mb-10 relative" ref={searchContainerRef}>
         <div className="relative flex items-center">
           <Search className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" />
           <input
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Search tours or destinations… e.g. Bursa, Yalova, Sapanca"
-            className="w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm shadow-sm placeholder:text-gray-400 focus:outline-none focus:border-[#E63946] focus:ring-2 focus:ring-[#E63946]/15 transition"
+            onFocus={() => setIsFocused(true)}
+            placeholder="Search tours or destinations… e.g. Bursa, Istanbul, Cappadocia"
+            className="w-full pl-12 pr-10 py-4 rounded-2xl border border-gray-200 bg-white text-gray-800 text-sm shadow-md placeholder:text-gray-400 focus:outline-none focus:border-[#E63946] focus:ring-2 focus:ring-[#E63946]/15 transition"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="absolute right-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute right-4 p-1 text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Clear search"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
+
+        {/* Dropdown */}
+        {showDropdown && (
+          <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+            {!query ? (
+              /* — Destinations panel — */
+              <div className="p-5">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">
+                  Browse by destination
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {destinations.map(dest => (
+                    <button
+                      key={dest}
+                      onMouseDown={() => {
+                        setActiveFilter(dest);
+                        setQuery('');
+                        setIsFocused(false);
+                        router.push(`/tours?region=${encodeURIComponent(dest)}`);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-50 hover:bg-[#E63946] hover:text-white text-gray-700 text-sm font-medium border border-gray-100 hover:border-[#E63946] transition-all duration-200 group"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-[#E63946] group-hover:text-white transition-colors" />
+                      {dest}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : dropdownResults.length === 0 ? (
+              /* — No results — */
+              <div className="p-6 text-center text-gray-400 text-sm">
+                No tours found for &ldquo;{query}&rdquo;
+              </div>
+            ) : (
+              /* — Tour results — */
+              <div className="py-2 max-h-[420px] overflow-y-auto">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 px-4 pt-2 pb-3">
+                  {dropdownResults.length} tour{dropdownResults.length !== 1 ? 's' : ''} found
+                </p>
+                {dropdownResults.map(tour => (
+                  <button
+                    key={tour.id}
+                    onMouseDown={() => {
+                      router.push(`/tours/${tour.slug}`);
+                      setIsFocused(false);
+                      setQuery('');
+                    }}
+                    className="w-full flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                  >
+                    <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+                      <Image
+                        src={tour.image}
+                        alt={tour.title}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 line-clamp-1">{tour.title}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="inline-flex items-center gap-1 text-xs text-[#E63946] font-medium">
+                          <MapPin className="w-3 h-3" />{tour.region}
+                        </span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-500">
+                          {tour.price ? `From €${tour.price}` : 'On request'}
+                        </span>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-gray-300 shrink-0" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Filters */}
-      <div className={`flex flex-wrap items-center justify-center gap-3 mb-12 transition-opacity duration-200 ${query ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
         {locations.map((location) => (
           <button
             key={location}
