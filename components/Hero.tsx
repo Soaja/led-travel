@@ -126,7 +126,7 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
             className="block"
           >
             holidays in{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] via-rose-400 to-[#E63946] italic">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] via-rose-400 to-[#E63946] italic pb-2 inline-block">
               Turkey
             </span>
           </motion.span>
