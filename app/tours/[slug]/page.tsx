@@ -6,6 +6,7 @@ import { ChevronRight, Star, Clock, Users, MapPin, Check, X as XIcon, Map as Map
 import TourGallery from '@/components/tour/TourGallery';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
+import { STATIC_REVIEWS } from '@/lib/reviews';
 
 export async function generateStaticParams() {
   const tours = await getToursFromSheet();
@@ -274,54 +275,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Review 1 */}
-            <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
-              <div className="flex text-yellow-400 mb-3">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-              </div>
-              <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;Il miglior tour che abbia mai fatto! La guida parlava perfettamente italiano e conosceva ogni angolo di Istanbul. Un&apos;esperienza autentica e indimenticabile.&quot;</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 relative overflow-hidden">
-                  <Image src="https://picsum.photos/seed/marco/100/100" alt="Marco" fill className="object-cover" />
+            {STATIC_REVIEWS.map((review) => (
+              <div key={review.id} className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
+                <div className="flex text-yellow-400 mb-3">
+                  {[...Array(review.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
                 </div>
-                <div>
-                  <div className="font-bold text-sm text-gray-900">Marco Ricci 🇮🇹</div>
-                  <div className="text-xs text-gray-500">Milano</div>
-                </div>
-              </div>
-            </div>
-            {/* Review 2 */}
-            <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
-              <div className="flex text-yellow-400 mb-3">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-              </div>
-              <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;Professional, punctual, and passionate guides. This is exactly how Turkey should be experienced — intimate, authentic, and absolutely stunning.&quot;</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 relative overflow-hidden">
-                  <Image src="https://picsum.photos/seed/james/100/100" alt="James" fill className="object-cover" />
-                </div>
-                <div>
-                  <div className="font-bold text-sm text-gray-900">James Thompson 🇬🇧</div>
-                  <div className="text-xs text-gray-500">London</div>
+                <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;{review.text}&quot;</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 relative overflow-hidden">
+                    <Image src={review.avatar} alt={review.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-sm text-gray-900">{review.name} {review.flag}</div>
+                    <div className="text-xs text-gray-500">{review.city}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* Review 3 */}
-            <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
-              <div className="flex text-yellow-400 mb-3">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-              </div>
-              <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;Incredible day exploring the old city. The skip-the-line access saved us hours, and our guide was a wealth of knowledge.&quot;</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 relative overflow-hidden">
-                  <Image src="https://picsum.photos/seed/sarah/100/100" alt="Sarah" fill className="object-cover" />
-                </div>
-                <div>
-                  <div className="font-bold text-sm text-gray-900">Sarah Jenkins 🇺🇸</div>
-                  <div className="text-xs text-gray-500">New York</div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
           <Link href="/reviews" className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
         </div>
