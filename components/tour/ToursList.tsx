@@ -240,7 +240,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
         {/* Dropdown */}
         {showDropdown && (
           <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
-            {!query ? (
+            {!query || query.trim().length < 2 ? (
               /* — Destinations panel — */
               <div className="p-5">
                 <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">

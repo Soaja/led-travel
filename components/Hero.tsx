@@ -196,7 +196,7 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
           {/* Dropdown */}
           {isFocused && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden text-left">
-              {!query ? (
+              {!query || query.trim().length < 2 ? (
                 <div className="p-4">
                   <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">Browse by destination</p>
                   <div className="flex flex-wrap gap-2">
