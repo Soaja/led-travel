@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X, Quote } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X, Quote, Sparkles } from 'lucide-react';
 import type { Tour } from '@/lib/tours';
 import { STATIC_REVIEWS } from '@/lib/reviews';
 
@@ -209,6 +209,9 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
 
   const showDropdown = isFocused;
   const destinations = locations.filter(l => l !== 'All');
+  const isSearching = query.trim().length >= 2;
+  const featuredTours = !isSearching ? filteredTours.filter(t => t.badge) : [];
+  const regularTours  = !isSearching ? filteredTours.filter(t => !t.badge) : filteredTours;
 
   return (
     <div className="container mx-auto px-4 md:px-6">
@@ -332,16 +335,127 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
         ))}
       </div>
 
-      {/* Grid */}
+      {/* Featured Tours */}
+      <AnimatePresence>
+        {featuredTours.length > 0 && (
+          <motion.div
+            key="featured-section"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mb-14"
+          >
+            {/* Featured header */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-2.5 bg-[#E63946] text-white px-5 py-2.5 rounded-full shadow-lg shadow-[#E63946]/30">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-sm font-bold uppercase tracking-widest">Featured Tours</span>
+              </div>
+              <div className="flex-1 h-px bg-gradient-to-r from-[#E63946]/30 to-transparent" />
+            </div>
+
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence mode="popLayout">
+                {featuredTours.map((tour) => {
+                  const gallery = tour.galleryImages
+                    ? tour.galleryImages.split('|').map(s => s.trim()).filter(Boolean)
+                    : [];
+                  const images = tour.image && !gallery.includes(tour.image)
+                    ? [tour.image, ...gallery]
+                    : gallery.length > 0 ? gallery : [tour.image];
+                  const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
+
+                  return (
+                    <motion.div
+                      key={tour.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={() => router.push(`/tours/${tour.slug}`)}
+                      className="bg-white rounded-2xl overflow-hidden border-2 border-[#E63946]/20 shadow-xl shadow-[#E63946]/10 hover:shadow-2xl hover:shadow-[#E63946]/20 hover:border-[#E63946]/40 transition-all duration-300 group flex flex-col cursor-pointer"
+                    >
+                      <div className="relative">
+                        <CardImageCarousel images={images} alt={tour.title} />
+                        {tour.badge && (
+                          <div className="absolute top-4 left-4 z-10 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md pointer-events-none ring-2 ring-white ring-offset-1 ring-offset-[#E63946]">
+                            {tour.badge}
+                          </div>
+                        )}
+                        <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 text-sm font-bold shadow-sm pointer-events-none">
+                          <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                          {tour.rating}
+                        </div>
+                      </div>
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4 text-[#E63946]" />
+                            {tour.region}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4 text-[#E63946]" />
+                            {tour.duration}
+                          </div>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-[#E63946] transition-colors">
+                          {tour.title}
+                        </h3>
+                        <div className="flex items-start gap-2 mb-4 bg-gray-50 rounded-xl px-3 py-2.5">
+                          <Quote className="w-3.5 h-3.5 text-[#E63946] shrink-0 mt-0.5" />
+                          <div className="min-w-0">
+                            <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">{review.text}</p>
+                            <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
+                              {review.name} {review.flag}
+                              <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+                          <div>
+                            <span className="text-xs text-gray-500 block">From</span>
+                            <span className="text-xl font-bold text-gray-900">
+                              {tour.price ? `€${tour.price}` : 'On request'}
+                            </span>
+                          </div>
+                          <Link
+                            href={`/tours/${tour.slug}`}
+                            className="flex items-center gap-2 bg-[#E63946] hover:bg-[#D62828] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300"
+                          >
+                            View Details <ArrowRight className="w-4 h-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* All Tours divider */}
+      {!isSearching && featuredTours.length > 0 && regularTours.length > 0 && (
+        <div className="flex items-center gap-4 mb-8">
+          <span className="text-sm font-bold uppercase tracking-widest text-gray-400">All Tours</span>
+          <div className="flex-1 h-px bg-gray-200" />
+        </div>
+      )}
+
+      {/* Regular / search result grid */}
       <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <AnimatePresence mode="popLayout">
-          {filteredTours.map((tour) => {
+          {regularTours.map((tour) => {
             const gallery = tour.galleryImages
               ? tour.galleryImages.split('|').map(s => s.trim()).filter(Boolean)
               : [];
             const images = tour.image && !gallery.includes(tour.image)
               ? [tour.image, ...gallery]
               : gallery.length > 0 ? gallery : [tour.image];
+            const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
 
             return (
               <motion.div
@@ -354,10 +468,8 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                 onClick={() => router.push(`/tours/${tour.slug}`)}
                 className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-100 group flex flex-col cursor-pointer"
               >
-                {/* Image carousel */}
                 <div className="relative">
                   <CardImageCarousel images={images} alt={tour.title} />
-
                   {tour.badge && (
                     <div className="absolute top-4 left-4 z-10 bg-[#E63946] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md pointer-events-none ring-2 ring-white ring-offset-1 ring-offset-[#E63946]">
                       {tour.badge}
@@ -368,8 +480,6 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                     {tour.rating}
                   </div>
                 </div>
-
-                {/* Content */}
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                     <div className="flex items-center gap-1">
@@ -381,30 +491,19 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                       {tour.duration}
                     </div>
                   </div>
-
                   <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-[#E63946] transition-colors">
                     {tour.title}
                   </h3>
-
-                  {/* Review snippet */}
-                  {(() => {
-                    const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
-                    return (
-                      <div className="flex items-start gap-2 mb-4 bg-gray-50 rounded-xl px-3 py-2.5">
-                        <Quote className="w-3.5 h-3.5 text-[#E63946] shrink-0 mt-0.5" />
-                        <div className="min-w-0">
-                          <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">
-                            {review.text}
-                          </p>
-                          <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
-                            {review.name} {review.flag}
-                            <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })()}
-
+                  <div className="flex items-start gap-2 mb-4 bg-gray-50 rounded-xl px-3 py-2.5">
+                    <Quote className="w-3.5 h-3.5 text-[#E63946] shrink-0 mt-0.5" />
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">{review.text}</p>
+                      <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
+                        {review.name} {review.flag}
+                        <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
+                      </p>
+                    </div>
+                  </div>
                   <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                     <div>
                       <span className="text-xs text-gray-500 block">From</span>
