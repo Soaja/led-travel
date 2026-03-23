@@ -46,15 +46,28 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
 
   const dropdownResults = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return [];
+    if (!q || q.length < 2) return [];
+
     return initialTours
-      .filter(t =>
-        t.title.toLowerCase().includes(q) ||
-        t.region.toLowerCase().includes(q) ||
-        (t.shortDescription ? t.shortDescription.toLowerCase().includes(q) : false) ||
-        (t.highlights ? t.highlights.toLowerCase().includes(q) : false) ||
-        t.searchKeywords?.some(kw => kw.includes(q))
-      )
+      .map(t => {
+        const titleL  = t.title.toLowerCase();
+        const regionL = t.region.toLowerCase();
+        let score = 0;
+
+        if (titleL.startsWith(q))                                  score = 100;
+        else if (regionL.startsWith(q))                            score = 90;
+        else if (titleL.includes(q))                               score = 70;
+        else if (regionL.includes(q))                              score = 60;
+        else if (t.shortDescription?.toLowerCase().includes(q))    score = 40;
+        else if (t.highlights?.toLowerCase().includes(q))          score = 30;
+        else if (t.searchKeywords?.some(kw => kw.startsWith(q)))   score = 20;
+        else if (t.searchKeywords?.some(kw => kw.includes(q)))     score = 10;
+
+        return { tour: t, score };
+      })
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(({ tour }) => tour)
       .slice(0, 6);
   }, [initialTours, query]);
 
@@ -163,7 +176,7 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
               onChange={e => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onKeyDown={e => {
-                if (e.key === 'Enter' && query.trim()) {
+                if (e.key === 'Enter' && query.trim().length >= 2) {
                   setIsFocused(false);
                   heroInputRef.current?.blur();
                   router.push(`/tours`);
