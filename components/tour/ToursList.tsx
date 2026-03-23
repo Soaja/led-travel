@@ -121,15 +121,20 @@ const locations = [
 
 const ALLOWED_REGIONS = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tours']);
 
-function matchesTour(tour: Tour, q: string): boolean {
-  return (
-    tour.title.toLowerCase().includes(q) ||
-    tour.region.toLowerCase().includes(q) ||
-    (tour.shortDescription ? tour.shortDescription.toLowerCase().includes(q) : false) ||
-    (tour.includes ? tour.includes.toLowerCase().includes(q) : false) ||
-    (tour.highlights ? tour.highlights.toLowerCase().includes(q) : false) ||
-    tour.searchKeywords.some(kw => kw.includes(q))
-  );
+function scoreTour(tour: Tour, q: string): number {
+  const titleL  = tour.title.toLowerCase();
+  const regionL = tour.region.toLowerCase();
+
+  if (titleL.startsWith(q))                                    return 100;
+  if (regionL.startsWith(q))                                   return 90;
+  if (titleL.includes(q))                                      return 70;
+  if (regionL.includes(q))                                     return 60;
+  if (tour.shortDescription?.toLowerCase().includes(q))        return 40;
+  if (tour.includes?.toLowerCase().includes(q))                return 35;
+  if (tour.highlights?.toLowerCase().includes(q))              return 30;
+  if (tour.searchKeywords?.some(kw => kw.startsWith(q)))       return 20;
+  if (tour.searchKeywords?.some(kw => kw.includes(q)))         return 10;
+  return 0;
 }
 
 export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
@@ -161,9 +166,13 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   // Results shown in the dropdown while typing
   const dropdownResults = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return [];
+    if (!q || q.length < 2) return [];
     return initialTours
-      .filter(tour => ALLOWED_REGIONS.has(tour.region) && matchesTour(tour, q))
+      .filter(tour => ALLOWED_REGIONS.has(tour.region))
+      .map(tour => ({ tour, score: scoreTour(tour, q) }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(({ tour }) => tour)
       .slice(0, 7);
   }, [initialTours, query]);
 
@@ -171,8 +180,12 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const filteredTours = useMemo(() => {
     const base = initialTours.filter(tour => ALLOWED_REGIONS.has(tour.region));
     const q = query.trim().toLowerCase();
-    if (q) {
-      return base.filter(tour => matchesTour(tour, q));
+    if (q && q.length >= 2) {
+      return base
+        .map(tour => ({ tour, score: scoreTour(tour, q) }))
+        .filter(({ score }) => score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(({ tour }) => tour);
     }
     return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
   }, [initialTours, query, activeFilter]);
