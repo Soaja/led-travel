@@ -7,7 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Clock, Star, ArrowRight, ChevronLeft, ChevronRight, Search, X, Quote, Sparkles } from 'lucide-react';
 import type { Tour } from '@/lib/tours';
-import { STATIC_REVIEWS } from '@/lib/reviews';
+import { STATIC_REVIEWS, type DbReview } from '@/lib/reviews';
+import { supabase } from '@/lib/supabase';
 
 // ---------------------------------------------------------------------------
 // CardImageCarousel
@@ -228,6 +229,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
   const [query, setQuery] = useState(qParam || '');
   const [debouncedQuery, setDebouncedQuery] = useState(qParam || '');
+  const [dbReviews, setDbReviews] = useState<DbReview[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -241,6 +243,17 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
     const t = setTimeout(() => setDebouncedQuery(query), 200);
     return () => clearTimeout(t);
   }, [query]);
+
+  // Fetch all reviews from Supabase once
+  useEffect(() => {
+    supabase
+      .from('reviews')
+      .select('id, name, tour, text, stars, created_at')
+      .limit(100)
+      .then(({ data }) => {
+        if (data && data.length > 0) setDbReviews(data as DbReview[]);
+      });
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -298,6 +311,9 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
       inputRef.current?.blur();
     }
   };
+
+  const reviewPool = dbReviews.length > 0 ? dbReviews : STATIC_REVIEWS.map(r => ({ ...r, id: String(r.id), created_at: '' }));
+  const getReview = (idx: number) => reviewPool[idx % reviewPool.length];
 
   const showDropdown = isFocused;
   const destinations = locations.filter(l => l !== 'All');
@@ -449,14 +465,14 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
 
             <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence mode="popLayout">
-                {featuredTours.map((tour) => {
+                {featuredTours.map((tour, idx) => {
                   const gallery = tour.galleryImages
                     ? tour.galleryImages.split('|').map(s => s.trim()).filter(Boolean)
                     : [];
                   const images = tour.image && !gallery.includes(tour.image)
                     ? [tour.image, ...gallery]
                     : gallery.length > 0 ? gallery : [tour.image];
-                  const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
+                  const review = getReview(idx);
 
                   return (
                     <motion.div
@@ -500,7 +516,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                           <div className="min-w-0">
                             <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">{review.text}</p>
                             <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
-                              {review.name} {review.flag}
+                              {review.name} {(review as any).flag}
                               <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
                             </p>
                           </div>
@@ -540,14 +556,14 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
       {/* Regular / search result grid */}
       <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <AnimatePresence mode="popLayout">
-          {regularTours.map((tour) => {
+          {regularTours.map((tour, idx) => {
             const gallery = tour.galleryImages
               ? tour.galleryImages.split('|').map(s => s.trim()).filter(Boolean)
               : [];
             const images = tour.image && !gallery.includes(tour.image)
               ? [tour.image, ...gallery]
               : gallery.length > 0 ? gallery : [tour.image];
-            const review = STATIC_REVIEWS[(parseInt(tour.id) || 0) % STATIC_REVIEWS.length];
+            const review = getReview(featuredTours.length + idx);
 
             return (
               <motion.div
