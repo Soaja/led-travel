@@ -167,17 +167,24 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       const rating = Number((4.5 + (mockId % 5) * 0.1).toFixed(1));
       const reviews = 50 + (mockId * 7) % 200;
 
+      // Only explicitly listed tours receive a badge (= appear in Featured section).
+      // Organised by region for readability. Add/remove entries here to control
+      // which tours are featured on the /tours page.
       let badge = '';
-      if (mockId % 7 === 0) badge = 'Best Seller';
-      else if (mockId % 11 === 0) badge = 'Must Do';
-
-      // Title-based badge overrides — takes priority over ID-based logic
       const BADGE_OVERRIDES: Array<[RegExp, string]> = [
-        [/sapanca/i,       'Most Liked'],
-        [/masukiye/i,      'Most Liked'],
-        [/princes island/i, 'Must Do'],
-        [/old city/i,      'Best Seller'],
-        [/green bursa/i,   'Most Liked'],
+        // Istanbul
+        [/princes island/i,  'Must Do'],
+        [/sapanca/i,          'Most Liked'],
+        [/masukiye/i,         'Most Liked'],
+        [/old city/i,         'Best Seller'],
+        // Cappadocia
+        [/red tour|north cappadocia/i, 'Best Seller'],
+        [/horse.?back/i,      'Must Do'],
+        [/dervish/i,          'Most Liked'],
+        // Other Tours
+        [/trabzon city/i,     'Best Seller'],
+        [/uzungol/i,          'Most Liked'],
+        [/ayder/i,            'Must Do'],
       ];
       for (const [pattern, label] of BADGE_OVERRIDES) {
         if (pattern.test(title)) { badge = label; break; }
