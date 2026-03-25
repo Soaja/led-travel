@@ -29,12 +29,22 @@ export interface Tour {
   image: string;
   badge: string;
   searchKeywords: string[];
+  secondaryRegions: string[];  // extra filter sections this tour also appears in
 }
+
+// Tours that appear in multiple filter sections simultaneously.
+// Add a [titlePattern, additionalRegions[]] entry to place a tour in more than one section.
+// The tour's primary `region` (from the sheet) is always preserved.
+const MULTI_CATEGORY_OVERRIDES: Array<[RegExp, string[]]> = [
+  [/sile|agva/i,       ['Other Tours']],
+  [/green bursa/i,     ['Other Tours']],
+  [/\byalova\b/i,      ['Other Tours']],
+];
 
 // Sub-destination keywords per region — used for keyword search
 // Add new places here to make them searchable without creating new routes
 export const REGION_KEYWORDS: Record<string, string[]> = {
-  'Istanbul':      ['bursa', 'yalova', 'sapanca', 'bosphorus', 'galata', 'sultanahmet', 'hagia sophia', 'grand bazaar', 'topkapi', 'princes islands', 'buyukada', 'kadikoy', 'ortakoy', 'beyoglu'],
+  'Istanbul':      ['sile', 'agva', 'bursa', 'yalova', 'sapanca', 'bosphorus', 'galata', 'sultanahmet', 'hagia sophia', 'grand bazaar', 'topkapi', 'princes islands', 'buyukada', 'kadikoy', 'ortakoy', 'beyoglu'],
   'Cappadocia':    ['goreme', 'urgup', 'avanos', 'uchisar', 'hot air balloon', 'fairy chimneys', 'underground city', 'derinkuyu', 'kaymakli'],
   'Izmir-Ephesus': ['ephesus', 'kusadasi', 'pergamon', 'selcuk', 'house of virgin mary', 'izmir', 'sirince'],
   'Pamukkale':     ['hierapolis', 'cotton castle', 'travertine', 'denizli', 'laodikeia', 'aphrodisias'],
@@ -170,6 +180,15 @@ export async function getToursFromSheet(): Promise<Tour[]> {
         if (pattern.test(title)) { badge = label; break; }
       }
 
+      // Compute extra sections this tour should appear in (besides its primary region)
+      const secondaryRegions: string[] = [];
+      for (const [pattern, extras] of MULTI_CATEGORY_OVERRIDES) {
+        if (pattern.test(title)) {
+          secondaryRegions.push(...extras.filter(r => r !== region));
+          break;
+        }
+      }
+
       const searchKeywords = [
         ...(REGION_KEYWORDS[region] ?? []),
         title.toLowerCase(),
@@ -183,7 +202,7 @@ export async function getToursFromSheet(): Promise<Tour[]> {
         startTime, endTime, durationStr, meals,
         includes, itinerary, highlights, notIncluded, whatToBring,
         shortDescription, metaDescription, coverImage, galleryImages, websiteUrl,
-        activeOnSite, duration, rating, reviews, image, badge, searchKeywords,
+        activeOnSite, duration, rating, reviews, image, badge, searchKeywords, secondaryRegions,
       };
     });
 

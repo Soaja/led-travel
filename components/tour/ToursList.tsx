@@ -106,6 +106,74 @@ function CardImageCarousel({ images, alt }: { images: string[]; alt: string }) {
 }
 
 // ---------------------------------------------------------------------------
+// FeaturedTourCard — editorial full-bleed style
+// ---------------------------------------------------------------------------
+function FeaturedTourCard({ tour, onClick }: { tour: Tour; onClick: () => void }) {
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      transition={{ duration: 0.4 }}
+      onClick={onClick}
+      className="relative rounded-3xl overflow-hidden cursor-pointer group aspect-[3/4] shadow-xl hover:shadow-2xl transition-shadow duration-500"
+    >
+      <Image
+        src={tour.image}
+        alt={tour.title}
+        fill
+        unoptimized
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+      {/* Badge */}
+      {tour.badge && (
+        <span className="absolute top-5 left-5 flex items-center gap-1.5 bg-white text-[11px] font-bold uppercase tracking-widest text-gray-900 px-3 py-1.5 rounded-full shadow-lg pointer-events-none">
+          <Sparkles className="w-3 h-3 text-[#E63946]" />
+          {tour.badge}
+        </span>
+      )}
+
+      {/* Rating */}
+      <div className="absolute top-5 right-5 flex items-center gap-1 bg-black/30 backdrop-blur-sm border border-white/20 text-white px-2.5 py-1 rounded-full text-sm font-bold pointer-events-none">
+        <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
+        {tour.rating}
+      </div>
+
+      {/* Bottom content */}
+      <div className="absolute inset-x-0 bottom-0 p-6">
+        <p className="text-white/60 text-xs mb-2 flex items-center gap-1.5">
+          <MapPin className="w-3 h-3" />{tour.region}
+          <span className="mx-0.5">·</span>
+          <Clock className="w-3 h-3" />{tour.duration}
+        </p>
+        <h3 className="text-white font-bold text-xl leading-snug mb-5 line-clamp-2">
+          {tour.title}
+        </h3>
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="text-white/50 text-[11px] uppercase tracking-wide">From</p>
+            <p className="text-white text-2xl font-bold leading-none">
+              {tour.price ? `€${tour.price}` : 'On request'}
+            </p>
+          </div>
+          <Link
+            href={`/tours/${tour.slug}`}
+            onClick={e => e.stopPropagation()}
+            className="flex items-center gap-2 bg-white text-gray-900 hover:bg-[#E63946] hover:text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 shadow-lg"
+          >
+            View <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // ToursList
 // ---------------------------------------------------------------------------
 const locations = [
@@ -121,19 +189,34 @@ const locations = [
 
 const ALLOWED_REGIONS = new Set(['Istanbul', 'Cappadocia', 'Pamukkale', 'Izmir-Ephesus', 'Antalya', 'Troy', 'Other Tours']);
 
-function scoreTour(tour: Tour, q: string): number {
-  const titleL  = tour.title.toLowerCase();
-  const regionL = tour.region.toLowerCase();
+// Normalize a string for fuzzy matching:
+// - lowercase
+// - treat & as a word separator (so "Sile & Agva" → "sile agva")
+// - treat hyphens/dashes as word separators (so "Izmir-Ephesus" → "izmir ephesus")
+// - collapse whitespace
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[&]/g, ' ')
+    .replace(/[-–—]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
-  if (titleL.startsWith(q))                                    return 100;
-  if (regionL.startsWith(q))                                   return 90;
-  if (titleL.includes(q))                                      return 70;
-  if (regionL.includes(q))                                     return 60;
-  if (tour.shortDescription?.toLowerCase().includes(q))        return 40;
-  if (tour.includes?.toLowerCase().includes(q))                return 35;
-  if (tour.highlights?.toLowerCase().includes(q))              return 30;
-  if (tour.searchKeywords?.some(kw => kw.startsWith(q)))       return 20;
-  if (tour.searchKeywords?.some(kw => kw.includes(q)))         return 10;
+function scoreTour(tour: Tour, rawQ: string): number {
+  const q         = normalize(rawQ);
+  const titleN    = normalize(tour.title);
+  const regionN   = normalize(tour.region);
+
+  if (titleN.startsWith(q))                                              return 100;
+  if (regionN.startsWith(q))                                             return 90;
+  if (titleN.includes(q))                                                return 70;
+  if (regionN.includes(q))                                               return 60;
+  if (normalize(tour.shortDescription ?? '').includes(q))               return 40;
+  if (normalize(tour.includes ?? '').includes(q))                        return 35;
+  if (normalize(tour.highlights ?? '').includes(q))                      return 30;
+  if (tour.searchKeywords?.some(kw => normalize(kw).startsWith(q)))     return 20;
+  if (tour.searchKeywords?.some(kw => normalize(kw).includes(q)))       return 10;
   return 0;
 }
 
@@ -144,6 +227,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   const qParam = searchParams.get('q');
   const [activeFilter, setActiveFilter] = useState(regionParam || 'All');
   const [query, setQuery] = useState(qParam || '');
+  const [debouncedQuery, setDebouncedQuery] = useState(qParam || '');
   const [isFocused, setIsFocused] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -151,6 +235,12 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   useEffect(() => {
     setActiveFilter(regionParam || 'All');
   }, [regionParam]);
+
+  // Debounce grid filtering so fast typing doesn't cause unnecessary re-renders
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(query), 200);
+    return () => clearTimeout(t);
+  }, [query]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -176,10 +266,10 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
       .slice(0, 7);
   }, [initialTours, query]);
 
-  // Tours shown in the main grid
+  // Tours shown in the main grid (uses debounced query to reduce flicker on fast typing)
   const filteredTours = useMemo(() => {
     const base = initialTours.filter(tour => ALLOWED_REGIONS.has(tour.region));
-    const q = query.trim().toLowerCase();
+    const q = debouncedQuery.trim();
     if (q && q.length >= 2) {
       return base
         .map(tour => ({ tour, score: scoreTour(tour, q) }))
@@ -187,8 +277,10 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
         .sort((a, b) => b.score - a.score)
         .map(({ tour }) => tour);
     }
-    return activeFilter === 'All' ? base : base.filter(t => t.region === activeFilter);
-  }, [initialTours, query, activeFilter]);
+    return activeFilter === 'All'
+      ? base
+      : base.filter(t => t.region === activeFilter || t.secondaryRegions?.includes(activeFilter));
+  }, [initialTours, debouncedQuery, activeFilter]);
 
   const handleQueryChange = (val: string) => {
     setQuery(val);
@@ -209,7 +301,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
 
   const showDropdown = isFocused;
   const destinations = locations.filter(l => l !== 'All');
-  const isSearching = query.trim().length >= 2;
+  const isSearching = debouncedQuery.trim().length >= 2;
   const featuredTours = !isSearching ? filteredTours.filter(t => t.badge) : [];
   const regularTours  = !isSearching ? filteredTours.filter(t => !t.badge) : filteredTours;
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Sparkles, HeartPulse, Send, CheckCircle2 } from 'lucide-react';
 
@@ -49,66 +50,70 @@ export default function Extras() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Card 1: Hammam */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col"
-          >
-            <div className="relative h-64 overflow-hidden">
-              <Image 
-                src="/images/hammam.jpg" 
-                alt="Traditional Turkish Hammam" 
-                fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-sm">
-                <Sparkles className="w-6 h-6 text-[#E63946]" />
+          <Link href="/extras/hammam" className="group block cursor-pointer">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+            >
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/hammam.jpg"
+                  alt="Traditional Turkish Hammam"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-sm">
+                  <Sparkles className="w-6 h-6 text-[#E63946]" />
+                </div>
               </div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Traditional Hammam</h3>
-              <p className="text-gray-600 mb-6 flex-grow">
-                Experience ultimate relaxation and cleansing in a historic, authentic Turkish bath. A centuries-old tradition for body and soul rejuvenation.
-              </p>
-              <a href="https://wa.me/905333811447" target="_blank" rel="noopener noreferrer" className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
-                Learn More <span className="text-xl">→</span>
-              </a>
-            </div>
-          </motion.div>
+              <div className="p-8 flex flex-col flex-grow">
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">Traditional Hammam</h3>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  Experience ultimate relaxation and cleansing in a historic, authentic Turkish bath. A centuries-old tradition for body and soul rejuvenation.
+                </p>
+                <span className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                  Learn More <span className="text-xl">→</span>
+                </span>
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Card 2: Aesthetic Surgery */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col"
-          >
-            <div className="relative h-64 overflow-hidden">
-              <Image 
-                src="/images/plastic.jpg" 
-                alt="Aesthetic & Medical Tourism" 
-                fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-sm">
-                <HeartPulse className="w-6 h-6 text-red-500" />
+          <Link href="/extras/clinics" className="group block cursor-pointer">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+            >
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/plastic.jpg"
+                  alt="Aesthetic & Medical Tourism"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-sm">
+                  <HeartPulse className="w-6 h-6 text-red-500" />
+                </div>
               </div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Aesthetic & Wellness</h3>
-              <p className="text-gray-600 mb-6 flex-grow">
-                World-class medical tourism in Turkey. We arrange top-tier hair transplants, dental care, and aesthetic procedures with trusted professionals.
-              </p>
-              <a href="https://wa.me/905333811447" target="_blank" rel="noopener noreferrer" className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
-                Learn More <span className="text-xl">→</span>
-              </a>
-            </div>
-          </motion.div>
+              <div className="p-8 flex flex-col flex-grow">
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">Aesthetic & Wellness</h3>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  World-class medical tourism in Turkey. We arrange top-tier hair transplants, dental care, and aesthetic procedures with trusted professionals.
+                </p>
+                <span className="text-[#E63946] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                  Learn More <span className="text-xl">→</span>
+                </span>
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Card 3: Custom Request (Interactive) */}
           <motion.div 
