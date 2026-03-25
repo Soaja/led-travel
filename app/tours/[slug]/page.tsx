@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { ChevronRight, Star, Clock, Users, MapPin, Check, X as XIcon, Map as MapIcon } from 'lucide-react';
+import { ChevronRight, Star, Clock, MapPin, Check, X as XIcon, Map as MapIcon } from 'lucide-react';
 import TourGallery from '@/components/tour/TourGallery';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
@@ -55,8 +55,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
   ];
   
   const description = tour.shortDescription || `Experience the best of ${tour.region} with our ${tour.title}. This premium tour is designed to give you an unforgettable experience.`;
-  const maxGroupSize = 8;
-  
+
   const itineraryItems = tour.itinerary
     ? tour.itinerary.split('|').map(i => i.trim()).filter(Boolean)
     : [];
@@ -162,10 +161,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
                 <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-5 h-5 text-[#E63946]" /> {tour.duration}
-                </div>
-                <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-                <div className="flex items-center gap-1.5">
-                  <Users className="w-5 h-5 text-[#E63946]" /> Max {maxGroupSize}
                 </div>
                 <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
                 <div className="flex items-center gap-1.5">

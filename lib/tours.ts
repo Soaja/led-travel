@@ -173,8 +173,11 @@ export async function getToursFromSheet(): Promise<Tour[]> {
 
       // Title-based badge overrides — takes priority over ID-based logic
       const BADGE_OVERRIDES: Array<[RegExp, string]> = [
-        [/sapanca/i,  'Most Liked'],
-        [/masukiye/i, 'Most Liked'],
+        [/sapanca/i,       'Most Liked'],
+        [/masukiye/i,      'Most Liked'],
+        [/princes island/i, 'Must Do'],
+        [/old city/i,      'Best Seller'],
+        [/green bursa/i,   'Most Liked'],
       ];
       for (const [pattern, label] of BADGE_OVERRIDES) {
         if (pattern.test(title)) { badge = label; break; }
