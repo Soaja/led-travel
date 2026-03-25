@@ -43,13 +43,22 @@ export default async function Home() {
     };
   });
 
-  const bestSellingTours = tours.slice(0, 4);
+  // Specific tours shown in the "Special Offers" section on the homepage
+  const SPECIAL_OFFER_PATTERNS = [
+    /sapanca/i,
+    /princes island/i,
+    /old city/i,
+    /green bursa/i,
+  ];
+  const specialOffers = SPECIAL_OFFER_PATTERNS
+    .map(pattern => tours.find(t => pattern.test(t.title)))
+    .filter(Boolean) as typeof tours;
 
   return (
     <>
       <Hero initialTours={tours} />
       <Destinations destinations={destinations} />
-      <Tours tours={bestSellingTours} />
+      <Tours tours={specialOffers} />
       <WhyUs />
       <Extras />
       <Reviews />
