@@ -607,7 +607,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                     <div className="min-w-0">
                       <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed">{review.text}</p>
                       <p className="text-xs font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
-                        {review.name} {review.flag}
+                        {review.name} {(review as any).flag}
                         <span className="text-yellow-400 ml-1">{'★'.repeat(review.stars)}</span>
                       </p>
                     </div>
