@@ -313,7 +313,16 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
   };
 
   const reviewPool = dbReviews.length > 0 ? dbReviews : STATIC_REVIEWS.map(r => ({ ...r, id: String(r.id), created_at: '' }));
-  const getReview = (idx: number) => reviewPool[idx % reviewPool.length];
+
+  // Pick a review that matches the tour's region; fall back to any review
+  const getReviewForTour = (tour: Tour, fallbackIdx: number) => {
+    const regionParts = normalize(tour.region).split(' ').filter(p => p.length > 3);
+    const matching = reviewPool.filter(r =>
+      regionParts.some(part => normalize(r.tour).includes(part))
+    );
+    if (matching.length > 0) return matching[fallbackIdx % matching.length];
+    return reviewPool[fallbackIdx % reviewPool.length];
+  };
 
   const showDropdown = isFocused;
   const destinations = locations.filter(l => l !== 'All');
@@ -472,7 +481,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
                   const images = tour.image && !gallery.includes(tour.image)
                     ? [tour.image, ...gallery]
                     : gallery.length > 0 ? gallery : [tour.image];
-                  const review = getReview(idx);
+                  const review = getReviewForTour(tour, idx);
 
                   return (
                     <motion.div
@@ -563,7 +572,7 @@ export default function ToursList({ initialTours }: { initialTours: Tour[] }) {
             const images = tour.image && !gallery.includes(tour.image)
               ? [tour.image, ...gallery]
               : gallery.length > 0 ? gallery : [tour.image];
-            const review = getReview(featuredTours.length + idx);
+            const review = getReviewForTour(tour, featuredTours.length + idx);
 
             return (
               <motion.div
