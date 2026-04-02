@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Sparkles, Droplets, Clock, Star } from 'lucide-react';
+import { ChevronRight, Sparkles, Droplets, Clock, Star, MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Traditional Hammam | LED Travel',
@@ -48,9 +48,10 @@ export default function HammamPage() {
           <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
             ■ Exclusive Extra
           </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 leading-tight">
             Traditional<br />Turkish Hammam
           </h1>
+          <p className="text-white/60 text-base font-medium mb-6">at <span className="text-white font-bold">Rumeli Hammam</span></p>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl">
             Step into a centuries-old ritual of steam, marble, and deep cleansing. The hammam is not just a bath — it is a social and spiritual ceremony that has shaped Turkish culture for generations.
           </p>
@@ -95,14 +96,21 @@ export default function HammamPage() {
               </ul>
             </div>
 
-            {/* Second image */}
-            <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src="/images/hammam.jpg"
-                alt="Marble interior of a traditional Turkish hammam"
-                fill
-                className="object-cover"
-              />
+            {/* Photo gallery */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-5">Inside Rumeli Hammam</h2>
+              <div className="grid grid-cols-3 gap-2.5">
+                {['h1','h2','h3','h4','h5','h6'].map((img, i) => (
+                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden shadow-sm group">
+                    <Image
+                      src={`/images/${img}.jpeg`}
+                      alt={`Rumeli Hammam photo ${i + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -128,6 +136,21 @@ export default function HammamPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Location card */}
+              <div className="bg-white border border-gray-100 rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Location</h3>
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-gray-800 mb-1">Rumeli Hammam</p>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Küçük Ayasofya, Küçük Ayasofya Cd. No:68/A<br />
+                      34122 Fatih / İstanbul
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* CTA card */}
