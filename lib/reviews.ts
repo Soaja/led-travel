@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore, unstable_cache } from 'next/cache';
 
 export type DbReview = {
   id: string;
@@ -42,44 +42,52 @@ function shuffleArray<T>(array: T[]): T[] {
   return array;
 }
 
-export async function getReviewsByRegion(region: string): Promise<DbReview[]> {
-  const keywords = REGION_KEYWORDS[region.toLowerCase()] ?? [];
-  if (keywords.length === 0) return [];
+export const getReviewsByRegion = unstable_cache(
+  async (region: string): Promise<DbReview[]> => {
+    const keywords = REGION_KEYWORDS[region.toLowerCase()] ?? [];
+    if (keywords.length === 0) return [];
 
-  const orFilter = keywords.map(k => `tour.ilike.%${k}%`).join(',');
+    const orFilter = keywords.map(k => `tour.ilike.%${k}%`).join(',');
 
-  const { data } = await supabase
-    .from('reviews')
-    .select('id, name, tour, text, stars, created_at')
-    .or(orFilter)
-    .order('created_at', { ascending: false });
+    const { data } = await supabase
+      .from('reviews')
+      .select('id, name, tour, text, stars, created_at')
+      .or(orFilter)
+      .order('created_at', { ascending: false });
 
-  return data ?? [];
-}
+    return data ?? [];
+  },
+  ['reviews-by-region'],
+  { revalidate: 300, tags: ['reviews'] }
+);
 
-export async function getRegionSummaries() {
-  const { data: allReviews } = await supabase
-    .from('reviews')
-    .select('id, name, tour, text, stars, created_at')
-    .order('created_at', { ascending: false });
+export const getRegionSummaries = unstable_cache(
+  async () => {
+    const { data: allReviews } = await supabase
+      .from('reviews')
+      .select('id, name, tour, text, stars, created_at')
+      .order('created_at', { ascending: false });
 
-  const reviews: DbReview[] = allReviews ?? [];
+    const reviews: DbReview[] = allReviews ?? [];
 
-  return REGIONS.map(region => {
-    const regionReviews = reviews.filter(r =>
-      slugMatchesRegion(r.tour, region.slug)
-    );
+    return REGIONS.map(region => {
+      const regionReviews = reviews.filter(r =>
+        slugMatchesRegion(r.tour, region.slug)
+      );
 
-    const count = regionReviews.length;
-    const avgRating =
-      count > 0
-        ? regionReviews.reduce((sum, r) => sum + r.stars, 0) / count
-        : 0;
-    const latestReview = regionReviews[0] ?? null;
+      const count = regionReviews.length;
+      const avgRating =
+        count > 0
+          ? regionReviews.reduce((sum, r) => sum + r.stars, 0) / count
+          : 0;
+      const latestReview = regionReviews[0] ?? null;
 
-    return { region: region.name, slug: region.slug, image: region.image, count, avgRating, latestReview };
-  });
-}
+      return { region: region.name, slug: region.slug, image: region.image, count, avgRating, latestReview };
+    });
+  },
+  ['region-summaries'],
+  { revalidate: 300, tags: ['reviews'] }
+);
 
 export async function getReviewsForTour(slug: string): Promise<DbReview[]> {
   noStore();

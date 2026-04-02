@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Star, MessageSquare, ChevronRight } from 'lucide-react';
 import ReviewForm from '@/components/ReviewForm';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Reviews by Destination | LED Travel',
