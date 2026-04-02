@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, HeartPulse, ShieldCheck, Star, Stethoscope } from 'lucide-react';
+import { ChevronRight, HeartPulse, ShieldCheck, Star, Stethoscope, MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Aesthetic & Wellness Clinics | LED Travel',
@@ -57,9 +57,10 @@ export default function ClinicsPage() {
           <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
             ■ Exclusive Extra
           </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 leading-tight">
             Aesthetic &amp;<br />Wellness Clinics
           </h1>
+          <p className="text-white/60 text-base font-medium mb-6">at <span className="text-white font-bold">Valley Clinic</span></p>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl">
             Turkey is one of the world&apos;s leading destinations for medical tourism — outstanding outcomes, internationally accredited clinics, and costs a fraction of Western Europe. We make it seamless.
           </p>
@@ -97,14 +98,40 @@ export default function ClinicsPage() {
               </div>
             </div>
 
-            {/* Second image */}
-            <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src="/images/plastic.jpg"
-                alt="Specialist medical consultation at a Turkish aesthetic clinic"
-                fill
-                className="object-cover"
-              />
+            {/* Photo gallery */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-5">Inside Valley Clinic</h2>
+
+              {/* Featured clinic photo */}
+              <div className="relative h-56 rounded-2xl overflow-hidden shadow-sm mb-2.5 group">
+                <Image
+                  src="https://valleyclinicturkiye.com/wp-content/uploads/2023/06/Valley-Clinic.png"
+                  alt="Valley Clinic Istanbul"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Procedure grid */}
+              <div className="grid grid-cols-3 gap-2.5">
+                {[
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2022/02/service12-570x385.jpg',
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2023/04/sac-ekimi-greft.jpg',
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2023/04/sac-ekimi-nedir-ve-nasil-yapilir-10461_b.jpg',
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2023/04/safirfue.jpg',
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2023/04/burunestetigi.jpg',
+                  'https://valleyclinicturkiye.com/wp-content/uploads/2023/04/lazer-liposuction-izmir.jpg',
+                ].map((src, i) => (
+                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden shadow-sm group">
+                    <Image
+                      src={src}
+                      alt={`Valley Clinic procedure ${i + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -154,6 +181,22 @@ export default function ClinicsPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Location card */}
+              <div className="bg-white border border-gray-100 rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Location</h3>
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-gray-800 mb-1">Valley Clinic</p>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Oz Altin Is Merkezi, Şirinevler<br />
+                      Meriç Sk No:16 Bahçelievler<br />
+                      34144 Bahçelievler / İstanbul
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* CTA card */}
