@@ -101,13 +101,13 @@ export default function HammamPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-5">Inside Rumeli Hammam</h2>
               <div className="grid grid-cols-3 gap-2.5">
                 {['h1','h2','h3','h4','h5','h6'].map((img, i) => (
-                  <div key={i} className="relative h-44 rounded-xl overflow-hidden shadow-sm group">
+                  <div key={i} className="rounded-xl overflow-hidden shadow-sm group">
                     <Image
                       src={`/images/${img}.jpeg`}
                       alt={`Rumeli Hammam photo ${i + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 33vw, 22vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      width={400}
+                      height={300}
+                      className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 ))}
