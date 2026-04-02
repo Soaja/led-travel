@@ -6,7 +6,7 @@ import { ChevronRight, Star, Clock, MapPin, Check, X as XIcon, Map as MapIcon } 
 import TourGallery from '@/components/tour/TourGallery';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
-import { getReviewsForTour } from '@/lib/reviews';
+import { getReviewsForTour, REGION_KEYWORDS } from '@/lib/reviews';
 
 export const dynamic = 'force-dynamic';
 
@@ -95,6 +95,11 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
       url: 'https://ledtravel.com'
     }
   };
+
+  // Derive the review region slug from the tour slug
+  const reviewRegionSlug = Object.keys(REGION_KEYWORDS).find(regionSlug =>
+    REGION_KEYWORDS[regionSlug].some(k => tour.slug.toLowerCase().includes(k))
+  ) ?? 'istanbul';
 
   // Fetch reviews and all tours in parallel
   const [guestReviews, allTours] = await Promise.all([
@@ -271,7 +276,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         <div className="mt-20 border-t border-gray-200 pt-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Guest Reviews</h2>
-            <Link href="/reviews" className="text-[#E63946] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
+            <Link href={`/reviews/${reviewRegionSlug}`} className="text-[#E63946] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -294,7 +299,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               </div>
             ))}
           </div>
-          <Link href="/reviews" className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
+          <Link href={`/reviews/${reviewRegionSlug}`} className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
         </div>
 
         {/* Related Tours */}
