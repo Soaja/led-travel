@@ -36,9 +36,15 @@ export default async function ReviewsPage() {
       <div className="container mx-auto px-4 md:px-6">
 
         {/* Leave a Review form */}
-        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 mb-16 border border-gray-100 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-[#E63946]" />
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 mb-20 border border-gray-100 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-[#E63946]" />
           <ReviewForm />
+        </div>
+
+        {/* Section heading */}
+        <div className="flex items-center gap-4 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 whitespace-nowrap">Reviews by Destination</h2>
+          <div className="flex-1 h-px bg-gray-200" />
         </div>
 
         {/* Destination cards */}
