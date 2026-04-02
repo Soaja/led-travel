@@ -2,6 +2,7 @@ import { getRegionSummaries } from '@/lib/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star, MessageSquare, ChevronRight } from 'lucide-react';
+import ReviewForm from '@/components/ReviewForm';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,6 +34,14 @@ export default async function ReviewsPage() {
       </div>
 
       <div className="container mx-auto px-4 md:px-6">
+
+        {/* Leave a Review form */}
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 mb-16 border border-gray-100 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-[#E63946]" />
+          <ReviewForm />
+        </div>
+
+        {/* Destination cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {summaries.map(({ region, slug, image, count, avgRating, latestReview }) => (
             <Link key={slug} href={`/reviews/${slug}`} className="group block">
