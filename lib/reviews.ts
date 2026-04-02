@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export type DbReview = {
   id: string;
@@ -9,6 +10,30 @@ export type DbReview = {
   created_at: string;
 };
 
+export const REGION_KEYWORDS: Record<string, string[]> = {
+  istanbul: ['istanbul'],
+  cappadocia: ['cappadocia', 'balloon', 'cave', 'classic-car', 'dervish', 'quad', 'photographer', 'salt-lake', 'konya'],
+  ephesus: ['ephesus'],
+  pamukkale: ['pamukkale'],
+  antalya: ['antalya', 'alanya', 'perge', 'aspendos', 'termessos', 'sagalassos', 'suluada', 'canyon', 'demre'],
+  'eastern-turkey': ['trabzon', 'sumela', 'ayder', 'pokut', 'borkca', 'firtina', 'blue-lake', 'hidirnebi', 'kayabasi', 'uzungol'],
+};
+
+export const REGIONS = [
+  { name: 'Istanbul', slug: 'istanbul', image: '/images/1.webp' },
+  { name: 'Cappadocia', slug: 'cappadocia', image: '/images/2.avif' },
+  { name: 'Ephesus', slug: 'ephesus', image: '/images/4.jpg' },
+  { name: 'Pamukkale', slug: 'pamukkale', image: '/images/3.jpg' },
+  { name: 'Antalya', slug: 'antalya', image: '/images/6.webp' },
+  { name: 'Eastern Turkey', slug: 'eastern-turkey', image: '/images/8.jpeg' },
+];
+
+function slugMatchesRegion(tourSlug: string, regionSlug: string): boolean {
+  const keywords = REGION_KEYWORDS[regionSlug] ?? [];
+  const lower = tourSlug.toLowerCase();
+  return keywords.some(k => lower.includes(k));
+}
+
 function shuffleArray<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -17,8 +42,53 @@ function shuffleArray<T>(array: T[]): T[] {
   return array;
 }
 
+export async function getReviewsByRegion(region: string): Promise<DbReview[]> {
+  const keywords = REGION_KEYWORDS[region.toLowerCase()] ?? [];
+  if (keywords.length === 0) return [];
+
+  const orFilter = keywords.map(k => `tour.ilike.%${k}%`).join(',');
+
+  const { data } = await supabase
+    .from('reviews')
+    .select('id, name, tour, text, stars, created_at')
+    .or(orFilter)
+    .order('created_at', { ascending: false });
+
+  return data ?? [];
+}
+
+export async function getRegionSummaries() {
+  const { data: allReviews } = await supabase
+    .from('reviews')
+    .select('id, name, tour, text, stars, created_at')
+    .order('created_at', { ascending: false });
+
+  const reviews: DbReview[] = allReviews ?? [];
+
+  return REGIONS.map(region => {
+    const regionReviews = reviews.filter(r =>
+      slugMatchesRegion(r.tour, region.slug)
+    );
+
+    const count = regionReviews.length;
+    const avgRating =
+      count > 0
+        ? regionReviews.reduce((sum, r) => sum + r.stars, 0) / count
+        : 0;
+    const latestReview = regionReviews[0] ?? null;
+
+    return { region: region.name, slug: region.slug, image: region.image, count, avgRating, latestReview };
+  });
+}
+
 export async function getReviewsForTour(slug: string): Promise<DbReview[]> {
-  // 1. Fetch up to 20 reviews for this tour, shuffle, take 3
+  noStore();
+
+  const regionSlug = Object.keys(REGION_KEYWORDS).find(r =>
+    slugMatchesRegion(slug, r)
+  );
+
+  // 1. Fetch up to 20 reviews for this specific tour, shuffle, take 3
   const { data: tourReviews } = await supabase
     .from('reviews')
     .select('id, name, tour, text, stars, created_at')
@@ -27,20 +97,24 @@ export async function getReviewsForTour(slug: string): Promise<DbReview[]> {
 
   const picked = shuffleArray<DbReview>(tourReviews ?? []).slice(0, 3);
 
-  // 2. Fill remaining spots with shuffled reviews from other tours
-  if (picked.length < 3) {
+  // 2. Fill remaining spots with reviews from the same region
+  if (picked.length < 3 && regionSlug) {
+    const keywords = REGION_KEYWORDS[regionSlug];
+    const orFilter = keywords.map(k => `tour.ilike.%${k}%`).join(',');
     const pickedIds = new Set(picked.map(r => r.id));
-    const { data: others } = await supabase
+
+    const { data: regionReviews } = await supabase
       .from('reviews')
       .select('id, name, tour, text, stars, created_at')
+      .or(orFilter)
       .neq('tour', slug)
       .limit(20);
 
-    const shuffledOthers = shuffleArray<DbReview>(others ?? [])
+    const shuffledRegion = shuffleArray<DbReview>(regionReviews ?? [])
       .filter(r => !pickedIds.has(r.id))
       .slice(0, 3 - picked.length);
 
-    picked.push(...shuffledOthers);
+    picked.push(...shuffledRegion);
   }
 
   // 3. Final fallback: static reviews if Supabase returned nothing
