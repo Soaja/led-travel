@@ -5,12 +5,12 @@ import { Star, Send, CheckCircle2, MapPin, ChevronDown, User } from 'lucide-reac
 import { supabase } from '@/lib/supabase';
 
 const LOCATIONS = [
-  { label: 'Istanbul',       value: 'istanbul'   },
-  { label: 'Cappadocia',     value: 'cappadocia' },
-  { label: 'Ephesus',        value: 'ephesus'    },
-  { label: 'Pamukkale',      value: 'pamukkale'  },
-  { label: 'Antalya',        value: 'antalya'    },
-  { label: 'Eastern Turkey', value: 'trabzon'    },
+  { label: 'Istanbul',       value: 'istanbul'        },
+  { label: 'Cappadocia',     value: 'cappadocia'      },
+  { label: 'Ephesus',        value: 'ephesus'         },
+  { label: 'Pamukkale',      value: 'pamukkale'       },
+  { label: 'Antalya',        value: 'antalya'         },
+  { label: 'Eastern Turkey', value: 'eastern-turkey'  },
 ];
 
 const STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'];
@@ -37,9 +37,17 @@ export default function ReviewForm() {
     setError('');
 
     try {
+      const destinationLabel = LOCATIONS.find((l) => l.value === location)?.label || location;
       const { error: supabaseError } = await supabase
         .from('reviews')
-        .insert([{ name, tour: location, text, stars: rating }]);
+        .insert([{
+          tour_slug: location,
+          destination: destinationLabel,
+          author: name,
+          rating,
+          comment: text,
+          approved: true,
+        }]);
 
       if (supabaseError) throw supabaseError;
 

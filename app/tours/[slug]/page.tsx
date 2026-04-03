@@ -6,7 +6,7 @@ import { ChevronRight, Star, Clock, MapPin, Check, X as XIcon, Map as MapIcon } 
 import TourGallery from '@/components/tour/TourGallery';
 import BookingCard from '@/components/tour/BookingCard';
 import { getTourBySlug, getToursFromSheet } from '@/lib/tours';
-import { getReviewsForTour, REGION_KEYWORDS } from '@/lib/reviews';
+import { getReviewsForTour } from '@/lib/reviews';
 
 export const dynamic = 'force-dynamic';
 
@@ -96,14 +96,14 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
     }
   };
 
-  // Derive the review region slug from the tour slug
-  const reviewRegionSlug = Object.keys(REGION_KEYWORDS).find(regionSlug =>
-    REGION_KEYWORDS[regionSlug].some(k => tour.slug.toLowerCase().includes(k))
-  ) ?? 'istanbul';
+  // Derive the destination slug for the reviews link
+  const destinationSlug = tour.destination
+    ? tour.destination.toLowerCase().replace(/\s+/g, '-')
+    : 'istanbul';
 
   // Fetch reviews and all tours in parallel
   const [guestReviews, allTours] = await Promise.all([
-    getReviewsForTour(tour.slug),
+    getReviewsForTour(tour.slug, tour.destination || ''),
     getToursFromSheet(),
   ]);
   const relatedTours = allTours
@@ -276,30 +276,30 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
         <div className="mt-20 border-t border-gray-200 pt-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Guest Reviews</h2>
-            <Link href={`/reviews/${reviewRegionSlug}`} className="text-[#E63946] font-bold hover:underline hidden md:block">Read all 128 reviews →</Link>
+            <Link href={`/reviews/${destinationSlug}`} className="text-[#E63946] font-bold hover:underline hidden md:block">Read all reviews →</Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {guestReviews.map((review) => (
               <div key={review.id} className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
                 <div className="flex text-yellow-400 mb-3">
-                  {[...Array(Math.min(Math.max(review.stars, 1), 5))].map((_, i) => (
+                  {Array.from({ length: Math.min(Math.max(review.rating, 1), 5) }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;{review.text}&quot;</p>
+                <p className="text-gray-700 italic mb-6 line-clamp-4">&quot;{review.comment}&quot;</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#E63946]/10 flex items-center justify-center shrink-0">
                     <span className="text-[#E63946] font-bold text-sm">
-                      {review.name.charAt(0).toUpperCase()}
+                      {review.author.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                  <div className="font-bold text-sm text-gray-900">{review.name}</div>
+                  <div className="font-bold text-sm text-gray-900">{review.author}</div>
                 </div>
               </div>
             ))}
           </div>
-          <Link href={`/reviews/${reviewRegionSlug}`} className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all 128 reviews →</Link>
+          <Link href={`/reviews/${destinationSlug}`} className="text-[#E63946] font-bold hover:underline mt-6 md:hidden block text-center">Read all reviews →</Link>
         </div>
 
         {/* Related Tours */}

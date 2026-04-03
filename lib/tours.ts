@@ -4,6 +4,7 @@ export interface Tour {
   id: string;
   slug: string;
   region: string;
+  destination: string;  // review destination name (Istanbul, Cappadocia, Ephesus, Pamukkale, Antalya, Eastern Turkey)
   title: string;
   price: number | null;
   priceNote: string;
@@ -63,6 +64,18 @@ const ALLOWED_DESTINATIONS = [
   'Other Tours',
 ];
 
+// Maps raw Destination column (col 1) to the reviews system's canonical destination name
+const REVIEW_DEST_MAP: Record<string, string> = {
+  'istanbul': 'Istanbul',
+  'cappadocia': 'Cappadocia',
+  'ephesus': 'Ephesus',
+  'izmir-ephesus': 'Ephesus',
+  'izmir': 'Ephesus',
+  'pamukkale': 'Pamukkale',
+  'antalya': 'Antalya',
+  'eastern turkey': 'Eastern Turkey',
+};
+
 // Maps legacy/sheet values to canonical display names
 const REGION_ALIASES: Record<string, string> = {
   'ephesus':        'Izmir-Ephesus',
@@ -114,7 +127,9 @@ export async function getToursFromSheet(): Promise<Tour[]> {
 
     const tours: Tour[] = dataRows.map((row) => {
       const id          = row[0]  || '';
-      let   region      = row[1]  || '';
+      const rawDest     = (row[1]  || '').trim();
+      let   region      = rawDest;
+      const destination = REVIEW_DEST_MAP[rawDest.toLowerCase()] || '';
       const title       = row[3]  || '';
       const priceStr    = row[4]  || '';
       const priceNote   = row[5]  || '';
@@ -208,7 +223,7 @@ export async function getToursFromSheet(): Promise<Tour[]> {
       ].join(' ').split(/\s+/).filter(Boolean);
 
       return {
-        id, slug, region, title, price, priceNote,
+        id, slug, region, destination, title, price, priceNote,
         startTime, endTime, durationStr, meals,
         includes, itinerary, highlights, notIncluded, whatToBring,
         shortDescription, metaDescription, coverImage, galleryImages, websiteUrl,
