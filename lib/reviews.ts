@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { STATIC_REVIEWS_MAP } from '@/lib/staticReviews';
 
 export type Review = {
   id: string;
@@ -120,17 +121,32 @@ export async function getAllReviewsMap(): Promise<
     .select('tour_slug, author, comment, rating')
     .eq('approved', true);
 
-  const reviews = data ?? [];
-  const grouped: Record<string, typeof reviews> = {};
-  for (const r of reviews) {
+  // Group DB reviews by tour slug
+  const dbReviews = data ?? [];
+  const grouped: Record<string, { author: string; comment: string; rating: number }[]> = {};
+  for (const r of dbReviews) {
     if (!grouped[r.tour_slug]) grouped[r.tour_slug] = [];
-    grouped[r.tour_slug].push(r);
+    grouped[r.tour_slug].push({ author: r.author, comment: r.comment, rating: r.rating });
   }
 
+  // Build final map: prefer DB reviews, fall back to static pool
   const map: Record<string, { author: string; comment: string; rating: number }> = {};
-  for (const [slug, group] of Object.entries(grouped)) {
-    const pick = group[Math.floor(Math.random() * group.length)];
-    map[slug] = { author: pick.author, comment: pick.comment, rating: pick.rating };
+
+  // Cover all slugs present in either DB or static map
+  const allSlugs = new Set([
+    ...Object.keys(grouped),
+    ...Object.keys(STATIC_REVIEWS_MAP),
+  ]);
+
+  for (const slug of allSlugs) {
+    const pool = grouped[slug]?.length
+      ? grouped[slug]
+      : STATIC_REVIEWS_MAP[slug] ?? [];
+
+    if (pool.length === 0) continue;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    map[slug] = pick;
   }
+
   return map;
 }
