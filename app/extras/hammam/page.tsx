@@ -4,9 +4,15 @@ import Link from 'next/link';
 import { ChevronRight, Sparkles, Droplets, Clock, Star, MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Traditional Hammam | LED Travel',
+  title: 'Traditional Hammam',
   description:
     'Experience the centuries-old tradition of the Turkish hammam — a ritual of steam, marble, and deep cleansing that renews body and soul.',
+  openGraph: {
+    title: 'Traditional Turkish Hammam | LED Travel',
+    description: 'Experience the centuries-old tradition of the Turkish hammam — a ritual of steam, marble, and deep cleansing.',
+    images: [{ url: '/images/1.webp', width: 1200, height: 630, alt: 'Traditional Turkish Hammam' }],
+  },
+  alternates: { canonical: '/extras/hammam' },
 };
 
 const highlights = [

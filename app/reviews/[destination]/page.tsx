@@ -17,10 +17,19 @@ const SLUG_TO_DESTINATION: Record<string, string> = {
 export async function generateMetadata({ params }: { params: Promise<{ destination: string }> }) {
   const { destination: slug } = await params;
   const destination = SLUG_TO_DESTINATION[slug];
-  if (!destination) return { title: 'Reviews | LED Travel' };
+  if (!destination) return { title: 'Reviews' };
+  const description = `Read verified traveler reviews for ${destination} tours by LED Travel. See why travelers love our private ${destination} experiences.`;
   return {
-    title: `${destination} Reviews | LED Travel`,
-    description: `Read verified traveler reviews for ${destination} tours by LED Travel.`,
+    title: `${destination} Reviews`,
+    description,
+    openGraph: {
+      title: `${destination} Reviews | LED Travel`,
+      description,
+      images: [{ url: '/images/1.webp', width: 1200, height: 630, alt: `${destination} Tours – LED Travel` }],
+    },
+    alternates: {
+      canonical: `/reviews/${slug}`,
+    },
   };
 }
 

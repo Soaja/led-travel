@@ -27,9 +27,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const description = tour.shortDescription || tour.includes || `Experience ${tour.title} with LED Travel.`;
+
   return {
-    title: `${tour.title} | LED Travel`,
-    description: tour.includes || `Experience ${tour.title} with LED Travel.`,
+    title: tour.title,
+    description,
+    openGraph: {
+      title: `${tour.title} | LED Travel`,
+      description,
+      images: tour.image ? [{ url: tour.image, width: 1200, height: 630, alt: tour.title }] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${tour.title} | LED Travel`,
+      description,
+      images: tour.image ? [tour.image] : [],
+    },
+    alternates: {
+      canonical: `/tours/${slug}`,
+    },
   };
 }
 
@@ -79,21 +96,28 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
     '@type': 'TouristTrip',
     name: tour.title,
     description: description,
-    touristType: [
-      "Private",
-      "Small Group"
-    ],
+    url: `https://ledtravel.net/tours/${tour.slug}`,
+    image: tour.image || undefined,
+    touristType: ['Private', 'Small Group'],
     offers: {
       '@type': 'Offer',
       price: tour.price || 0,
       priceCurrency: 'EUR',
       availability: 'https://schema.org/InStock',
+      url: `https://ledtravel.net/tours/${tour.slug}`,
     },
     provider: {
-      '@type': 'Organization',
+      '@type': 'TravelAgency',
       name: 'LED Travel',
-      url: 'https://ledtravel.com'
-    }
+      url: 'https://ledtravel.net',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Alemdar, Yerebatan caddesi No.30',
+        addressLocality: 'Fatih / İstanbul',
+        addressCountry: 'TR',
+      },
+    },
+    ...(tour.duration ? { duration: tour.duration } : {}),
   };
 
   // Derive the destination slug for the reviews link

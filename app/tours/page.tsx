@@ -5,8 +5,14 @@ import { getToursFromSheet } from '@/lib/tours';
 import { getAllReviewsMap } from '@/lib/reviews';
 
 export const metadata: Metadata = {
-  title: 'All Tours | LED Travel',
+  title: 'All Tours',
   description: 'Explore our premium private tours across Turkey. Filter by destination and find your perfect experience.',
+  openGraph: {
+    title: 'All Tours | LED Travel',
+    description: 'Explore our premium private tours across Turkey — Istanbul, Cappadocia, Ephesus, Pamukkale, Antalya and more.',
+    images: [{ url: '/images/2.avif', width: 1200, height: 630, alt: 'LED Travel Tours' }],
+  },
+  alternates: { canonical: '/tours' },
 };
 
 export default async function ToursPage() {

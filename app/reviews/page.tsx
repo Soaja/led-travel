@@ -7,8 +7,14 @@ import ReviewForm from '@/components/ReviewForm';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Reviews by Destination | LED Travel',
+  title: 'Reviews by Destination',
   description: 'Read verified traveler reviews for Istanbul, Cappadocia, Ephesus, Pamukkale, Antalya and Eastern Turkey tours.',
+  openGraph: {
+    title: 'Traveler Reviews | LED Travel',
+    description: 'Read verified traveler reviews for Istanbul, Cappadocia, Ephesus, Pamukkale, Antalya and Eastern Turkey tours.',
+    images: [{ url: '/images/1.webp', width: 1200, height: 630, alt: 'LED Travel Reviews' }],
+  },
+  alternates: { canonical: '/reviews' },
 };
 
 const DESTINATION_IMAGES: Record<string, string> = {

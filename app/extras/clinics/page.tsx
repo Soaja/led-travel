@@ -4,9 +4,15 @@ import Link from 'next/link';
 import { ChevronRight, HeartPulse, ShieldCheck, Star, Stethoscope, MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Aesthetic & Wellness Clinics | LED Travel',
+  title: 'Aesthetic & Wellness Clinics',
   description:
     'World-class aesthetic and medical tourism in Turkey. Hair transplants, dental care, and cosmetic procedures arranged through trusted, accredited clinics.',
+  openGraph: {
+    title: 'Aesthetic & Wellness Clinics | LED Travel',
+    description: 'World-class aesthetic and medical tourism in Turkey. Hair transplants, dental care, and cosmetic procedures.',
+    images: [{ url: '/images/1.webp', width: 1200, height: 630, alt: 'Aesthetic & Wellness Clinics Turkey' }],
+  },
+  alternates: { canonical: '/extras/clinics' },
 };
 
 const services = [
