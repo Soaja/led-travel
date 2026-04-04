@@ -8,7 +8,7 @@ const teamMembers = [
   {
     name: 'Kadir Kılgı',
     role: 'Owner & Founder',
-    email: 'kadir@ledtravel.net',
+    email: 'info@ledtravel.net',
     image: '/images/aboutus3.webp',
     description: 'Visionary leader with a passion for showcasing the authentic beauty of Turkey to the world.'
   },

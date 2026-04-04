@@ -69,7 +69,7 @@ export default function ContactPage() {
               <Mail className="w-6 h-6 text-[#E63946] group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Email Us</h3>
-            <a href="mailto:kadir@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">kadir@ledtravel.net</a>
+            <a href="mailto:info@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">info@ledtravel.net</a>
             <a href="mailto:lara@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">lara@ledtravel.net</a>
             <a href="mailto:murat@ledtravel.net" className="text-gray-600 hover:text-[#E63946] transition-colors block mb-1">murat@ledtravel.net</a>
             <p className="text-sm text-gray-500 mt-2">We reply within 24 hours</p>

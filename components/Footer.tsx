@@ -108,7 +108,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
                 <div className="flex flex-col gap-1">
                   <a href="mailto:lara@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">lara@ledtravel.net</a>
-                  <a href="mailto:kadir@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">kadir@ledtravel.net</a>
+                  <a href="mailto:info@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">info@ledtravel.net</a>
                   <a href="mailto:murat@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">murat@ledtravel.net</a>
                 </div>
               </li>
