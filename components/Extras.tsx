@@ -12,24 +12,33 @@ export default function Extras() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!requestText || !email) return;
-    
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, message: requestText }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        console.error('Submission error:', data.error);
+      } else {
+        setIsSuccess(true);
+        setRequestText('');
+        setEmail('');
+        setTimeout(() => setIsSuccess(false), 5000);
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      setRequestText('');
-      setEmail('');
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 5000);
-    }, 1000);
+    }
   };
 
   return (
