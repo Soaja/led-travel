@@ -108,7 +108,7 @@ export default function AboutPage() {
             className="relative h-[600px] rounded-3xl overflow-hidden"
           >
             <Image
-              src="https://hellostambul.ru/wp-content/uploads/2020/06/%D0%9E%D1%80%D1%82%D0%B0%D0%BA%D1%91%D0%B9-by-Meri%C3%A7-Da%C4%9F%C4%B1-on-Unsplash.jpg"
+              src="/images/aboutus1.webp"
               alt="More than just a tour agency"
               fill
               className="object-cover"
