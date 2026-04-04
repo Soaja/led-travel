@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin as supabase } from '@/lib/supabaseAdmin';
 import { STATIC_REVIEWS_MAP } from '@/lib/staticReviews';
 
 export type Review = {
