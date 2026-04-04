@@ -15,7 +15,7 @@ const DESTINATION_IMAGES: Record<string, string> = {
   Istanbul: 'https://itisturkey.com/wp-content/uploads/2023/01/Istanbul-old-city.jpg',
   Cappadocia: 'https://itisturkey.com/wp-content/uploads/2023/01/HOT-AIR-BALOON-TOUR_cappadocia_1.jpg',
   Ephesus: 'https://itisturkey.com/wp-content/uploads/2023/04/ephesus-Kapak.jpg',
-  Pamukkale: 'https://itisturkey.com/wp-content/uploads/2023/04/pamukkale.jpg',
+  Pamukkale: '/images/3.jpg',
   Antalya: 'https://itisturkey.com/wp-content/uploads/2023/04/antalya-Kapak.jpg',
   'Eastern Turkey': 'https://itisturkey.com/wp-content/uploads/2023/04/trabzon-Kapak.jpg',
 };
