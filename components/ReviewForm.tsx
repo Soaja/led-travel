@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Star, Send, CheckCircle2, MapPin, ChevronDown, User } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 
 const LOCATIONS = [
   { label: 'Istanbul',       value: 'istanbul'        },
@@ -16,6 +16,7 @@ const LOCATIONS = [
 const STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'];
 
 export default function ReviewForm() {
+  const router = useRouter();
   const [rating, setRating]               = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isSubmitted, setIsSubmitted]     = useState(false);
@@ -30,29 +31,30 @@ export default function ReviewForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating === 0)   { setError('Please select a star rating.');    return; }
-    if (!location)      { setError('Please select a destination.');     return; }
+    if (rating === 0) { setError('Please select a star rating.'); return; }
+    if (!location)    { setError('Please select a destination.');  return; }
 
     setIsSubmitting(true);
     setError('');
 
     try {
-      const destinationLabel = LOCATIONS.find((l) => l.value === location)?.label || location;
-      const { error: supabaseError } = await supabase
-        .from('reviews')
-        .insert([{
-          tour_slug: location,
-          destination: destinationLabel,
-          author: name,
-          rating,
-          comment: text,
-          approved: true,
-        }]);
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, location, text, rating }),
+      });
 
-      if (supabaseError) throw supabaseError;
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to submit.');
 
       setIsSubmitted(true);
       setName(''); setLocation(''); setText(''); setRating(0);
+
+      // Redirect to the destination reviews page after a short delay
+      setTimeout(() => {
+        router.push(`/reviews/${location}`);
+        router.refresh();
+      }, 2000);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
     } finally {
