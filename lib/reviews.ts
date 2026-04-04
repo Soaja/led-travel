@@ -21,6 +21,73 @@ const DESTINATIONS = [
   'Eastern Turkey',
 ] as const;
 
+const STATIC_SLUG_TO_DESTINATION: Record<string, string> = {
+  'istanbul-old-city-full-day-tour': 'Istanbul',
+  'istanbul-old-city-morning-tour': 'Istanbul',
+  'istanbul-old-city-afternoon-tour': 'Istanbul',
+  'istanbul-two-continents-tour': 'Istanbul',
+  'istanbul-byzantine-ottoman-tour': 'Istanbul',
+  'istanbul-old-modern-full-day-tour': 'Istanbul',
+  'istanbul-old-modern-half-day-tour': 'Istanbul',
+  'princes-islands-tour': 'Istanbul',
+  'bosphorous-dinner-cruise': 'Istanbul',
+  'morning-bosphorus-tour-with-breakfast': 'Istanbul',
+  'afternoon-bosphorus-tour-with-lunch': 'Istanbul',
+  'sunset-bosphorus-tour': 'Istanbul',
+  'night-bosphorus-tour-with-dinner': 'Istanbul',
+  'istanbul-street-food-tour': 'Istanbul',
+  'istanbul-paragliding-tour': 'Istanbul',
+  'topkapi-palace-grand-bazaar': 'Istanbul',
+  'dolmabahce-palace-and-2-continents': 'Istanbul',
+  'sapanca-masukiye-tour': 'Istanbul',
+  'sile-agva-tour-from-istanbul': 'Istanbul',
+  'yalova-thermal-tour-from-istanbul': 'Istanbul',
+  'green-bursa-tour-from-istanbul': 'Istanbul',
+  'grand-istanbul-aquarium-tour': 'Istanbul',
+  'hot-air-baloon-tour': 'Cappadocia',
+  'green-tour-south-cappadocia-tour': 'Cappadocia',
+  'red-tour-north-cappadocia-tour': 'Cappadocia',
+  'private-konya-tour-from-cappadocia': 'Cappadocia',
+  'classic-car-tour': 'Cappadocia',
+  'camel-back-riding': 'Cappadocia',
+  'professional-photographer-tour': 'Cappadocia',
+  'horse-back-riding': 'Cappadocia',
+  'private-salt-lake-tour': 'Cappadocia',
+  'turkish-night-in-the-cave': 'Cappadocia',
+  'cappadocia-dervish-ceremony': 'Cappadocia',
+  'selfie-touring-at-sunrise': 'Cappadocia',
+  'atv-quad-safari-tour': 'Cappadocia',
+  'off-road-safari-tour': 'Cappadocia',
+  'ephesus-tour': 'Ephesus',
+  'ephesus-quad-safari-tour': 'Ephesus',
+  'ephesus-sky-diving-tour': 'Ephesus',
+  'izmir-city-tour': 'Ephesus',
+  'pamukkale-tour': 'Pamukkale',
+  'pamukkale-hot-air-balloon-tour': 'Pamukkale',
+  'pamukkale-tour-from-antalya': 'Pamukkale',
+  'antalya-city-tour': 'Antalya',
+  'combo-activity-rafting-quad-zipline': 'Antalya',
+  'antalya-paramotor-tour': 'Antalya',
+  'alanya-paragliding-tour': 'Antalya',
+  'sagalassos-tour-from-antalya': 'Antalya',
+  'perge-aspendos-side-tour': 'Antalya',
+  'suluada-island-boat-tour': 'Antalya',
+  'antalya-green-canyon-tour': 'Antalya',
+  'demre-myra-kekova-tour': 'Antalya',
+  'termessos-duden-waterfall': 'Antalya',
+  'trabzon-city-tour': 'Eastern Turkey',
+  'uzungol-tour-from-trabzon': 'Eastern Turkey',
+  'sumela-hamsikoy-tour': 'Eastern Turkey',
+  'hidirnebi-plateau-cal-cave-sera-lake': 'Eastern Turkey',
+  'bork-a-karag-l-tour': 'Eastern Turkey',
+  'kayabasi-hackali-baba-plateau-cal-cave': 'Eastern Turkey',
+  'ayder-plateau-tour': 'Eastern Turkey',
+  'firtina-valley-huser-plateau-tour': 'Eastern Turkey',
+  'blue-lake-kumbet-plateau': 'Eastern Turkey',
+  'gito-plateau-tour': 'Eastern Turkey',
+  'pokut-plateau-waterfall-tour': 'Eastern Turkey',
+};
+
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -31,31 +98,19 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export async function getReviewsForTour(slug: string, destination: string): Promise<Review[]> {
-  const { data: tourReviews } = await supabase
-    .from('reviews')
-    .select('*')
-    .eq('tour_slug', slug)
-    .eq('approved', true);
-
-  const picked = shuffleArray<Review>(tourReviews ?? []).slice(0, 3);
-
-  if (picked.length < 3 && destination) {
-    const pickedIds = new Set(picked.map((r) => r.id));
-    const { data: destReviews } = await supabase
-      .from('reviews')
-      .select('*')
-      .eq('destination', destination)
-      .eq('approved', true)
-      .neq('tour_slug', slug);
-
-    const shuffledDest = shuffleArray<Review>(destReviews ?? [])
-      .filter((r) => !pickedIds.has(r.id))
-      .slice(0, 3 - picked.length);
-
-    picked.push(...shuffledDest);
-  }
-
-  return picked;
+  const staticPool = STATIC_REVIEWS_MAP[slug] ?? [];
+  return shuffleArray(staticPool)
+    .slice(0, 3)
+    .map((r, i) => ({
+      id: `static-${slug}-${i}`,
+      tour_slug: slug,
+      destination: destination,
+      author: r.author,
+      rating: r.rating,
+      comment: r.comment,
+      created_at: new Date().toISOString(),
+      approved: true,
+    }));
 }
 
 export async function getReviewsByDestination(destination: string): Promise<Review[]> {
@@ -84,10 +139,32 @@ export async function getDestinationSummaries(): Promise<
     .eq('approved', true)
     .order('created_at', { ascending: false });
 
-  const reviews: Review[] = allReviews ?? [];
+  const dbReviews: Review[] = allReviews ?? [];
+
+  // Build static reviews as Review objects grouped by destination
+  const staticByDestination: Record<string, Review[]> = {};
+  for (const [slug, snippets] of Object.entries(STATIC_REVIEWS_MAP)) {
+    const dest = STATIC_SLUG_TO_DESTINATION[slug];
+    if (!dest) continue;
+    if (!staticByDestination[dest]) staticByDestination[dest] = [];
+    snippets.forEach((s, i) => {
+      staticByDestination[dest].push({
+        id: `static-${slug}-${i}`,
+        tour_slug: slug,
+        destination: dest,
+        author: s.author,
+        rating: s.rating,
+        comment: s.comment,
+        created_at: new Date(0).toISOString(),
+        approved: true,
+      });
+    });
+  }
 
   return DESTINATIONS.map((destination) => {
-    const destReviews = reviews.filter((r) => r.destination === destination);
+    const dbDest = dbReviews.filter((r) => r.destination === destination);
+    // Use DB reviews if available, otherwise fall back to static pool
+    const destReviews = dbDest.length > 0 ? dbDest : (staticByDestination[destination] ?? []);
     const count = destReviews.length;
     const avgRating =
       count > 0 ? destReviews.reduce((sum, r) => sum + r.rating, 0) / count : 0;
