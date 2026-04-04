@@ -2,9 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'motion/react';
 import { Star, Quote, ArrowRight } from 'lucide-react';
-import useEmblaCarousel from 'embla-carousel-react';
 
 const reviews = [
   {
@@ -109,112 +107,110 @@ const reviews = [
   },
 ];
 
+function ReviewCard({ review }: { review: typeof reviews[0] }) {
+  return (
+    <div className="flex-shrink-0 w-80 bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4 hover:bg-white/8 hover:border-white/20 transition-colors duration-300">
+      <Quote className="w-8 h-8 text-[#E63946] opacity-60" />
+      <p className="text-gray-300 text-sm leading-relaxed line-clamp-4 flex-grow">
+        {review.text}
+      </p>
+      <div className="flex gap-0.5 mt-auto">
+        {[...Array(review.stars)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+        ))}
+      </div>
+      <div className="flex items-center gap-3 pt-3 border-t border-white/10">
+        <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 ring-2 ring-white/20">
+          <Image
+            src={review.avatar}
+            alt={review.name}
+            fill
+            className="object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        <div>
+          <div className="text-white font-semibold text-sm flex items-center gap-1.5">
+            {review.name} <span>{review.flag}</span>
+          </div>
+          <div className="text-gray-500 text-xs">{review.city} · {review.tour}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Reviews() {
-  const [emblaRef] = useEmblaCarousel({
-    align: 'start',
-    loop: false,
-    breakpoints: {
-      '(min-width: 768px)': { active: false }
-    }
-  });
+  const row1 = [...reviews, ...reviews];
+  const row2 = [...reviews.slice(5), ...reviews.slice(0, 5), ...reviews.slice(5), ...reviews.slice(0, 5)];
 
   return (
-    <section id="reviews" className="py-20 bg-[#FDF8F2] overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Star className="w-10 h-10 text-[#E63946] fill-current" />
-            <span className="text-5xl font-bold text-[#E63946]">4.9</span>
-          </div>
-          <p className="text-gray-500 text-sm mb-6">Based on 1,847 verified reviews</p>
-          
-          {/* Logo Row */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <div className="flex items-center gap-1 text-gray-700 font-bold text-lg">
-              <span className="text-blue-500 text-2xl">G</span>oogle
-            </div>
-            <div className="flex items-center gap-1 text-gray-700 font-bold text-lg">
-              <span className="text-green-500 text-2xl">O</span>TripAdvisor
-            </div>
-          </div>
-          
-          <h2 className="text-3xl font-bold text-gray-900">What Our Travelers Say</h2>
-        </div>
+    <section id="reviews" className="py-24 bg-[#0D0D1F] overflow-hidden">
+      {/* Header */}
+      <div className="container mx-auto px-4 md:px-6 text-center mb-16">
+        <span className="text-[#E63946] font-bold tracking-wider uppercase text-sm mb-4 block">
+          ■ Guest Experiences
+        </span>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          What Our Travelers Say
+        </h2>
+        <p className="text-gray-400 mb-10 max-w-xl mx-auto">
+          Real experiences from real travelers across Turkey
+        </p>
 
-        {/* Reviews Carousel/Grid */}
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex md:grid md:grid-cols-3 gap-6 md:gap-8 cursor-grab active:cursor-grabbing md:cursor-auto">
-            {reviews.map((review, index) => (
-              <motion.div
-                key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="embla__slide flex-[0_0_90%] min-w-0 md:flex-auto bg-white p-6 rounded-2xl shadow-md relative flex flex-col"
-              >
-                <Quote className="absolute top-6 right-6 w-12 h-12 text-[#E63946] opacity-20 rotate-180" />
-                
-                {/* Top: Stars */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(review.stars)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                
-                {/* Quote Text */}
-                <p className="text-gray-700 text-base leading-relaxed italic line-clamp-4 flex-grow">
-                  &quot;{review.text}&quot;
-                </p>
-                
-                {/* Divider */}
-                <div className="border-t border-gray-100 my-4"></div>
-                
-                {/* Bottom Row */}
-                <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden shrink-0">
-                    <Image
-                      src={review.avatar}
-                      alt={review.name}
-                      fill
-                      className="object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="font-bold text-gray-900 flex items-center gap-1.5">
-                      {review.name} <span className="text-sm">{review.flag}</span>
-                    </div>
-                    <div className="text-sm text-gray-500 mb-0.5">{review.city}</div>
-                    <div className="text-xs text-[#E63946] font-medium">Tour: {review.tour}</div>
-                  </div>
-                </div>
-              </motion.div>
+        {/* Rating badge */}
+        <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-white/5 border border-white/10 rounded-full px-6 py-3">
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
             ))}
           </div>
+          <span className="text-white font-bold text-lg">4.9</span>
+          <span className="text-gray-500">·</span>
+          <span className="text-gray-300 text-sm">1,847 reviews</span>
+          <span className="text-gray-500">·</span>
+          <span className="text-gray-400 text-sm">Google &amp; TripAdvisor</span>
         </div>
+      </div>
 
-        {/* Bottom Link */}
-        <div className="mt-12 text-center flex flex-col items-center">
-          <Link 
-            href="/reviews"
-            className="inline-flex items-center gap-2 text-[#E63946] font-bold hover:text-red-600 transition-colors duration-300 mb-6"
-          >
-            Read all 1,847 reviews <ArrowRight className="w-4 h-4" />
-          </Link>
-          
-          {/* Small Logos */}
-          <div className="flex items-center justify-center gap-4 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-            <div className="text-xs font-bold flex items-center gap-1">
-              <span className="text-blue-500">G</span> Google Reviews
-            </div>
-            <div className="w-1 h-1 rounded-full bg-gray-300"></div>
-            <div className="text-xs font-bold flex items-center gap-1">
-              <span className="text-green-500">O</span> TripAdvisor
-            </div>
-          </div>
+      {/* Row 1 — left to right */}
+      <div className="overflow-hidden mb-5">
+        <div
+          className="flex gap-5"
+          style={{
+            width: 'max-content',
+            animation: 'marquee 50s linear infinite',
+          }}
+        >
+          {row1.map((review, i) => (
+            <ReviewCard key={`r1-${i}`} review={review} />
+          ))}
         </div>
+      </div>
+
+      {/* Row 2 — right to left */}
+      <div className="overflow-hidden">
+        <div
+          className="flex gap-5"
+          style={{
+            width: 'max-content',
+            animation: 'marquee-reverse 45s linear infinite',
+          }}
+        >
+          {row2.map((review, i) => (
+            <ReviewCard key={`r2-${i}`} review={review} />
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="container mx-auto px-4 text-center mt-16">
+        <Link
+          href="/reviews"
+          className="inline-flex items-center gap-2 bg-[#E63946] text-white font-bold px-8 py-4 rounded-full hover:bg-red-600 transition-colors duration-300"
+        >
+          Read all 1,847 reviews <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
     </section>
   );

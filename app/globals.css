@@ -11,3 +11,13 @@ body {
   background-color: #FFFFFF;
   color: #1A1A2E;
 }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
