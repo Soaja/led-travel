@@ -121,7 +121,27 @@ export async function getReviewsByDestination(destination: string): Promise<Revi
     .eq('approved', true)
     .order('created_at', { ascending: false });
 
-  return data ?? [];
+  const dbReviews: Review[] = data ?? [];
+  if (dbReviews.length > 0) return dbReviews;
+
+  // Fall back to static reviews for this destination
+  const staticReviews: Review[] = [];
+  for (const [slug, snippets] of Object.entries(STATIC_REVIEWS_MAP)) {
+    if (STATIC_SLUG_TO_DESTINATION[slug] !== destination) continue;
+    snippets.forEach((s, i) => {
+      staticReviews.push({
+        id: `static-${slug}-${i}`,
+        tour_slug: slug,
+        destination,
+        author: s.author,
+        rating: s.rating,
+        comment: s.comment,
+        created_at: new Date(0).toISOString(),
+        approved: true,
+      });
+    });
+  }
+  return staticReviews;
 }
 
 export async function getDestinationSummaries(): Promise<
