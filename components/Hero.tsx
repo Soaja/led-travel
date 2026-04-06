@@ -97,12 +97,13 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
       {/* ── Background ── */}
       <div className="absolute inset-0 z-0 bg-[#1A1A2E]">
         <Image
-          src="https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=1920&auto=format&fit=crop"
+          src="/images/hero.webp"
           alt="Istanbul skyline"
           fill
+          sizes="100vw"
           className="object-cover object-center scale-105"
           priority
-          referrerPolicy="no-referrer"
+          quality={75}
         />
         {/* Layered overlays for depth and readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/80 via-[#1A1A2E]/30 to-[#1A1A2E]/90" />
@@ -129,16 +130,16 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-[1.25] pb-2 drop-shadow-2xl max-w-5xl">
           <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 40 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.75, delay: 0.15, ease: [0.2, 0.65, 0.3, 0.9] }}
             className="block"
           >
             Light up your
           </motion.span>
           <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 40 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.75, delay: 0.35, ease: [0.2, 0.65, 0.3, 0.9] }}
             className="block"
           >
@@ -151,8 +152,8 @@ export default function Hero({ initialTours = [] }: { initialTours?: Tour[] }) {
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
           className="text-lg md:text-xl text-white/65 mb-10 max-w-xl leading-relaxed font-light"
         >

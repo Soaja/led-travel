@@ -11,9 +11,9 @@ const STATIC_DESTINATIONS = [
   { name: 'Istanbul',       slug: 'istanbul',       image: '/images/1.webp'  },
   { name: 'Cappadocia',     slug: 'cappadocia',     image: '/images/2.avif'  },
   { name: 'Pamukkale',      slug: 'pamukkale',      image: '/images/3.jpg'   },
-  { name: 'Izmir-Ephesus',  slug: 'ephesus',        image: '/images/4.jpg'   },
+  { name: 'Izmir-Ephesus',  slug: 'ephesus',        image: '/images/4.webp'  },
   { name: 'Antalya',        slug: 'antalya',        image: '/images/6.webp'  },
-  { name: 'Troy',           slug: 'troy',           image: '/images/7.jpg'   },
+  { name: 'Troy',           slug: 'troy',           image: '/images/7.webp'  },
   { name: 'Other Tours',     slug: 'eastern-turkey', image: '/images/8.jpeg'  },
 ];
 

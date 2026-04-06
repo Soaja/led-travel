@@ -23,7 +23,7 @@ const teamMembers = [
     name: 'Murat Kılgı',
     role: 'Affiliate partner & head of local service organizations',
     email: 'murat@ledtravel.net',
-    image: '/images/aboutus4.jpg',
+    image: '/images/aboutus4.webp',
     description: 'Ensures every local service and organization is handled with precision for a flawless journey.'
   },
   {
