@@ -34,16 +34,19 @@ export default function TourGallery({ images }: { images: string[] }) {
   return (
     <div className="mb-8">
       {/* Main Image */}
-      <div className="relative h-96 w-full rounded-2xl overflow-hidden mb-4 cursor-pointer group" onClick={() => { setCurrentIndex(0); setIsOpen(true); }}>
-        <Image src={images[0]} alt="Tour Main" fill unoptimized className="object-cover group-hover:scale-105 transition-transform duration-500" />
+      <div className="relative h-52 sm:h-64 md:h-72 w-full rounded-2xl overflow-hidden mb-3 cursor-pointer group" onClick={() => { setCurrentIndex(0); setIsOpen(true); }}>
+        <Image src={images[0]} alt="Tour Main" fill unoptimized sizes="(max-width: 768px) 100vw, 66vw" className="object-cover object-center group-hover:scale-105 transition-transform duration-500" priority />
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+        <div className="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded-lg backdrop-blur-sm pointer-events-none">
+          View all photos
+        </div>
       </div>
-      
+
       {/* Thumbnails */}
-      <div className="flex gap-4 overflow-x-auto pb-2 snap-x hide-scrollbar">
+      <div className="flex gap-3 overflow-x-auto pb-2 snap-x hide-scrollbar">
         {images.slice(1).map((img, idx) => (
-          <div key={idx} className="relative h-24 w-32 shrink-0 rounded-xl overflow-hidden cursor-pointer snap-start group" onClick={() => { setCurrentIndex(idx + 1); setIsOpen(true); }}>
-            <Image src={img} alt={`Thumbnail ${idx}`} fill unoptimized className="object-cover group-hover:scale-110 transition-transform duration-500" />
+          <div key={idx} className="relative h-20 w-28 shrink-0 rounded-xl overflow-hidden cursor-pointer snap-start group" onClick={() => { setCurrentIndex(idx + 1); setIsOpen(true); }}>
+            <Image src={img} alt={`Thumbnail ${idx}`} fill unoptimized sizes="112px" className="object-cover object-center group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
           </div>
         ))}

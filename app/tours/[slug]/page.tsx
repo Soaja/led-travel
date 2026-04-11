@@ -150,7 +150,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
       />
       
       {/* Dark Header Background for Navbar */}
-      <div className="bg-[#1A1A2E] pt-32 pb-8 mb-8">
+      <div className="bg-[#1A1A2E] pt-28 pb-5 mb-6">
         <div className="container mx-auto px-4 md:px-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-gray-400">
