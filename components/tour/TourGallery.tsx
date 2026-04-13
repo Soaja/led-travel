@@ -35,12 +35,12 @@ export default function TourGallery({ images }: { images: string[] }) {
     <div className="mb-8">
       {/* Desktop: main image left + 2×2 grid right | Mobile: square image + scroll thumbnails */}
       <div className="hidden md:flex gap-3 items-stretch">
-        {/* Main Image — square */}
+        {/* Main Image — dominant */}
         <div
-          className="relative aspect-square w-[420px] shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
+          className="relative aspect-square w-[58%] shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
           onClick={() => { setCurrentIndex(0); setIsOpen(true); }}
         >
-          <Image src={images[0]} alt="Tour Main" fill unoptimized sizes="420px" className="object-cover object-center group-hover:scale-105 transition-transform duration-500" priority />
+          <Image src={images[0]} alt="Tour Main" fill unoptimized sizes="58vw" className="object-cover object-center group-hover:scale-105 transition-transform duration-500" priority />
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
         </div>
 
