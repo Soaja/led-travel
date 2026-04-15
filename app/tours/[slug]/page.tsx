@@ -86,11 +86,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
     }
   }
   
-  // Fallback images if we don't have enough
-  while (images.length < 4) {
-    images.push(`https://picsum.photos/seed/${tour.slug}${images.length}/800/600`);
-  }
-
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',

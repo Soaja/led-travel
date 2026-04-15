@@ -1,138 +1,83 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function TourGallery({ images }: { images: string[] }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
 
-  const handlePrevious = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  const prev = useCallback(() => {
+    setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
   }, [images.length]);
 
-  const handleNext = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  const next = useCallback(() => {
+    setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
   }, [images.length]);
 
-  // Handle keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') handlePrevious();
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'Escape') setIsOpen(false);
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
     };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, handlePrevious, handleNext]);
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [prev, next]);
 
   return (
-    <div className="mb-8">
-      {/* Desktop: main image left + 2×2 grid right | Mobile: square image + scroll thumbnails */}
-      <div className="hidden md:flex gap-3 items-stretch">
-        {/* Main Image — dominant */}
-        <div
-          className="relative aspect-square w-[58%] shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
-          onClick={() => { setCurrentIndex(0); setIsOpen(true); }}
-        >
-          <Image src={images[0]} alt="Tour Main" fill unoptimized sizes="58vw" className="object-cover object-center group-hover:scale-105 transition-transform duration-500" priority />
-          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-        </div>
+    <div className="mb-10">
+      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gray-100 select-none">
+        <Image
+          key={current}
+          src={images[current]}
+          alt={`Tour photo ${current + 1}`}
+          fill
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-center"
+          priority={current === 0}
+        />
 
-        {/* 2×2 thumbnail grid */}
-        <div className="grid grid-cols-2 gap-3 flex-1">
-          {images.slice(1, 5).map((img, idx) => (
-            <div
-              key={idx}
-              className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
-              onClick={() => { setCurrentIndex(idx + 1); setIsOpen(true); }}
-            >
-              <Image src={img} alt={`Tour photo ${idx + 2}`} fill unoptimized sizes="200px" className="object-cover object-center group-hover:scale-110 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-              {/* "View all" badge on last thumbnail */}
-              {idx === 3 && images.length > 5 && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <span className="text-white font-semibold text-sm">+{images.length - 5} more</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile: square main image */}
-      <div className="md:hidden">
-        <div
-          className="relative aspect-square w-full rounded-2xl overflow-hidden mb-3 cursor-pointer group"
-          onClick={() => { setCurrentIndex(0); setIsOpen(true); }}
-        >
-          <Image src={images[0]} alt="Tour Main" fill unoptimized sizes="100vw" className="object-cover object-center group-hover:scale-105 transition-transform duration-500" priority />
-          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-          <div className="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded-lg backdrop-blur-sm pointer-events-none">
-            View all photos
-          </div>
-        </div>
-        <div className="flex gap-3 overflow-x-auto pb-2 snap-x hide-scrollbar">
-          {images.slice(1).map((img, idx) => (
-            <div key={idx} className="relative aspect-square w-20 shrink-0 rounded-xl overflow-hidden cursor-pointer snap-start group" onClick={() => { setCurrentIndex(idx + 1); setIsOpen(true); }}>
-              <Image src={img} alt={`Thumbnail ${idx}`} fill unoptimized sizes="80px" className="object-cover object-center group-hover:scale-110 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Lightbox Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
-          <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 text-white hover:text-[#E63946] z-50 transition-colors">
-            <X className="w-8 h-8" />
-          </button>
-          
-          {/* Previous Button */}
-          {images.length > 1 && (
-            <button 
-              onClick={handlePrevious}
-              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 p-2 md:p-3 rounded-full transition-all z-50"
+        {images.length > 1 && (
+          <>
+            {/* Left arrow */}
+            <button
+              onClick={prev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
               aria-label="Previous image"
             >
-              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-          )}
 
-          <div className="relative w-full max-w-5xl h-[80vh]" onClick={(e) => e.stopPropagation()}>
-            <Image src={images[currentIndex]} alt="Lightbox" fill unoptimized className="object-contain" />
-          </div>
-
-          {/* Next Button */}
-          {images.length > 1 && (
-            <button 
-              onClick={handleNext}
-              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-black/40 p-2 md:p-3 rounded-full transition-all z-50"
+            {/* Right arrow */}
+            <button
+              onClick={next}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
               aria-label="Next image"
             >
-              <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
+              <ChevronRight className="w-5 h-5" />
             </button>
-          )}
 
-          {/* Simple controls */}
-          <div className="absolute bottom-6 flex gap-4" onClick={(e) => e.stopPropagation()}>
-            {images.map((_, idx) => (
-              <button 
-                key={idx} 
-                onClick={() => setCurrentIndex(idx)} 
-                className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex ? 'bg-[#E63946] scale-125' : 'bg-white/50 hover:bg-white'}`} 
-                aria-label={`Go to image ${idx + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+            {/* Dots */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrent(idx)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    idx === current ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'
+                  }`}
+                  aria-label={`Go to image ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Counter */}
+            <div className="absolute top-4 right-4 bg-black/40 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+              {current + 1} / {images.length}
+            </div>
+          </>
+        )}
+      </div>
     </div>
-  )
+  );
 }
