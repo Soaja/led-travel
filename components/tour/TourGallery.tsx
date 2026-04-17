@@ -61,30 +61,29 @@ export default function TourGallery({ images }: { images: string[] }) {
         )}
       </div>
 
-      {/* Thumbnails grid */}
+      {/* Next 3 thumbnails */}
       {images.length > 1 && (
         <div className="grid grid-cols-3 gap-2">
-          {images.map((src, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrent(idx)}
-              className={`relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 transition-all duration-200 ${
-                idx === current
-                  ? 'ring-2 ring-[#E63946] ring-offset-2 opacity-100'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
-              aria-label={`View photo ${idx + 1}`}
-            >
-              <Image
-                src={src}
-                alt={`Tour thumbnail ${idx + 1}`}
-                fill
-                unoptimized
-                sizes="(max-width: 1024px) 33vw, 20vw"
-                className="object-cover object-center"
-              />
-            </button>
-          ))}
+          {[1, 2, 3].map((offset) => {
+            const idx = (current + offset) % images.length;
+            return (
+              <button
+                key={idx}
+                onClick={() => setCurrent(idx)}
+                className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 opacity-80 hover:opacity-100 transition-all duration-200"
+                aria-label={`View photo ${idx + 1}`}
+              >
+                <Image
+                  src={images[idx]}
+                  alt={`Tour thumbnail ${idx + 1}`}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1024px) 33vw, 20vw"
+                  className="object-cover object-center"
+                />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
