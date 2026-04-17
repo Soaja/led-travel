@@ -161,14 +161,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
       </div>
 
       <div className="container mx-auto px-4 md:px-6">
-        {/* Gallery */}
-        <TourGallery images={images} />
+        {/* Hero: Gallery + Booking Card side by side */}
+        <div className="flex flex-col lg:flex-row gap-8 items-start mb-10">
+          {/* Left: Gallery */}
+          <div className="lg:w-3/5 w-full">
+            <TourGallery images={images} />
+          </div>
+          {/* Right: Booking Card */}
+          <div className="lg:w-2/5 w-full">
+            <BookingCard price={tour.price} rating={tour.rating} reviewsCount={tour.reviews} title={tour.title} />
+          </div>
+        </div>
 
         {/* Main Content */}
-        <div className="flex flex-col lg:flex-row gap-12 mt-8">
-          
-          {/* Left Column */}
-          <div className="flex-grow lg:w-2/3">
+        <div className="flex flex-col gap-12">
+
+          {/* Full width content column */}
+          <div className="w-full">
             <div className="mb-6">
               {tour.badge && (
                 <span className="inline-block bg-[#E63946] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
@@ -282,11 +291,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
             )}
 
 
-          </div>
-
-          {/* Right Column - Booking Card */}
-          <div className="lg:w-1/3 relative">
-            <BookingCard price={tour.price} rating={tour.rating} reviewsCount={tour.reviews} title={tour.title} />
           </div>
 
         </div>

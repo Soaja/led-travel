@@ -24,7 +24,7 @@ export default function TourGallery({ images }: { images: string[] }) {
   }, [prev, next]);
 
   return (
-    <div className="mb-10">
+    <div>
       <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gray-100 select-none">
         <Image
           key={current}
