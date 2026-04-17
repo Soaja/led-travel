@@ -24,60 +24,69 @@ export default function TourGallery({ images }: { images: string[] }) {
   }, [prev, next]);
 
   return (
-    <div>
-      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gray-100 select-none">
+    <div className="flex flex-col gap-3">
+      {/* Main image */}
+      <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 select-none">
         <Image
           key={current}
           src={images[current]}
           alt={`Tour photo ${current + 1}`}
           fill
           unoptimized
-          sizes="100vw"
-          className="object-cover object-center"
+          sizes="(max-width: 1024px) 100vw, 60vw"
+          className="object-cover object-center transition-opacity duration-300"
           priority={current === 0}
         />
 
         {images.length > 1 && (
           <>
-            {/* Left arrow */}
             <button
               onClick={prev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-
-            {/* Right arrow */}
             <button
               onClick={next}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow transition-all"
               aria-label="Next image"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {images.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrent(idx)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    idx === current ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'
-                  }`}
-                  aria-label={`Go to image ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Counter */}
-            <div className="absolute top-4 right-4 bg-black/40 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+            <div className="absolute top-3 right-3 bg-black/40 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
               {current + 1} / {images.length}
             </div>
           </>
         )}
       </div>
+
+      {/* Thumbnails grid */}
+      {images.length > 1 && (
+        <div className="grid grid-cols-3 gap-2">
+          {images.map((src, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrent(idx)}
+              className={`relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 transition-all duration-200 ${
+                idx === current
+                  ? 'ring-2 ring-[#E63946] ring-offset-2 opacity-100'
+                  : 'opacity-70 hover:opacity-100'
+              }`}
+              aria-label={`View photo ${idx + 1}`}
+            >
+              <Image
+                src={src}
+                alt={`Tour thumbnail ${idx + 1}`}
+                fill
+                unoptimized
+                sizes="(max-width: 1024px) 33vw, 20vw"
+                className="object-cover object-center"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
