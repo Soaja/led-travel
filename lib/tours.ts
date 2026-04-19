@@ -194,8 +194,8 @@ export async function getToursFromSheet(): Promise<Tour[]> {
         [/old city.*full.?day|full.?day.*old city/i, 'Best Seller'],
         // Cappadocia
         [/red tour|north cappadocia/i, 'Best Seller'],
-        [/horse.?back/i,      'Must Do'],
-        [/dervish/i,          'Most Liked'],
+        [/hot.?air.?balloon/i, 'Must Do'],
+        [/green tour/i,        'Most Liked'],
         // Other Tours
         [/trabzon city/i,     'Best Seller'],
         [/uzungol/i,          'Most Liked'],
