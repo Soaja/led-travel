@@ -100,15 +100,15 @@ export default function Footer() {
               <li className="flex items-center gap-3 text-gray-400 justify-center md:justify-start">
                 <Phone className="w-5 h-5 text-[#E63946] shrink-0" />
                 <div className="flex flex-col">
-                  <a href="tel:+905333811447" className="text-sm hover:text-white transition-colors duration-300">+90 533 381 14 47</a>
-                  <a href="tel:+905336693721" className="text-sm hover:text-white transition-colors duration-300 mt-1">+90 533 669 37 21</a>
+                  <a href="tel:+902125173427" className="text-sm hover:text-white transition-colors duration-300">+90 212 517 34 27</a>
+                  <a href="tel:+905333811447" className="text-sm hover:text-white transition-colors duration-300 mt-1">+90 533 381 14 47</a>
                 </div>
               </li>
               <li className="flex items-start gap-3 text-gray-400 justify-center md:justify-start">
                 <Mail className="w-5 h-5 text-[#E63946] shrink-0 mt-0.5" />
                 <div className="flex flex-col gap-1">
-                  <a href="mailto:lara@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">lara@ledtravel.net</a>
                   <a href="mailto:info@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">info@ledtravel.net</a>
+                  <a href="mailto:lara@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">lara@ledtravel.net</a>
                   <a href="mailto:murat@ledtravel.net" className="text-sm hover:text-white transition-colors duration-300">murat@ledtravel.net</a>
                 </div>
               </li>

@@ -80,7 +80,7 @@ const organizationJsonLd = {
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      telephone: '+90-533-381-14-47',
+      telephone: '+90-212-517-34-27',
       contactType: 'customer service',
       availableLanguage: ['English', 'Turkish'],
     },
