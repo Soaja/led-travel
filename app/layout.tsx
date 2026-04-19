@@ -16,6 +16,10 @@ const BASE_URL = 'https://ledtravel.net';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
+  icons: {
+    icon: '/images/favicon.png',
+    apple: '/images/favicon.png',
+  },
   title: {
     default: 'LED Travel | Premium Turkey Tours',
     template: '%s | LED Travel',
